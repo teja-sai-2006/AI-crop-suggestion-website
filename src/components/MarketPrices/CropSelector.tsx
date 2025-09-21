@@ -23,7 +23,7 @@ const CropSelector: React.FC<CropSelectorProps> = ({
 }) => {
   return (
     <div className="space-y-2">
-      <Label htmlFor="crop-selector" className="text-sm font-medium">
+      <Label htmlFor="crop-selector" className="text-sm font-medium text-enhanced text-overlay">
         Select Crop
       </Label>
       <Select
@@ -31,12 +31,12 @@ const CropSelector: React.FC<CropSelectorProps> = ({
         onValueChange={onCropChange}
         disabled={loading}
       >
-        <SelectTrigger id="crop-selector" className="w-full">
+        <SelectTrigger id="crop-selector" className="w-full glass text-enhanced">
           <SelectValue placeholder={loading ? "Loading crops..." : "Choose a crop"} />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="glass">
           {crops.map((crop) => (
-            <SelectItem key={crop} value={crop}>
+            <SelectItem key={crop} value={crop} className="text-enhanced">
               {crop}
             </SelectItem>
           ))}

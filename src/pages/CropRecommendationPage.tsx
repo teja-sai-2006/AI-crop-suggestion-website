@@ -3,7 +3,7 @@ import CropRecommendation from "@/components/CropRecommendation";
 
 const CropRecommendationPage = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navigation />
       <div className="pt-20">
         <CropRecommendation />

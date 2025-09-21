@@ -1,8 +1,11 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  /* Completely transparent root container for maximum background visibility */
+  background: transparent;
 }
 
 .logo {
@@ -33,8 +36,16 @@
   }
 }
 
+
 .card {
   padding: 2em;
+  /* Ultra transparent card with enhanced glass effect */
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255,255,255,0.12);
 }
 
 .read-the-docs {

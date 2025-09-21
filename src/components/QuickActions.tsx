@@ -45,9 +45,9 @@ const actions = [
 export const QuickActions = () => {
   const navigate = useNavigate();
   return (
-    <Card className="shadow-card">
+    <Card className="glass-ultra shadow-card">
       <CardHeader className="pb-3">
-        <CardTitle className="text-lg">Quick Actions</CardTitle>
+        <CardTitle className="text-lg text-enhanced">Quick Actions</CardTitle>
       </CardHeader>
       
       <CardContent>
@@ -82,7 +82,7 @@ export const QuickActions = () => {
               <Button
                 key={index}
                 variant="ghost"
-                className={`h-auto p-4 flex-col space-y-2 ${action.color} transition-colors`}
+                className={`h-auto p-4 flex-col space-y-2 glass text-enhanced transition-colors`}
                 onClick={handleClick}
               >
                 <IconComponent className="h-6 w-6" />

@@ -172,24 +172,24 @@ const ConsultationHistory: React.FC<ConsultationHistoryProps> = ({ refreshTrigge
   };
 
   const renderConsultationCard = (consultation: ConsultationBooking) => (
-    <Card key={consultation.id} className="mb-4">
+    <Card key={consultation.id} className="mb-4 glass-ultra hover:glass-medium transition-all duration-300">
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-3">
             <Avatar className="h-12 w-12">
-              <AvatarFallback>
+              <AvatarFallback className="bg-green-100 text-green-600">
                 {consultation.expertName.split(' ').map(n => n[0]).join('')}
               </AvatarFallback>
             </Avatar>
             
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 mb-1">
-                <h3 className="font-semibold text-lg truncate">
+                <h3 className="font-semibold text-lg truncate text-strong">
                   {consultation.expertName}
                 </h3>
                 <Badge 
                   variant="outline" 
-                  className={`${getStatusColor(consultation.status)} border`}
+                  className={`${getStatusColor(consultation.status)} border-white/20`}
                 >
                   <div className="flex items-center gap-1">
                     {getStatusIcon(consultation.status)}
@@ -200,18 +200,18 @@ const ConsultationHistory: React.FC<ConsultationHistoryProps> = ({ refreshTrigge
               
               <div className="flex flex-wrap gap-2 mb-2">
                 {consultation.expertSpecialization.map((spec, index) => (
-                  <Badge key={index} variant="secondary" className="text-xs">
+                  <Badge key={index} variant="secondary" className="text-xs bg-blue-100 text-blue-800 border-blue-300">
                     {spec}
                   </Badge>
                 ))}
               </div>
               
-              <p className="text-sm text-muted-foreground mb-2 font-medium">
+              <p className="text-sm text-enhanced text-overlay mb-2 font-medium">
                 {consultation.topic}
               </p>
               
               {consultation.description && (
-                <p className="text-sm text-muted-foreground line-clamp-2">
+                <p className="text-sm text-enhanced text-overlay line-clamp-2">
                   {consultation.description}
                 </p>
               )}
@@ -219,17 +219,17 @@ const ConsultationHistory: React.FC<ConsultationHistoryProps> = ({ refreshTrigge
           </div>
           
           <div className="text-right">
-            <div className="text-lg font-semibold text-green-600 mb-1">
+            <div className="text-lg font-semibold text-green-400 mb-1">
               ₹{consultation.fee}
             </div>
             <Badge 
               variant="outline" 
-              className={`text-xs ${
+              className={`text-xs border-white/20 ${
                 consultation.paymentStatus === 'paid' 
-                  ? 'text-green-700 border-green-300' 
+                  ? 'text-green-400 bg-green-100/20' 
                   : consultation.paymentStatus === 'refunded'
-                  ? 'text-orange-700 border-orange-300'
-                  : 'text-yellow-700 border-yellow-300'
+                  ? 'text-orange-400 bg-orange-100/20'
+                  : 'text-yellow-400 bg-yellow-100/20'
               }`}
             >
               {consultation.paymentStatus}
@@ -241,20 +241,20 @@ const ConsultationHistory: React.FC<ConsultationHistoryProps> = ({ refreshTrigge
       <CardContent className="pt-0">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <Calendar className="h-4 w-4 text-blue-400" />
             <div>
-              <div className="font-medium">Date</div>
-              <div className="text-muted-foreground">
+              <div className="font-medium text-strong">Date</div>
+              <div className="text-enhanced">
                 {formatDate(consultation.scheduledDate)}
               </div>
             </div>
           </div>
           
           <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-muted-foreground" />
+            <Clock className="h-4 w-4 text-green-400" />
             <div>
-              <div className="font-medium">Time</div>
-              <div className="text-muted-foreground">
+              <div className="font-medium text-strong">Time</div>
+              <div className="text-enhanced">
                 {formatTime(consultation.scheduledTime)}
               </div>
             </div>
@@ -263,18 +263,18 @@ const ConsultationHistory: React.FC<ConsultationHistoryProps> = ({ refreshTrigge
           <div className="flex items-center gap-2">
             {getConsultationMethodIcon(consultation.consultationMethod)}
             <div>
-              <div className="font-medium">Method</div>
-              <div className="text-muted-foreground capitalize">
+              <div className="font-medium text-strong">Method</div>
+              <div className="text-enhanced capitalize">
                 {consultation.consultationMethod.replace('_', ' ')}
               </div>
             </div>
           </div>
           
           <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-muted-foreground" />
+            <Clock className="h-4 w-4 text-purple-400" />
             <div>
-              <div className="font-medium">Duration</div>
-              <div className="text-muted-foreground">
+              <div className="font-medium text-strong">Duration</div>
+              <div className="text-enhanced">
                 {consultation.duration} minutes
               </div>
             </div>
@@ -282,31 +282,31 @@ const ConsultationHistory: React.FC<ConsultationHistoryProps> = ({ refreshTrigge
         </div>
         
         {consultation.notes && (
-          <div className="mt-4 p-3 bg-muted/50 rounded-lg">
+          <div className="mt-4 p-3 glass-medium rounded-lg">
             <div className="flex items-center gap-2 mb-2">
-              <FileText className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm font-medium">Notes</span>
+              <FileText className="h-4 w-4 text-blue-400" />
+              <span className="text-sm font-medium text-strong">Notes</span>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-enhanced text-overlay">
               {consultation.notes}
             </p>
           </div>
         )}
         
         {consultation.expertNotes && (
-          <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+          <div className="mt-4 p-3 glass-medium rounded-lg border border-blue-400/20">
             <div className="flex items-center gap-2 mb-2">
-              <User className="h-4 w-4 text-blue-600" />
-              <span className="text-sm font-medium text-blue-900">Expert Notes</span>
+              <User className="h-4 w-4 text-blue-400" />
+              <span className="text-sm font-medium text-strong">Expert Notes</span>
             </div>
-            <p className="text-sm text-blue-800">
+            <p className="text-sm text-enhanced text-overlay">
               {consultation.expertNotes}
             </p>
           </div>
         )}
         
         {consultation.rating && (
-          <div className="mt-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+          <div className="mt-4 p-3 glass-medium rounded-lg border border-yellow-400/20">
             <div className="flex items-center gap-2 mb-2">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
@@ -314,7 +314,7 @@ const ConsultationHistory: React.FC<ConsultationHistoryProps> = ({ refreshTrigge
                     key={i}
                     className={`text-lg ${
                       i < consultation.rating! 
-                        ? 'text-yellow-500' 
+                        ? 'text-yellow-400' 
                         : 'text-gray-300'
                     }`}
                   >
@@ -322,10 +322,10 @@ const ConsultationHistory: React.FC<ConsultationHistoryProps> = ({ refreshTrigge
                   </span>
                 ))}
               </div>
-              <span className="text-sm font-medium">Your Rating</span>
+              <span className="text-sm font-medium text-strong">Your Rating</span>
             </div>
             {consultation.review && (
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-enhanced text-overlay">
                 {consultation.review}
               </p>
             )}
@@ -339,15 +339,15 @@ const ConsultationHistory: React.FC<ConsultationHistoryProps> = ({ refreshTrigge
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <Skeleton className="h-8 w-48" />
-          <Skeleton className="h-10 w-32" />
+          <Skeleton className="h-8 w-48 glass-medium" />
+          <Skeleton className="h-10 w-32 glass-medium" />
         </div>
         <div className="space-y-4">
           {[...Array(3)].map((_, i) => (
-            <Card key={i}>
+            <Card key={i} className="glass-ultra">
               <CardHeader>
                 <div className="flex gap-4">
-                  <Skeleton className="h-12 w-12 rounded-full" />
+                  <Skeleton className="h-12 w-12 rounded-full glass-medium" />
                   <div className="space-y-2 flex-1">
                     <Skeleton className="h-4 w-3/4" />
                     <Skeleton className="h-3 w-1/2" />
@@ -393,22 +393,22 @@ const ConsultationHistory: React.FC<ConsultationHistoryProps> = ({ refreshTrigge
       {/* Header */}
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold flex items-center gap-2">
-            <History className="h-6 w-6" />
+          <h2 className="text-2xl font-bold flex items-center gap-2 text-strong">
+            <History className="h-6 w-6 text-green-400" />
             Consultation History
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-enhanced text-overlay">
             Track your past and upcoming expert consultations
           </p>
         </div>
         
         <div className="flex gap-2">
           <Select value={statusFilter} onValueChange={(value: any) => setStatusFilter(value)}>
-            <SelectTrigger className="w-40">
+            <SelectTrigger className="w-40 glass-medium text-enhanced border-white/20">
               <Filter className="h-4 w-4 mr-2" />
               <SelectValue placeholder="Filter status" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="glass-ultra">
               <SelectItem value="all">All Status</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>
               <SelectItem value="confirmed">Confirmed</SelectItem>
@@ -419,7 +419,7 @@ const ConsultationHistory: React.FC<ConsultationHistoryProps> = ({ refreshTrigge
             </SelectContent>
           </Select>
           
-          <Button variant="outline" size="sm" onClick={fetchConsultations}>
+          <Button variant="outline" size="sm" onClick={fetchConsultations} className="border-white/20 text-enhanced hover:bg-white/10">
             <RefreshCw className="h-4 w-4 mr-2" />
             Refresh
           </Button>

@@ -17,15 +17,15 @@ const LatestPriceCard: React.FC<LatestPriceCardProps> = ({
 }) => {
   if (loading) {
     return (
-      <Card>
+      <Card className="glass-medium">
         <CardHeader>
-          <CardTitle>Latest Price</CardTitle>
+          <CardTitle className="text-strong">Latest Price</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded mb-2"></div>
-            <div className="h-4 bg-gray-200 rounded w-2/3 mb-2"></div>
-            <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+            <div className="h-8 glass-ultra rounded mb-2"></div>
+            <div className="h-4 glass-ultra rounded w-2/3 mb-2"></div>
+            <div className="h-4 glass-ultra rounded w-1/2"></div>
           </div>
         </CardContent>
       </Card>
@@ -34,12 +34,12 @@ const LatestPriceCard: React.FC<LatestPriceCardProps> = ({
 
   if (!price) {
     return (
-      <Card>
+      <Card className="glass-medium">
         <CardHeader>
-          <CardTitle>Latest Price</CardTitle>
+          <CardTitle className="text-strong">Latest Price</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-500">No price data available</p>
+          <p className="text-enhanced">No price data available</p>
         </CardContent>
       </Card>
     );
@@ -55,15 +55,15 @@ const LatestPriceCard: React.FC<LatestPriceCardProps> = ({
   };
 
   const getTrendColor = () => {
-    if (price.trend === 'up') return 'bg-green-100 text-green-800';
-    if (price.trend === 'down') return 'bg-red-100 text-red-800';
-    return 'bg-gray-100 text-gray-800';
+    if (price.trend === 'up') return 'glass text-green-400 text-strong';
+    if (price.trend === 'down') return 'glass text-red-400 text-strong';
+    return 'glass text-enhanced';
   };
 
   return (
-    <Card>
+    <Card className="glass-medium">
       <CardHeader>
-        <CardTitle className="flex items-center justify-between">
+        <CardTitle className="flex items-center justify-between text-strong">
           Latest Price
           <Badge className={getTrendColor()}>
             {getTrendIcon()}
@@ -76,20 +76,20 @@ const LatestPriceCard: React.FC<LatestPriceCardProps> = ({
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
-          <div className="text-3xl font-bold text-green-600">
+          <div className="text-3xl font-bold text-green-400 text-strong">
             ₹{price.price.toLocaleString()}
-            <span className="text-sm font-normal text-gray-600 ml-2">
+            <span className="text-sm font-normal text-enhanced ml-2">
               per {price.unit}
             </span>
           </div>
-          <div className="text-sm text-gray-600">
-            <p><strong>Crop:</strong> {price.crop}</p>
-            <p><strong>Market:</strong> {price.location}</p>
-            <p><strong>Quality:</strong> {price.quality}</p>
-            <p><strong>Date:</strong> {new Date(price.date).toLocaleDateString()}</p>
+          <div className="text-sm text-enhanced">
+            <p><strong className="text-strong">Crop:</strong> {price.crop}</p>
+            <p><strong className="text-strong">Market:</strong> {price.location}</p>
+            <p><strong className="text-strong">Quality:</strong> {price.quality}</p>
+            <p><strong className="text-strong">Date:</strong> {new Date(price.date).toLocaleDateString()}</p>
           </div>
           {price.trend !== 'stable' && price.previousPrice && (
-            <div className="text-xs text-gray-500">
+            <div className="text-xs text-enhanced">
               <p>
                 {price.trend === 'up' ? 'Increased' : 'Decreased'} by ₹
                 {Math.abs(price.price - price.previousPrice).toFixed(2)} from yesterday

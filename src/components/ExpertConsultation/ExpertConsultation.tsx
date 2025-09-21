@@ -46,38 +46,38 @@ const ExpertConsultation: React.FC = () => {
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
-          <div className="p-2 bg-green-100 rounded-lg">
-            <Phone className="h-6 w-6 text-green-600" />
+          <div className="p-2 glass rounded-lg">
+            <Phone className="h-6 w-6 text-green-400" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Expert Consultation</h1>
-            <p className="text-gray-600">Connect with verified agricultural experts for personalized guidance</p>
+            <h1 className="text-3xl font-bold text-strong">Expert Consultation</h1>
+            <p className="text-enhanced text-overlay">Connect with verified agricultural experts for personalized guidance</p>
           </div>
         </div>
         
         {/* Key Features */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-          <Card className="border-green-200 bg-green-50">
+          <Card className="glass-ultra">
             <CardContent className="p-4 text-center">
-              <Users className="h-8 w-8 text-green-600 mx-auto mb-2" />
-              <h3 className="font-semibold text-green-900">Verified Experts</h3>
-              <p className="text-sm text-green-700">Connect with certified agricultural professionals</p>
+              <Users className="h-8 w-8 text-green-400 mx-auto mb-2" />
+              <h3 className="font-semibold text-strong">Verified Experts</h3>
+              <p className="text-sm text-enhanced">Connect with certified agricultural professionals</p>
             </CardContent>
           </Card>
           
-          <Card className="border-blue-200 bg-blue-50">
+          <Card className="glass-ultra">
             <CardContent className="p-4 text-center">
-              <Phone className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-              <h3 className="font-semibold text-blue-900">Multiple Methods</h3>
-              <p className="text-sm text-blue-700">Video, audio, chat, or in-person consultations</p>
+              <Phone className="h-8 w-8 text-blue-400 mx-auto mb-2" />
+              <h3 className="font-semibold text-strong">Multiple Methods</h3>
+              <p className="text-sm text-enhanced">Video, audio, chat, or in-person consultations</p>
             </CardContent>
           </Card>
           
-          <Card className="border-purple-200 bg-purple-50">
+          <Card className="glass-ultra">
             <CardContent className="p-4 text-center">
-              <History className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-              <h3 className="font-semibold text-purple-900">Track History</h3>
-              <p className="text-sm text-purple-700">Keep records of all your consultations</p>
+              <History className="h-8 w-8 text-purple-400 mx-auto mb-2" />
+              <h3 className="font-semibold text-strong">Track History</h3>
+              <p className="text-sm text-enhanced">Keep records of all your consultations</p>
             </CardContent>
           </Card>
         </div>
@@ -85,12 +85,12 @@ const ExpertConsultation: React.FC = () => {
 
       {/* Main Content */}
       <Tabs value={activeTab} onValueChange={(value: 'experts' | 'history') => setActiveTab(value)}>
-        <TabsList className="grid w-full grid-cols-2 mb-8">
-          <TabsTrigger value="experts" className="flex items-center gap-2">
+        <TabsList className="grid w-full grid-cols-2 mb-8 glass-medium">
+          <TabsTrigger value="experts" className="flex items-center gap-2 text-enhanced">
             <Users className="h-4 w-4" />
             Find Experts
           </TabsTrigger>
-          <TabsTrigger value="history" className="flex items-center gap-2">
+          <TabsTrigger value="history" className="flex items-center gap-2 text-enhanced">
             <History className="h-4 w-4" />
             My Consultations
           </TabsTrigger>

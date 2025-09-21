@@ -53,20 +53,20 @@ export const StatsOverview = () => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {stats.map((stat, index) => (
-        <Card key={index} className="shadow-soft hover:shadow-card transition-shadow">
+        <Card key={index} className="glass-ultra shadow-soft hover:shadow-card transition-shadow">
           <CardContent className="p-4">
             <div className="space-y-2">
-              <div className="text-sm text-muted-foreground">{stat.title}</div>
-              <div className="text-2xl font-bold">{stat.value}</div>
+              <div className="text-sm text-muted-foreground text-enhanced">{stat.title}</div>
+              <div className="text-2xl font-bold text-enhanced">{stat.value}</div>
               <div className="flex items-center space-x-1">
                 {getTrendIcon(stat.trend)}
-                <span className={`text-sm font-medium ${getTrendColor(
+                <span className={`text-sm font-medium text-enhanced ${getTrendColor(
                   stat.trend, 
                   stat.title === "Water Usage"
                 )}`}>
                   {stat.change}
                 </span>
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs text-muted-foreground text-enhanced">
                   {stat.description}
                 </span>
               </div>

@@ -42,11 +42,11 @@ export const Navigation = () => {
   return (
     <>
       {/* Fixed Top Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border shadow-sm">
+      <nav className="fixed top-0 left-0 right-0 z-50 glass backdrop-blur-sm border-b border-border shadow-sm">
         <div className="container mx-auto px-6 py-3">
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-lg font-semibold">
+            <div className="flex items-center space-x-2 text-lg font-semibold text-enhanced">
               <div className="text-xl">🌾</div>
               <span>KrishiMitra</span>
             </div>
@@ -61,7 +61,7 @@ export const Navigation = () => {
                     variant={isActive ? "default" : "ghost"}
                     size="sm"
                     onClick={() => handleNavigation(item.path)}
-                    className="flex items-center gap-2 px-3"
+                    className={`flex items-center gap-2 px-3 text-enhanced ${isActive ? 'glass' : 'glass-ultra'}`}
                     title={item.label}
                   >
                     <Icon className="h-4 w-4" />
@@ -74,7 +74,7 @@ export const Navigation = () => {
 
           {/* Mobile Navigation */}
           <div className="md:hidden flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-lg font-semibold">
+            <div className="flex items-center space-x-2 text-lg font-semibold text-enhanced">
               <div className="text-xl">🌾</div>
               <span>KrishiMitra</span>
             </div>
@@ -82,7 +82,7 @@ export const Navigation = () => {
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
-              className="bg-card/80 backdrop-blur-sm border border-border"
+              className="glass backdrop-blur-sm border border-border text-enhanced"
             >
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
@@ -93,7 +93,7 @@ export const Navigation = () => {
       {/* Mobile Navigation Overlay */}
       {isOpen && (
         <div className="md:hidden fixed inset-0 bg-black/50 z-40" onClick={() => setIsOpen(false)}>
-          <div className="fixed top-16 right-4 bg-card border border-border rounded-lg p-4 shadow-card min-w-[200px]">
+          <div className="fixed top-16 right-4 glass border border-border rounded-lg p-4 shadow-card min-w-[200px]">
             <div className="space-y-2">
               {navigationItems.map((item) => {
                 const Icon = item.icon;
@@ -104,7 +104,7 @@ export const Navigation = () => {
                     key={item.path}
                     variant={isActive ? "default" : "ghost"}
                     onClick={() => handleNavigation(item.path)}
-                    className="w-full justify-start gap-3"
+                    className={`w-full justify-start gap-3 text-enhanced ${isActive ? 'glass' : 'glass-ultra'}`}
                   >
                     <Icon className="h-4 w-4" />
                     {item.label}

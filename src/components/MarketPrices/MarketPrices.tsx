@@ -176,13 +176,13 @@ const MarketPrices: React.FC = () => {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
-              <div className="p-2 bg-green-100 rounded-lg">
+            <h1 className="text-3xl font-bold text-strong text-overlay flex items-center gap-3">
+              <div className="p-2 glass rounded-lg">
                 <BarChart3 className="h-6 w-6 text-green-600" />
               </div>
               Market Prices
             </h1>
-            <p className="text-gray-600">
+            <p className="text-enhanced text-overlay">
               Real-time crop prices across Indian markets
             </p>
           </div>
@@ -191,6 +191,7 @@ const MarketPrices: React.FC = () => {
             onClick={handleRefresh}
             disabled={refreshing}
             variant="outline"
+            className="glass hover:glass-medium text-enhanced"
           >
             <RefreshCw className={`h-4 w-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
             Refresh
@@ -200,31 +201,31 @@ const MarketPrices: React.FC = () => {
         {/* Summary Cards */}
         {summary && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <Card className="border-blue-200 bg-blue-50">
+            <Card className="glass-ultra">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2">
                   <BarChart3 className="h-5 w-5 text-blue-600" />
                   <div>
-                    <p className="text-sm text-blue-700">Total Crops</p>
-                    <p className="text-2xl font-bold text-blue-900">{summary.totalCrops}</p>
+                    <p className="text-sm text-enhanced text-overlay">Total Crops</p>
+                    <p className="text-2xl font-bold text-strong">{summary.totalCrops}</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
             
-            <Card className="border-purple-200 bg-purple-50">
+            <Card className="glass-ultra">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-purple-600" />
                   <div>
-                    <p className="text-sm text-purple-700">Markets</p>
-                    <p className="text-2xl font-bold text-purple-900">{summary.totalMarkets}</p>
+                    <p className="text-sm text-enhanced text-overlay">Markets</p>
+                    <p className="text-2xl font-bold text-strong">{summary.totalMarkets}</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
             
-            <Card className={`border-${summary.avgPriceChange >= 0 ? 'green' : 'red'}-200 bg-${summary.avgPriceChange >= 0 ? 'green' : 'red'}-50`}>
+            <Card className="glass-ultra">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2">
                   {summary.avgPriceChange >= 0 ? (
@@ -233,10 +234,10 @@ const MarketPrices: React.FC = () => {
                     <TrendingDown className="h-5 w-5 text-red-600" />
                   )}
                   <div>
-                    <p className={`text-sm text-${summary.avgPriceChange >= 0 ? 'green' : 'red'}-700`}>
+                    <p className="text-sm text-enhanced text-overlay">
                       Avg Change
                     </p>
-                    <p className={`text-2xl font-bold text-${summary.avgPriceChange >= 0 ? 'green' : 'red'}-900`}>
+                    <p className={`text-2xl font-bold text-strong ${summary.avgPriceChange >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                       {summary.avgPriceChange >= 0 ? '+' : ''}{summary.avgPriceChange.toFixed(1)}%
                     </p>
                   </div>
@@ -244,13 +245,13 @@ const MarketPrices: React.FC = () => {
               </CardContent>
             </Card>
             
-            <Card className="border-gray-200 bg-gray-50">
+            <Card className="glass-ultra">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2">
                   <RefreshCw className="h-5 w-5 text-gray-600" />
                   <div>
-                    <p className="text-sm text-gray-700">Last Updated</p>
-                    <p className="text-sm font-bold text-gray-900">Just now</p>
+                    <p className="text-sm text-enhanced text-overlay">Last Updated</p>
+                    <p className="text-sm font-bold text-enhanced">Just now</p>
                   </div>
                 </div>
               </CardContent>
@@ -307,9 +308,9 @@ const MarketPrices: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Top Gainers */}
               {summary.topGainers.length > 0 && (
-                <Card>
+                <Card className="glass-medium">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-green-700">
+                    <CardTitle className="flex items-center gap-2 text-green-400 text-strong">
                       <TrendingUp className="h-5 w-5" />
                       Top Gainers
                     </CardTitle>
@@ -317,16 +318,16 @@ const MarketPrices: React.FC = () => {
                   <CardContent>
                     <div className="space-y-3">
                       {summary.topGainers.map((gainer, index) => (
-                        <div key={index} className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                        <div key={index} className="flex items-center justify-between p-3 glass rounded-lg">
                           <div>
-                            <div className="font-medium">{gainer.crop}</div>
-                            <div className="text-sm text-muted-foreground">{gainer.location}</div>
+                            <div className="font-medium text-strong">{gainer.crop}</div>
+                            <div className="text-sm text-enhanced">{gainer.location}</div>
                           </div>
                           <div className="text-right">
-                            <div className="font-semibold text-green-600">
+                            <div className="font-semibold text-green-400 text-strong">
                               +{gainer.changePercentage.toFixed(1)}%
                             </div>
-                            <div className="text-sm">₹{gainer.currentPrice}/kg</div>
+                            <div className="text-sm text-enhanced">₹{gainer.currentPrice}/kg</div>
                           </div>
                         </div>
                       ))}
@@ -337,9 +338,9 @@ const MarketPrices: React.FC = () => {
 
               {/* Top Losers */}
               {summary.topLosers.length > 0 && (
-                <Card>
+                <Card className="glass-medium">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-red-700">
+                    <CardTitle className="flex items-center gap-2 text-red-400 text-strong">
                       <TrendingDown className="h-5 w-5" />
                       Top Losers
                     </CardTitle>
@@ -347,16 +348,16 @@ const MarketPrices: React.FC = () => {
                   <CardContent>
                     <div className="space-y-3">
                       {summary.topLosers.map((loser, index) => (
-                        <div key={index} className="flex items-center justify-between p-3 bg-red-50 rounded-lg">
+                        <div key={index} className="flex items-center justify-between p-3 glass rounded-lg">
                           <div>
-                            <div className="font-medium">{loser.crop}</div>
-                            <div className="text-sm text-muted-foreground">{loser.location}</div>
+                            <div className="font-medium text-strong">{loser.crop}</div>
+                            <div className="text-sm text-enhanced">{loser.location}</div>
                           </div>
                           <div className="text-right">
-                            <div className="font-semibold text-red-600">
+                            <div className="font-semibold text-red-400 text-strong">
                               {loser.changePercentage.toFixed(1)}%
                             </div>
-                            <div className="text-sm">₹{loser.currentPrice}/kg</div>
+                            <div className="text-sm text-enhanced">₹{loser.currentPrice}/kg</div>
                           </div>
                         </div>
                       ))}

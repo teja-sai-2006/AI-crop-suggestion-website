@@ -3,7 +3,7 @@ import { ExpertConsultation } from "@/components/ExpertConsultation";
 
 const ExpertCallPage = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navigation />
       <div className="pt-20">
         <ExpertConsultation />

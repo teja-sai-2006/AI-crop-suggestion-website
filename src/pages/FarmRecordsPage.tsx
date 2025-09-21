@@ -3,7 +3,7 @@ import { FarmRecords } from "@/components/FarmRecords";
 
 const FarmRecordsPage = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navigation />
       <div className="pt-20">
         <FarmRecords />

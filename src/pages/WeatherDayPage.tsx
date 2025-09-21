@@ -42,7 +42,7 @@ const WeatherDayPage = () => {
 
   if (!isLocationSet) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen">
         <Navigation />
         <main className="container mx-auto px-6 py-8 pt-24">
           <Button variant="ghost" onClick={() => navigate('/weather')} className="mb-4">← Back to forecast</Button>
@@ -64,7 +64,7 @@ const WeatherDayPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navigation />
       <main className="container mx-auto px-6 py-8 pt-24">
         <Button variant="ghost" onClick={() => navigate('/weather')} className="mb-4">← Back to forecast</Button>

@@ -139,44 +139,44 @@ const DiseaseDetection: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto p-6 space-y-6">
       <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold text-gray-900 flex items-center justify-center gap-2">
+        <h1 className="text-3xl font-bold text-enhanced text-overlay flex items-center justify-center gap-2">
           <Bug className="h-8 w-8 text-red-600" />
           Plant Disease Detection
         </h1>
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-enhanced text-overlay">
           AI-powered disease diagnosis with treatment recommendations
         </p>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="upload">Upload & Analyze</TabsTrigger>
-          <TabsTrigger value="results">Results</TabsTrigger>
-          <TabsTrigger value="history">History</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3 glass">
+          <TabsTrigger value="upload" className="text-enhanced">Upload & Analyze</TabsTrigger>
+          <TabsTrigger value="results" className="text-enhanced">Results</TabsTrigger>
+          <TabsTrigger value="history" className="text-enhanced">History</TabsTrigger>
         </TabsList>
 
         <TabsContent value="upload" className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Upload Section */}
-            <Card>
+            <Card className="glass-ultra">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-enhanced">
                   <Camera className="h-5 w-5" />
                   Upload Plant Image
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-enhanced text-overlay">
                   Take a clear photo of the affected plant parts for accurate diagnosis
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="cropType">Crop Type</Label>
+                    <Label htmlFor="cropType" className="text-enhanced">Crop Type</Label>
                     <Select value={cropType} onValueChange={setCropType}>
-                      <SelectTrigger>
+                      <SelectTrigger className="glass text-enhanced">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="glass">
                         <SelectItem value="tomato">Tomato</SelectItem>
                         <SelectItem value="potato">Potato</SelectItem>
                         <SelectItem value="cucumber">Cucumber</SelectItem>
@@ -188,9 +188,9 @@ const DiseaseDetection: React.FC = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label>Plant Image</Label>
+                    <Label className="text-enhanced">Plant Image</Label>
                     <div 
-                      className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-gray-400 transition-colors"
+                      className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-gray-400 transition-colors glass"
                       onClick={() => fileInputRef.current?.click()}
                     >
                       {imagePreview ? (
@@ -200,14 +200,14 @@ const DiseaseDetection: React.FC = () => {
                             alt="Preview" 
                             className="max-h-48 mx-auto rounded-lg"
                           />
-                          <p className="text-sm text-gray-500">{selectedFile?.name}</p>
+                          <p className="text-sm text-enhanced text-overlay">{selectedFile?.name}</p>
                         </div>
                       ) : (
                         <div className="space-y-2">
                           <Upload className="h-12 w-12 mx-auto text-gray-400" />
                           <div>
-                            <p className="text-gray-600">Click to upload image</p>
-                            <p className="text-sm text-gray-500">JPG, PNG, WebP up to 10MB</p>
+                            <p className="text-enhanced">Click to upload image</p>
+                            <p className="text-sm text-enhanced text-overlay">JPG, PNG, WebP up to 10MB</p>
                           </div>
                         </div>
                       )}
@@ -223,15 +223,15 @@ const DiseaseDetection: React.FC = () => {
                 </div>
 
                 {error && (
-                  <Alert variant="destructive">
+                  <Alert variant="destructive" className="glass-ultra">
                     <AlertTriangle className="h-4 w-4" />
-                    <AlertDescription>{error}</AlertDescription>
+                    <AlertDescription className="text-enhanced">{error}</AlertDescription>
                   </Alert>
                 )}
 
                 <Button 
                   onClick={handleAnalyze} 
-                  className="w-full" 
+                  className="w-full glass hover:glass-medium text-enhanced" 
                   disabled={!selectedFile || isAnalyzing}
                 >
                   {isAnalyzing ? (
@@ -250,9 +250,9 @@ const DiseaseDetection: React.FC = () => {
             </Card>
 
             {/* Tips Section */}
-            <Card>
+            <Card className="glass-ultra">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-enhanced">
                   <Leaf className="h-5 w-5 text-green-600" />
                   Photography Tips
                 </CardTitle>
@@ -261,23 +261,23 @@ const DiseaseDetection: React.FC = () => {
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Take photos in good natural lighting</span>
+                    <span className="text-enhanced">Take photos in good natural lighting</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Focus on affected plant parts (leaves, stems, fruits)</span>
+                    <span className="text-enhanced">Focus on affected plant parts (leaves, stems, fruits)</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Keep the camera steady and close enough to see details</span>
+                    <span className="text-enhanced">Keep the camera steady and close enough to see details</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Include both affected and healthy parts for comparison</span>
+                    <span className="text-enhanced">Include both affected and healthy parts for comparison</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Avoid blurry or dark images</span>
+                    <span className="text-enhanced">Avoid blurry or dark images</span>
                   </div>
                 </div>
               </CardContent>
@@ -289,58 +289,58 @@ const DiseaseDetection: React.FC = () => {
           {result ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Diagnosis Results */}
-              <Card>
+              <Card className="glass-ultra">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2 text-enhanced">
                     <Bug className="h-5 w-5" />
                     Disease Diagnosis
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-enhanced text-overlay">
                     Analysis confidence: {result.confidence}%
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="border rounded-lg p-4">
+                  <div className="border rounded-lg p-4 glass">
                     <div className="flex justify-between items-start mb-2">
                       <div>
-                        <h3 className="font-semibold text-lg">{result.primaryDiagnosis.diseaseName}</h3>
-                        <p className="text-sm text-gray-600 italic">{result.primaryDiagnosis.scientificName}</p>
+                        <h3 className="font-semibold text-lg text-enhanced">{result.primaryDiagnosis.diseaseName}</h3>
+                        <p className="text-sm text-enhanced text-overlay italic">{result.primaryDiagnosis.scientificName}</p>
                       </div>
-                      <Badge variant={getSeverityBadgeVariant(result.primaryDiagnosis.severity)}>
+                      <Badge variant={getSeverityBadgeVariant(result.primaryDiagnosis.severity)} className="glass">
                         {result.primaryDiagnosis.severity} severity
                       </Badge>
                     </div>
                     
                     <div className="space-y-2">
                       <div>
-                        <span className="font-medium">Confidence:</span>
+                        <span className="font-medium text-enhanced">Confidence:</span>
                         <div className="flex items-center gap-2 mt-1">
                           <Progress value={result.primaryDiagnosis.confidence} className="flex-1" />
-                          <span className="text-sm">{result.primaryDiagnosis.confidence}%</span>
+                          <span className="text-sm text-enhanced">{result.primaryDiagnosis.confidence}%</span>
                         </div>
                       </div>
                       
                       <div>
-                        <span className="font-medium">Category:</span>
-                        <span className="ml-2 capitalize">{result.primaryDiagnosis.category}</span>
+                        <span className="font-medium text-enhanced">Category:</span>
+                        <span className="ml-2 capitalize text-enhanced">{result.primaryDiagnosis.category}</span>
                       </div>
                       
                       <div>
-                        <span className="font-medium">Affected Parts:</span>
-                        <span className="ml-2">{result.primaryDiagnosis.affectedParts.join(', ')}</span>
+                        <span className="font-medium text-enhanced">Affected Parts:</span>
+                        <span className="ml-2 text-enhanced">{result.primaryDiagnosis.affectedParts.join(', ')}</span>
                       </div>
                     </div>
                   </div>
 
                   {result.alternativeDiagnoses.length > 0 && (
                     <div>
-                      <h4 className="font-medium mb-2">Alternative Diagnoses</h4>
+                      <h4 className="font-medium mb-2 text-enhanced">Alternative Diagnoses</h4>
                       <div className="space-y-2">
                         {result.alternativeDiagnoses.map((diagnosis, index) => (
-                          <div key={index} className="border rounded p-3 text-sm">
+                          <div key={index} className="border rounded p-3 text-sm glass">
                             <div className="flex justify-between">
-                              <span className="font-medium">{diagnosis.diseaseName}</span>
-                              <span className="text-gray-600">{diagnosis.confidence}%</span>
+                              <span className="font-medium text-enhanced">{diagnosis.diseaseName}</span>
+                              <span className="text-enhanced text-overlay">{diagnosis.confidence}%</span>
                             </div>
                           </div>
                         ))}
@@ -351,9 +351,9 @@ const DiseaseDetection: React.FC = () => {
               </Card>
 
               {/* Treatment Recommendations */}
-              <Card>
+              <Card className="glass-ultra">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2 text-enhanced">
                     <Shield className="h-5 w-5 text-blue-600" />
                     Treatment Options
                   </CardTitle>
@@ -361,43 +361,43 @@ const DiseaseDetection: React.FC = () => {
                 <CardContent>
                   <div className="space-y-4">
                     {result.treatments.slice(0, 3).map((treatment, index) => (
-                      <div key={index} className="border rounded-lg p-4">
+                      <div key={index} className="border rounded-lg p-4 glass">
                         <div className="flex justify-between items-start mb-2">
-                          <h4 className="font-semibold">{treatment.name}</h4>
-                          <Badge variant="outline" className="capitalize">
+                          <h4 className="font-semibold text-enhanced">{treatment.name}</h4>
+                          <Badge variant="outline" className="capitalize glass">
                             {treatment.type}
                           </Badge>
                         </div>
                         
                         <div className="grid grid-cols-2 gap-4 text-sm">
                           <div>
-                            <span className="text-gray-600">Dosage:</span>
-                            <p className="font-medium">{treatment.dosage}</p>
+                            <span className="text-enhanced text-overlay">Dosage:</span>
+                            <p className="font-medium text-enhanced">{treatment.dosage}</p>
                           </div>
                           <div>
-                            <span className="text-gray-600">Method:</span>
-                            <p className="font-medium">{treatment.applicationMethod}</p>
+                            <span className="text-enhanced text-overlay">Method:</span>
+                            <p className="font-medium text-enhanced">{treatment.applicationMethod}</p>
                           </div>
                           <div>
-                            <span className="text-gray-600">Frequency:</span>
-                            <p className="font-medium">{treatment.frequency}</p>
+                            <span className="text-enhanced text-overlay">Frequency:</span>
+                            <p className="font-medium text-enhanced">{treatment.frequency}</p>
                           </div>
                           <div>
-                            <span className="text-gray-600">Cost:</span>
-                            <p className="font-medium">₹{treatment.cost.min}-{treatment.cost.max}</p>
+                            <span className="text-enhanced text-overlay">Cost:</span>
+                            <p className="font-medium text-enhanced">₹{treatment.cost.min}-{treatment.cost.max}</p>
                           </div>
                         </div>
                         
                         <div className="mt-2">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm text-gray-600">Effectiveness:</span>
+                            <span className="text-sm text-enhanced text-overlay">Effectiveness:</span>
                             <Progress value={treatment.effectiveness} className="flex-1" />
-                            <span className="text-sm">{treatment.effectiveness}%</span>
+                            <span className="text-sm text-enhanced">{treatment.effectiveness}%</span>
                           </div>
                         </div>
                         
                         {treatment.notes && (
-                          <p className="text-sm text-gray-600 mt-2 italic">{treatment.notes}</p>
+                          <p className="text-sm text-enhanced text-overlay mt-2 italic">{treatment.notes}</p>
                         )}
                       </div>
                     ))}
@@ -406,10 +406,10 @@ const DiseaseDetection: React.FC = () => {
               </Card>
             </div>
           ) : (
-            <Card>
+            <Card className="glass-ultra">
               <CardContent className="p-6 text-center">
                 <Bug className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600">
+                <p className="text-enhanced text-overlay">
                   Upload and analyze an image to see disease diagnosis results
                 </p>
               </CardContent>
@@ -418,13 +418,13 @@ const DiseaseDetection: React.FC = () => {
         </TabsContent>
 
         <TabsContent value="history" className="space-y-4">
-          <Card>
+          <Card className="glass-ultra">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-enhanced">
                 <Clock className="h-5 w-5" />
                 Analysis History
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-enhanced text-overlay">
                 Your previous disease detection analyses
               </CardDescription>
             </CardHeader>
@@ -432,33 +432,33 @@ const DiseaseDetection: React.FC = () => {
               {history.length === 0 ? (
                 <div className="text-center py-8 text-gray-500">
                   <FileImage className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>No analysis history yet</p>
+                  <p className="text-enhanced text-overlay">No analysis history yet</p>
                 </div>
               ) : (
                 <div className="space-y-4">
                   {history.map((item) => (
-                    <div key={item.id} className="border rounded-lg p-4">
+                    <div key={item.id} className="border rounded-lg p-4 glass">
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2">
-                            <h4 className="font-semibold">{item.diseaseName}</h4>
-                            <Badge variant={getSeverityBadgeVariant(item.severity)}>
+                            <h4 className="font-semibold text-enhanced">{item.diseaseName}</h4>
+                            <Badge variant={getSeverityBadgeVariant(item.severity)} className="glass">
                               {item.confidence}% confidence
                             </Badge>
                           </div>
                           
-                          <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
+                          <div className="grid grid-cols-2 gap-4 text-sm text-enhanced text-overlay">
                             <div>
                               <span>Crop: </span>
-                              <span className="font-medium capitalize">{item.cropType}</span>
+                              <span className="font-medium capitalize text-enhanced">{item.cropType}</span>
                             </div>
                             <div>
                               <span>Date: </span>
-                              <span className="font-medium">{new Date(item.date).toLocaleDateString()}</span>
+                              <span className="font-medium text-enhanced">{new Date(item.date).toLocaleDateString()}</span>
                             </div>
                             <div>
                               <span>Image: </span>
-                              <span className="font-medium">{item.imageFileName}</span>
+                              <span className="font-medium text-enhanced">{item.imageFileName}</span>
                             </div>
                             <div>
                               <span>Status: </span>
@@ -470,13 +470,14 @@ const DiseaseDetection: React.FC = () => {
                         </div>
                         
                         <div className="flex gap-2">
-                          <Button size="sm" variant="outline">
+                          <Button size="sm" variant="outline" className="glass text-enhanced">
                             <Eye className="h-4 w-4" />
                           </Button>
                           <Button 
                             size="sm" 
                             variant="outline"
                             onClick={() => handleDeleteHistory(item.id)}
+                            className="glass text-enhanced"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>

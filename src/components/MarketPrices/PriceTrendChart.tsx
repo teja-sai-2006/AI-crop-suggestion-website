@@ -28,13 +28,13 @@ const PriceTrendChart: React.FC<PriceTrendChartProps> = ({
 }) => {
   if (loading) {
     return (
-      <Card>
+      <Card className="glass-medium">
         <CardHeader>
-          <CardTitle>{title}</CardTitle>
+          <CardTitle className="text-strong">{title}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="h-64 animate-pulse">
-            <div className="h-full bg-gray-200 rounded"></div>
+            <div className="h-full glass-ultra rounded"></div>
           </div>
         </CardContent>
       </Card>
@@ -43,13 +43,13 @@ const PriceTrendChart: React.FC<PriceTrendChartProps> = ({
 
   if (!data || data.length === 0) {
     return (
-      <Card>
+      <Card className="glass-medium">
         <CardHeader>
-          <CardTitle>{title}</CardTitle>
+          <CardTitle className="text-strong">{title}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="h-64 flex items-center justify-center">
-            <p className="text-gray-500">No trend data available</p>
+            <p className="text-enhanced">No trend data available</p>
           </div>
         </CardContent>
       </Card>
@@ -84,9 +84,9 @@ const PriceTrendChart: React.FC<PriceTrendChartProps> = ({
   const padding = (maxPrice - minPrice) * 0.1;
 
   return (
-    <Card>
+    <Card className="glass-medium">
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="text-strong">{title}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="h-64">
@@ -97,37 +97,40 @@ const PriceTrendChart: React.FC<PriceTrendChartProps> = ({
                 dataKey="date"
                 axisLine={false}
                 tickLine={false}
-                className="text-xs"
+                className="text-xs text-enhanced"
               />
               <YAxis
                 tickFormatter={formatYAxis}
                 axisLine={false}
                 tickLine={false}
-                className="text-xs"
+                className="text-xs text-enhanced"
                 domain={[minPrice - padding, maxPrice + padding]}
               />
               <Tooltip
                 formatter={formatTooltip}
-                labelClassName="text-sm font-medium"
+                labelClassName="text-sm font-medium text-strong"
                 contentStyle={{
-                  backgroundColor: 'white',
-                  border: '1px solid #e5e7eb',
+                  backgroundColor: 'rgba(255, 255, 255, 0.12)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
                   borderRadius: '6px',
                   fontSize: '12px',
+                  color: 'white',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
                 }}
               />
               <Line
                 type="monotone"
                 dataKey="price"
-                stroke="#16a34a"
+                stroke="#4ade80"
                 strokeWidth={2}
-                dot={{ fill: '#16a34a', strokeWidth: 2, r: 4 }}
-                activeDot={{ r: 6, stroke: '#16a34a', strokeWidth: 2 }}
+                dot={{ fill: '#4ade80', strokeWidth: 2, r: 4 }}
+                activeDot={{ r: 6, stroke: '#4ade80', strokeWidth: 2 }}
               />
             </LineChart>
           </ResponsiveContainer>
         </div>
-        <div className="mt-4 text-xs text-gray-600">
+        <div className="mt-4 text-xs text-enhanced">
           <div className="flex justify-between">
             <span>Min: ₹{minPrice.toLocaleString()}</span>
             <span>Max: ₹{maxPrice.toLocaleString()}</span>

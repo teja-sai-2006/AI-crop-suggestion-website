@@ -3,7 +3,7 @@ import DiseaseDetection from "@/components/DiseaseDetection";
 
 const DiseaseDetectionPage = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navigation />
       <div className="pt-20">
         <DiseaseDetection />

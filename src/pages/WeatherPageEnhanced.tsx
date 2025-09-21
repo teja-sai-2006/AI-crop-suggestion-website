@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 const WeatherPageEnhanced: React.FC = () => {
   return (
     <WeatherProvider>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen">
         {/* Header */}
         <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
           <div className="container mx-auto px-6 py-8">

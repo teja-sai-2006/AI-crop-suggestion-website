@@ -239,11 +239,11 @@ const ChatBot: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto p-4 lg:p-6 space-y-4 lg:space-y-6">
       <div className="text-center space-y-2">
-        <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 flex items-center justify-center gap-2">
+        <h1 className="text-2xl lg:text-3xl font-bold text-strong text-overlay flex items-center justify-center gap-2">
           <img src="/favicon.svg" alt="KrishiMitra" className="h-6 w-6 lg:h-8 lg:w-8" />
           KrishiMitra
         </h1>
-        <p className="text-base lg:text-lg text-gray-600">
+        <p className="text-base lg:text-lg text-strong text-overlay">
           Get instant farming advice with voice and text support
         </p>
       </div>
@@ -251,12 +251,12 @@ const ChatBot: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6">
         {/* Chat History Sidebar */}
         <div className="lg:col-span-1">
-          <Card>
+          <Card className="glass-ultra">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-sm font-medium">Chat History</CardTitle>
+                <CardTitle className="text-sm font-medium text-strong">Chat History</CardTitle>
                 <div className="flex gap-2">
-                  <Button size="sm" variant="outline" onClick={createNewSession}>
+                  <Button size="sm" variant="outline" onClick={createNewSession} className="glass hover:glass-medium text-enhanced">
                     <Plus className="h-4 w-4" />
                   </Button>
                   {sessions.length > 0 && (
@@ -266,6 +266,7 @@ const ChatBot: React.FC = () => {
                       onClick={clearAllHistory}
                       onBlur={() => setShowClearConfirm(false)}
                       title={showClearConfirm ? "Click again to confirm" : "Clear all chat history"}
+                      className={showClearConfirm ? "" : "glass hover:glass-medium text-enhanced"}
                     >
                       <Trash2 className="h-3 w-3" />
                       {showClearConfirm && <span className="ml-1 text-xs">Confirm?</span>}
@@ -280,34 +281,34 @@ const ChatBot: React.FC = () => {
                   {sessions.length === 0 ? (
                     <div className="text-center py-8 text-gray-500">
                       <MessageSquare className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                      <p className="text-sm">No chat history</p>
-                      <p className="text-xs text-gray-400">Start a conversation to create history</p>
+                      <p className="text-sm text-enhanced">No chat history</p>
+                      <p className="text-xs text-enhanced text-overlay">Start a conversation to create history</p>
                     </div>
                   ) : (
                     sessions.map((session) => (
                       <div 
                         key={session.id}
-                        className={`p-3 rounded-lg border cursor-pointer transition-colors ${
+                        className={`p-3 rounded-lg border cursor-pointer transition-colors glass ${
                           currentSession?.id === session.id 
-                            ? 'bg-blue-50 border-blue-200' 
-                            : 'hover:bg-gray-50'
+                            ? 'ring-2 ring-blue-400' 
+                            : 'hover:glass-medium'
                         }`}
                         onClick={() => setCurrentSession(session)}
                       >
                         <div className="flex justify-between items-start">
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium truncate">{session.title}</p>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-sm font-medium truncate text-enhanced">{session.title}</p>
+                            <p className="text-xs text-enhanced text-overlay">
                               {session.messageCount} messages
                             </p>
-                            <p className="text-xs text-gray-400">
+                            <p className="text-xs text-enhanced text-overlay">
                               {new Date(session.lastMessageAt).toLocaleDateString()}
                             </p>
                           </div>
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="h-6 w-6 p-0 hover:bg-red-50 hover:text-red-600"
+                            className="h-6 w-6 p-0 hover:bg-red-50 hover:text-red-600 glass"
                             onClick={(e) => {
                               e.stopPropagation();
                               deleteSession(session.id);
@@ -371,19 +372,19 @@ const ChatBot: React.FC = () => {
 
         {/* Main Chat Area */}
         <div className="lg:col-span-3">
-          <Card className="h-[500px] lg:h-[600px] flex flex-col">
+          <Card className="h-[500px] lg:h-[600px] flex flex-col glass-ultra">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2 text-strong">
                     <img src="/favicon.svg" alt="KrishiMitra" className="h-5 w-5" />
                     {currentSession?.title || 'KrishiMitra'}
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-enhanced text-overlay">
                     Ask me anything about farming, crops, weather, or diseases
                   </CardDescription>
                 </div>
-                <Badge variant="outline" className="flex items-center gap-1">
+                <Badge variant="outline" className="flex items-center gap-1 glass text-enhanced">
                   <Languages className="h-3 w-3" />
                   {settings.language.toUpperCase()}
                 </Badge>
@@ -400,7 +401,7 @@ const ChatBot: React.FC = () => {
                       className={`flex gap-3 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       {msg.sender === 'bot' && (
-                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-full glass flex items-center justify-center">
                           <Bot className="h-4 w-4 text-blue-600" />
                         </div>
                       )}
@@ -409,8 +410,8 @@ const ChatBot: React.FC = () => {
                         <div 
                           className={`rounded-lg p-3 ${
                             msg.sender === 'user' 
-                              ? 'bg-blue-600 text-white' 
-                              : 'bg-gray-100 text-gray-900'
+                              ? 'glass-medium text-strong' 
+                              : 'glass text-enhanced'
                           }`}
                         >
                           <p className="text-sm">{msg.content}</p>
@@ -422,12 +423,12 @@ const ChatBot: React.FC = () => {
                         </div>
                         
                         <div className="flex items-center gap-2 mt-1">
-                          <span className="text-xs text-gray-500 flex items-center gap-1">
+                          <span className="text-xs text-enhanced text-overlay flex items-center gap-1">
                             <Clock className="h-3 w-3" />
                             {formatTime(msg.timestamp)}
                           </span>
                           {msg.metadata?.topic && (
-                            <Badge variant="secondary" className="text-xs">
+                            <Badge variant="secondary" className="text-xs glass">
                               {msg.metadata.topic}
                             </Badge>
                           )}
@@ -441,7 +442,7 @@ const ChatBot: React.FC = () => {
                                 key={index}
                                 size="sm"
                                 variant="outline"
-                                className="text-xs h-6"
+                                className="text-xs h-6 glass hover:glass-medium text-enhanced"
                                 onClick={() => handleQuickReply(suggestion)}
                               >
                                 <Lightbulb className="h-3 w-3 mr-1" />
@@ -453,8 +454,8 @@ const ChatBot: React.FC = () => {
                       </div>
 
                       {msg.sender === 'user' && (
-                        <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center order-3">
-                          <User className="h-4 w-4 text-gray-600" />
+                        <div className="w-8 h-8 rounded-full glass flex items-center justify-center order-3">
+                          <User className="h-4 w-4 text-enhanced" />
                         </div>
                       )}
                     </div>
@@ -462,13 +463,13 @@ const ChatBot: React.FC = () => {
                   
                   {isLoading && (
                     <div className="flex gap-3">
-                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-full glass flex items-center justify-center">
                         <Bot className="h-4 w-4 text-blue-600" />
                       </div>
-                      <div className="bg-gray-100 rounded-lg p-3">
+                      <div className="glass rounded-lg p-3">
                         <div className="flex items-center gap-2">
                           <Loader2 className="h-4 w-4 animate-spin" />
-                          <span className="text-sm text-gray-600">Thinking...</span>
+                          <span className="text-sm text-enhanced">Thinking...</span>
                         </div>
                       </div>
                     </div>
@@ -480,15 +481,15 @@ const ChatBot: React.FC = () => {
 
               {/* Quick Replies */}
               {quickReplies.length > 0 && (
-                <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                  <p className="text-xs font-medium text-gray-600 mb-2">Quick replies:</p>
+                <div className="mt-4 p-3 glass rounded-lg">
+                  <p className="text-xs font-medium text-enhanced mb-2">Quick replies:</p>
                   <div className="flex flex-wrap gap-2">
                     {quickReplies.slice(0, 4).map((reply) => (
                       <Button
                         key={reply.id}
                         size="sm"
                         variant="outline"
-                        className="text-xs h-6"
+                        className="text-xs h-6 glass hover:glass-medium text-enhanced"
                         onClick={() => handleQuickReply(reply.text)}
                       >
                         {reply.text}
@@ -508,7 +509,7 @@ const ChatBot: React.FC = () => {
                     placeholder="Ask about crops, weather, diseases, or farming tips..."
                     onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
                     disabled={isLoading || isListening}
-                    className="pr-12"
+                    className="pr-12 glass text-strong"
                   />
                   {isListening && (
                     <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
@@ -524,6 +525,7 @@ const ChatBot: React.FC = () => {
                   onClick={() => sendMessage()}
                   disabled={!message.trim() || isLoading || isListening}
                   size="sm"
+                  className="glass hover:glass-medium text-enhanced"
                 >
                   <Send className="h-4 w-4" />
                 </Button>
@@ -534,6 +536,7 @@ const ChatBot: React.FC = () => {
                     disabled={isLoading || isListening}
                     size="sm"
                     variant={isListening ? "destructive" : "outline"}
+                    className={isListening ? "" : "glass hover:glass-medium text-enhanced"}
                   >
                     {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
                   </Button>
@@ -541,8 +544,8 @@ const ChatBot: React.FC = () => {
               </div>
 
               {error && (
-                <Alert variant="destructive" className="mt-2">
-                  <AlertDescription>{error}</AlertDescription>
+                <Alert variant="destructive" className="mt-2 glass-ultra">
+                  <AlertDescription className="text-enhanced">{error}</AlertDescription>
                 </Alert>
               )}
             </CardContent>

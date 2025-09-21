@@ -96,15 +96,15 @@ const FarmRecords: React.FC = () => {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Farm Records</h1>
-            <p className="text-gray-600">Track your farming activities, expenses, and yields</p>
+            <h1 className="text-3xl font-bold text-strong">Farm Records</h1>
+            <p className="text-enhanced text-overlay">Track your farming activities, expenses, and yields</p>
           </div>
           
           <div className="flex gap-2">
             <Button
               onClick={() => handleAddRecord('activity')}
               variant="outline"
-              className="hidden sm:flex"
+              className="hidden sm:flex glass hover:glass-medium text-enhanced border-white/20"
             >
               <Plus className="h-4 w-4 mr-2" />
               Add Activity
@@ -112,14 +112,14 @@ const FarmRecords: React.FC = () => {
             <Button
               onClick={() => handleAddRecord('expense')}
               variant="outline"
-              className="hidden sm:flex"
+              className="hidden sm:flex glass hover:glass-medium text-enhanced border-white/20"
             >
               <Plus className="h-4 w-4 mr-2" />
               Add Expense
             </Button>
             <Button
               onClick={() => handleAddRecord('yield')}
-              className="hidden sm:flex"
+              className="hidden sm:flex glass hover:glass-medium text-enhanced border-white/20"
             >
               <Plus className="h-4 w-4 mr-2" />
               Add Yield
@@ -127,7 +127,7 @@ const FarmRecords: React.FC = () => {
             
             {/* Mobile Add Button */}
             <div className="sm:hidden">
-              <Button onClick={() => handleAddRecord('activity')}>
+              <Button onClick={() => handleAddRecord('activity')} className="glass hover:glass-medium text-enhanced">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Record
               </Button>
@@ -138,49 +138,49 @@ const FarmRecords: React.FC = () => {
         {/* Quick Stats */}
         {summary && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <Card className="border-green-200 bg-green-50">
+            <Card className="glass-ultra">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2">
-                  <Activity className="h-5 w-5 text-green-600" />
+                  <Activity className="h-5 w-5 text-green-400" />
                   <div>
-                    <p className="text-sm text-green-700">Activities</p>
-                    <p className="text-2xl font-bold text-green-900">{summary.totalActivities}</p>
+                    <p className="text-sm text-enhanced text-overlay">Activities</p>
+                    <p className="text-2xl font-bold text-strong">{summary.totalActivities}</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
             
-            <Card className="border-red-200 bg-red-50">
+            <Card className="glass-ultra">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2">
-                  <DollarSign className="h-5 w-5 text-red-600" />
+                  <DollarSign className="h-5 w-5 text-red-400" />
                   <div>
-                    <p className="text-sm text-red-700">Expenses</p>
-                    <p className="text-2xl font-bold text-red-900">₹{summary.totalExpenseAmount.toLocaleString()}</p>
+                    <p className="text-sm text-enhanced text-overlay">Expenses</p>
+                    <p className="text-2xl font-bold text-strong">₹{summary.totalExpenseAmount.toLocaleString()}</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
             
-            <Card className="border-blue-200 bg-blue-50">
+            <Card className="glass-ultra">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-blue-600" />
+                  <TrendingUp className="h-5 w-5 text-blue-400" />
                   <div>
-                    <p className="text-sm text-blue-700">Yield Value</p>
-                    <p className="text-2xl font-bold text-blue-900">₹{summary.totalYieldValue.toLocaleString()}</p>
+                    <p className="text-sm text-enhanced text-overlay">Yield Value</p>
+                    <p className="text-2xl font-bold text-strong">₹{summary.totalYieldValue.toLocaleString()}</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
             
-            <Card className={`border-${summary.netProfit >= 0 ? 'green' : 'red'}-200 bg-${summary.netProfit >= 0 ? 'green' : 'red'}-50`}>
+            <Card className="glass-ultra">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2">
-                  <TrendingUp className={`h-5 w-5 text-${summary.netProfit >= 0 ? 'green' : 'red'}-600`} />
+                  <TrendingUp className={`h-5 w-5 ${summary.netProfit >= 0 ? 'text-green-400' : 'text-red-400'}`} />
                   <div>
-                    <p className={`text-sm text-${summary.netProfit >= 0 ? 'green' : 'red'}-700`}>Net Profit</p>
-                    <p className={`text-2xl font-bold text-${summary.netProfit >= 0 ? 'green' : 'red'}-900`}>
+                    <p className={`text-sm text-enhanced text-overlay`}>Net Profit</p>
+                    <p className={`text-2xl font-bold text-strong ${summary.netProfit >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                       ₹{Math.abs(summary.netProfit).toLocaleString()}
                     </p>
                   </div>
@@ -193,32 +193,32 @@ const FarmRecords: React.FC = () => {
 
       {/* Main Content */}
       <Tabs value={activeTab} onValueChange={(value: any) => setActiveTab(value)}>
-        <TabsList className="grid w-full grid-cols-4 mb-8">
-          <TabsTrigger value="overview" className="flex items-center gap-2">
+        <TabsList className="grid w-full grid-cols-4 mb-8 glass-medium">
+          <TabsTrigger value="overview" className="flex items-center gap-2 text-enhanced">
             {getTabIcon('overview')}
             <span className="hidden sm:inline">Overview</span>
-            <Badge variant="secondary" className="ml-1">
+            <Badge variant="secondary" className="ml-1 glass">
               {getTabBadge('overview')}
             </Badge>
           </TabsTrigger>
-          <TabsTrigger value="activities" className="flex items-center gap-2">
+          <TabsTrigger value="activities" className="flex items-center gap-2 text-enhanced">
             {getTabIcon('activities')}
             <span className="hidden sm:inline">Activities</span>
-            <Badge variant="secondary" className="ml-1">
+            <Badge variant="secondary" className="ml-1 glass">
               {getTabBadge('activities')}
             </Badge>
           </TabsTrigger>
-          <TabsTrigger value="expenses" className="flex items-center gap-2">
+          <TabsTrigger value="expenses" className="flex items-center gap-2 text-enhanced">
             {getTabIcon('expenses')}
             <span className="hidden sm:inline">Expenses</span>
-            <Badge variant="secondary" className="ml-1">
+            <Badge variant="secondary" className="ml-1 glass">
               {getTabBadge('expenses')}
             </Badge>
           </TabsTrigger>
-          <TabsTrigger value="yields" className="flex items-center gap-2">
+          <TabsTrigger value="yields" className="flex items-center gap-2 text-enhanced">
             {getTabIcon('yields')}
             <span className="hidden sm:inline">Yields</span>
-            <Badge variant="secondary" className="ml-1">
+            <Badge variant="secondary" className="ml-1 glass">
               {getTabBadge('yields')}
             </Badge>
           </TabsTrigger>

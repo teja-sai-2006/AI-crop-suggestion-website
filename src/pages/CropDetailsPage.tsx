@@ -240,7 +240,7 @@ export const CropDetailsPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen">
         <Navigation />
         <div className="container mx-auto px-6 py-8 pt-20">
           <div className="flex items-center justify-center h-64">
@@ -256,7 +256,7 @@ export const CropDetailsPage: React.FC = () => {
 
   if (!crop) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen">
         <Navigation />
         <div className="container mx-auto px-6 py-8 pt-20">
           <div className="text-center">
@@ -272,11 +272,11 @@ export const CropDetailsPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navigation />
       
       {/* Header */}
-      <header className="bg-gradient-harvest text-foreground shadow-card mt-16">
+      <header className="glass-medium text-strong shadow-card mt-16">
         <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -284,7 +284,7 @@ export const CropDetailsPage: React.FC = () => {
                 variant="outline" 
                 size="sm" 
                 onClick={() => navigate('/tracker')}
-                className="bg-background/10 hover:bg-background/20"
+                className="glass-medium hover:glass text-enhanced border-white/20"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back

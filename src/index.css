@@ -138,6 +138,148 @@ All colors MUST be HSL for consistency and theming support.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    /* Background with rotating images */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    animation: backgroundRotateExpanded 120s infinite;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Enhanced background rotation animation with available images */
+  @keyframes backgroundRotateExpanded {
+    0%, 8% {
+      background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+        url('/src/assets/backgrounds/hero-farmland.jpg');
+    }
+    9%, 16% {
+      background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+        url('/src/assets/backgrounds/farm-field-sunset.jpg');
+    }
+    17%, 24% {
+      background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+        url('/src/assets/backgrounds/wheat-field.jpg');
+    }
+    25%, 32% {
+      background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+        url('/src/assets/backgrounds/rolling-hills.jpg');
+    }
+    33%, 40% {
+      background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+        url('/src/assets/backgrounds/sunflower-field.jpg');
+    }
+    41%, 48% {
+      background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+        url('/src/assets/backgrounds/mountain-valley.jpg');
+    }
+    49%, 56% {
+      background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+        url('/src/assets/backgrounds/corn-field.jpg');
+    }
+    57%, 64% {
+      background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+        url('/src/assets/backgrounds/barley-field.jpg');
+    }
+    65%, 72% {
+      background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+        url('/src/assets/backgrounds/tea-plantation.jpg');
+    }
+    73%, 80% {
+      background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+        url('/src/assets/backgrounds/vineyard.jpg');
+    }
+    81%, 88% {
+      background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+        url('/src/assets/backgrounds/cool-farming-ybreiif7eiumpdky.jpg');
+    }
+    89%, 100% {
+      background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+        url('/src/assets/backgrounds/nature-landscape.jpg');
+    }
+  }
+
+  /* Enhanced Glassmorphism utility for maximum transparency */
+  .glass {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+    backdrop-filter: blur(10px) saturate(1.1);
+    -webkit-backdrop-filter: blur(10px) saturate(1.1);
+    border-radius: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  /* For dark mode glass - even more transparent */
+  .dark .glass {
+    background: rgba(30, 41, 59, 0.12);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* Ultra transparent glass for main containers */
+  .glass-ultra {
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+    backdrop-filter: blur(8px) saturate(1.05);
+    -webkit-backdrop-filter: blur(8px) saturate(1.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Medium transparency glass for modals and important elements */
+  .glass-medium {
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    backdrop-filter: blur(12px) saturate(1.15);
+    -webkit-backdrop-filter: blur(12px) saturate(1.15);
+    border-radius: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Text enhancement for better readability over images */
+  .text-enhanced {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 
+                 0 1px 4px rgba(0, 0, 0, 0.6),
+                 0 0 2px rgba(255, 255, 255, 0.3);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    filter: contrast(1.2);
+  }
+
+  /* Strong background overlay for critical text areas */
+  .text-overlay {
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.25) 100%
+    );
+    backdrop-filter: blur(8px);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  /* High contrast text for forms and inputs */
+  .text-strong {
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.9), 
+                 0 1px 6px rgba(0, 0, 0, 0.7),
+                 0 0 3px rgba(255, 255, 255, 0.4);
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.98);
+    filter: contrast(1.3);
   }
 }

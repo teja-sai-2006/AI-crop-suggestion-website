@@ -106,34 +106,34 @@ export const WeatherWidget = () => {
   // If no location is selected, show the select location prompt
   if (!isLocationSet) {
     return (
-      <Card className="shadow-card hover:shadow-glow transition-all duration-300">
+      <Card className="glass-ultra shadow-card hover:shadow-glow transition-all duration-300">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center justify-between">
-            <span className="text-lg">Weather Forecast</span>
-            <Badge variant="outline" className="text-muted-foreground">
+            <span className="text-lg text-enhanced">Weather Forecast</span>
+            <Badge variant="outline" className="text-muted-foreground glass">
               📍 No location set
             </Badge>
           </CardTitle>
         </CardHeader>
         
         <CardContent className="space-y-4">
-          <div className="bg-gradient-sky rounded-lg p-6 text-white text-center">
+          <div className="glass rounded-lg p-6 text-white text-center">
             <MapPin className="h-12 w-12 mx-auto mb-3 opacity-80" />
-            <h3 className="text-lg font-semibold mb-2">Select Your Location</h3>
-            <p className="text-sm opacity-90 mb-4">
+            <h3 className="text-lg font-semibold mb-2 text-enhanced">Select Your Location</h3>
+            <p className="text-sm opacity-90 mb-4 text-enhanced">
               Choose your location to get accurate weather forecasts
             </p>
             <Button 
               variant="secondary" 
               onClick={() => setIsLocationSelectorOpen(true)}
-              className="bg-white/20 hover:bg-white/30 border-white/30"
+              className="glass text-enhanced border-white/30"
             >
               <MapPin className="h-4 w-4 mr-2" />
               Select Location
             </Button>
           </div>
           
-          <div className="text-xs text-muted-foreground text-center pt-2 border-t">
+          <div className="text-xs text-muted-foreground text-center pt-2 border-t text-enhanced">
             Set your location to view weather data
           </div>
         </CardContent>
@@ -225,12 +225,12 @@ export const WeatherWidget = () => {
   
   // Return normal weather widget with data
   return (
-    <Card className="shadow-card hover:shadow-glow transition-all duration-300 cursor-pointer" onClick={() => navigate('/weather')}>
+    <Card className="glass-ultra shadow-card hover:shadow-glow transition-all duration-300 cursor-pointer" onClick={() => navigate('/weather')}>
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center justify-between">
-          <span className="text-lg">Weather Forecast</span>
+          <span className="text-lg text-enhanced">Weather Forecast</span>
           <div className="flex items-center gap-2">
-            <Badge variant="outline" className="text-muted-foreground">
+            <Badge variant="outline" className="text-muted-foreground glass">
               📍 {weatherData.current.location}
             </Badge>
             <Button 
@@ -240,7 +240,7 @@ export const WeatherWidget = () => {
                 e.stopPropagation();
                 setIsLocationSelectorOpen(true);
               }}
-              className="h-6 w-6 p-0 text-muted-foreground hover:text-foreground"
+              className="h-6 w-6 p-0 text-muted-foreground hover:text-foreground glass"
               title="Change Location"
             >
               <MapPin className="h-3 w-3" />
@@ -251,21 +251,21 @@ export const WeatherWidget = () => {
       
       <CardContent className="space-y-4">
         {/* Current Weather */}
-        <div className="bg-gradient-sky rounded-lg p-4 text-white">
+        <div className="glass rounded-lg p-4 text-white">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <WeatherIcon condition={weatherData.current.condition} size="h-8 w-8" />
               <div>
-                <div className="text-2xl font-bold">{weatherData.current.temperature}°C</div>
-                <div className="text-sm opacity-90">{weatherData.current.description}</div>
+                <div className="text-2xl font-bold text-enhanced">{weatherData.current.temperature}°C</div>
+                <div className="text-sm opacity-90 text-enhanced">{weatherData.current.description}</div>
               </div>
             </div>
             <div className="text-right space-y-1">
-              <div className="flex items-center space-x-1 text-sm">
+              <div className="flex items-center space-x-1 text-sm text-enhanced">
                 <Droplets className="h-3 w-3" />
                 <span>{weatherData.current.humidity}%</span>
               </div>
-              <div className="flex items-center space-x-1 text-sm">
+              <div className="flex items-center space-x-1 text-sm text-enhanced">
                 <Wind className="h-3 w-3" />
                 <span>{weatherData.current.windSpeed} km/h</span>
               </div>
@@ -276,19 +276,19 @@ export const WeatherWidget = () => {
         {/* 4-Day Forecast */}
         <div className="grid grid-cols-4 gap-2">
           {weatherData.forecast.map((day, index) => (
-            <div key={index} className="text-center p-2 rounded-md bg-muted/50">
-              <div className="text-xs font-medium text-muted-foreground mb-1">{day.day}</div>
+            <div key={index} className="text-center p-2 rounded-md glass">
+              <div className="text-xs font-medium text-muted-foreground mb-1 text-enhanced">{day.day}</div>
               <WeatherIcon condition={day.condition} size="h-5 w-5 mx-auto mb-1" />
-              <div className="text-sm font-semibold">{day.high}°</div>
-              <div className="text-xs text-muted-foreground">{day.low}°</div>
+              <div className="text-sm font-semibold text-enhanced">{day.high}°</div>
+              <div className="text-xs text-muted-foreground text-enhanced">{day.low}°</div>
               {day.rain > 0 && (
-                <div className="text-xs text-weather-rainy mt-1">{day.rain}%</div>
+                <div className="text-xs text-weather-rainy mt-1 text-enhanced">{day.rain}%</div>
               )}
             </div>
           ))}
         </div>
 
-        <div className="text-xs text-muted-foreground text-center pt-2 border-t">
+        <div className="text-xs text-muted-foreground text-center pt-2 border-t text-enhanced">
           {isRefreshing ? (
             <span className="inline-flex items-center">
               <span className="animate-spin inline-block w-3 h-3 border border-muted-foreground border-t-transparent rounded-full mr-1"></span>

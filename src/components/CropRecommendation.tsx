@@ -190,21 +190,21 @@ const CropRecommendation: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto p-6 space-y-6">
       <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold text-gray-900 flex items-center justify-center gap-2">
+        <h1 className="text-3xl font-bold text-enhanced flex items-center justify-center gap-2 text-overlay">
           <Sprout className="h-8 w-8 text-green-600" />
           Crop Recommendation System
         </h1>
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-enhanced text-overlay">
           Get AI-powered crop suggestions based on your soil and climate parameters
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Input Form */}
-        <Card>
+        <Card className="glass-ultra">
           <CardHeader>
-            <CardTitle>Soil & Climate Parameters</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-enhanced">Soil & Climate Parameters</CardTitle>
+            <CardDescription className="text-enhanced">
               Enter your soil test results and climate information to get personalized crop recommendations
             </CardDescription>
           </CardHeader>
@@ -212,10 +212,10 @@ const CropRecommendation: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Soil Parameters */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-gray-800">Soil Parameters</h3>
+                <h3 className="text-lg font-semibold text-enhanced">Soil Parameters</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="ph">pH Level</Label>
+                    <Label htmlFor="ph" className="text-enhanced">pH Level</Label>
                     <Input
                       id="ph"
                       type="number"
@@ -225,10 +225,11 @@ const CropRecommendation: React.FC = () => {
                       value={formData.soil.ph}
                       onChange={(e) => handleInputChange('soil', 'ph', e.target.value)}
                       placeholder="6.5"
+                      className="glass text-enhanced"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="nitrogen">Nitrogen (kg/ha)</Label>
+                    <Label htmlFor="nitrogen" className="text-enhanced">Nitrogen (kg/ha)</Label>
                     <Input
                       id="nitrogen"
                       type="number"
@@ -237,10 +238,11 @@ const CropRecommendation: React.FC = () => {
                       value={formData.soil.nitrogen}
                       onChange={(e) => handleInputChange('soil', 'nitrogen', e.target.value)}
                       placeholder="50"
+                      className="glass text-enhanced"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="phosphorus">Phosphorus (kg/ha)</Label>
+                    <Label htmlFor="phosphorus" className="text-enhanced">Phosphorus (kg/ha)</Label>
                     <Input
                       id="phosphorus"
                       type="number"
@@ -249,10 +251,11 @@ const CropRecommendation: React.FC = () => {
                       value={formData.soil.phosphorus}
                       onChange={(e) => handleInputChange('soil', 'phosphorus', e.target.value)}
                       placeholder="30"
+                      className="glass text-enhanced"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="potassium">Potassium (kg/ha)</Label>
+                    <Label htmlFor="potassium" className="text-enhanced">Potassium (kg/ha)</Label>
                     <Input
                       id="potassium"
                       type="number"
@@ -261,6 +264,7 @@ const CropRecommendation: React.FC = () => {
                       value={formData.soil.potassium}
                       onChange={(e) => handleInputChange('soil', 'potassium', e.target.value)}
                       placeholder="40"
+                      className="glass text-enhanced"
                     />
                   </div>
                 </div>
@@ -268,10 +272,10 @@ const CropRecommendation: React.FC = () => {
 
               {/* Climate Parameters */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-gray-800">Climate Information</h3>
+                <h3 className="text-lg font-semibold text-enhanced">Climate Information</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="temperature">Average Temperature (°C)</Label>
+                    <Label htmlFor="temperature" className="text-enhanced">Average Temperature (°C)</Label>
                     <Input
                       id="temperature"
                       type="number"
@@ -280,10 +284,11 @@ const CropRecommendation: React.FC = () => {
                       value={formData.climate.temperature}
                       onChange={(e) => handleInputChange('climate', 'temperature', e.target.value)}
                       placeholder="25"
+                      className="glass text-enhanced"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="rainfall">Annual Rainfall (mm)</Label>
+                    <Label htmlFor="rainfall" className="text-enhanced">Annual Rainfall (mm)</Label>
                     <Input
                       id="rainfall"
                       type="number"
@@ -292,10 +297,11 @@ const CropRecommendation: React.FC = () => {
                       value={formData.climate.rainfall}
                       onChange={(e) => handleInputChange('climate', 'rainfall', e.target.value)}
                       placeholder="800"
+                      className="glass text-enhanced"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="humidity">Humidity (%)</Label>
+                    <Label htmlFor="humidity" className="text-enhanced">Humidity (%)</Label>
                     <Input
                       id="humidity"
                       type="number"
@@ -304,18 +310,19 @@ const CropRecommendation: React.FC = () => {
                       value={formData.climate.humidity}
                       onChange={(e) => handleInputChange('climate', 'humidity', e.target.value)}
                       placeholder="65"
+                      className="glass text-enhanced"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="season">Season</Label>
+                    <Label htmlFor="season" className="text-enhanced">Season</Label>
                     <Select
                       value={formData.season || 'kharif'}
                       onValueChange={(value) => handleGeneralInputChange('season', value)}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="glass text-enhanced">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="glass">
                         <SelectItem value="kharif">Kharif (Monsoon)</SelectItem>
                         <SelectItem value="rabi">Rabi (Winter)</SelectItem>
                         <SelectItem value="zaid">Zaid (Summer)</SelectItem>
@@ -327,15 +334,15 @@ const CropRecommendation: React.FC = () => {
 
               {/* Farm Details */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-gray-800">Farm Details</h3>
+                <h3 className="text-lg font-semibold text-enhanced">Farm Details</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="location">Location</Label>
+                    <Label htmlFor="location" className="text-enhanced">Location</Label>
                     <Select onValueChange={handleLocationChange} defaultValue="mumbai">
-                      <SelectTrigger>
+                      <SelectTrigger className="glass text-enhanced">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="glass">
                         <SelectItem value="mumbai">Mumbai, Maharashtra</SelectItem>
                         <SelectItem value="delhi">Delhi, Delhi</SelectItem>
                         <SelectItem value="bangalore">Bangalore, Karnataka</SelectItem>
@@ -346,7 +353,7 @@ const CropRecommendation: React.FC = () => {
                     </Select>
                   </div>
                   <div>
-                    <Label htmlFor="farmSize">Farm Size (acres)</Label>
+                    <Label htmlFor="farmSize" className="text-enhanced">Farm Size (acres)</Label>
                     <Input
                       id="farmSize"
                       type="number"
@@ -356,18 +363,19 @@ const CropRecommendation: React.FC = () => {
                       value={formData.farmSize}
                       onChange={(e) => handleGeneralInputChange('farmSize', parseFloat(e.target.value) || 0)}
                       placeholder="2.0"
+                      className="glass text-enhanced"
                     />
                   </div>
                   <div className="col-span-2">
-                    <Label htmlFor="experience">Experience Level</Label>
+                    <Label htmlFor="experience" className="text-enhanced">Experience Level</Label>
                     <Select
                       value={formData.experience}
                       onValueChange={(value) => handleGeneralInputChange('experience', value)}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="glass text-enhanced">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="glass">
                         <SelectItem value="beginner">Beginner (0-2 years)</SelectItem>
                         <SelectItem value="intermediate">Intermediate (3-10 years)</SelectItem>
                         <SelectItem value="expert">Expert (10+ years)</SelectItem>
@@ -394,45 +402,45 @@ const CropRecommendation: React.FC = () => {
         {/* Results Section */}
         <div className="space-y-6">
           {error && (
-            <Alert variant="destructive">
+            <Alert variant="destructive" className="glass-ultra">
               <AlertTriangle className="h-4 w-4" />
-              <AlertDescription>{error}</AlertDescription>
+              <AlertDescription className="text-enhanced">{error}</AlertDescription>
             </Alert>
           )}
 
           {result && (
             <Tabs defaultValue="recommendations" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="recommendations">Crops</TabsTrigger>
-                <TabsTrigger value="analysis">Analysis</TabsTrigger>
-                <TabsTrigger value="warnings">Warnings</TabsTrigger>
-                <TabsTrigger value="tips">Tips</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-4 glass">
+                <TabsTrigger value="recommendations" className="text-enhanced">Crops</TabsTrigger>
+                <TabsTrigger value="analysis" className="text-enhanced">Analysis</TabsTrigger>
+                <TabsTrigger value="warnings" className="text-enhanced">Warnings</TabsTrigger>
+                <TabsTrigger value="tips" className="text-enhanced">Tips</TabsTrigger>
               </TabsList>
 
               <TabsContent value="recommendations" className="space-y-4">
-                <Card>
+                <Card className="glass-ultra">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
+                    <CardTitle className="flex items-center gap-2 text-enhanced">
                       <Sprout className="h-5 w-5" />
                       Recommended Crops
                     </CardTitle>
-                    <CardDescription>
+                    <CardDescription className="text-enhanced">
                       Based on your soil and climate parameters (Confidence: {result.confidence}%)
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
                       {result.recommendations.slice(0, 3).map((crop, index) => (
-                        <Card key={crop.variety} className={`cursor-pointer transition-all ${
+                        <Card key={crop.variety} className={`cursor-pointer transition-all glass ${
                           selectedCrop?.variety === crop.variety ? 'ring-2 ring-blue-500' : ''
                         }`} onClick={() => setSelectedCrop(crop)}>
                           <CardContent className="p-4">
                             <div className="flex justify-between items-start mb-2">
                               <div>
-                                <h4 className="font-semibold text-lg">{crop.variety}</h4>
-                                <p className="text-sm text-gray-600">{crop.name}</p>
+                                <h4 className="font-semibold text-lg text-enhanced">{crop.variety}</h4>
+                                <p className="text-sm text-enhanced text-overlay">{crop.name}</p>
                               </div>
-                              <Badge variant={getConfidenceBadgeVariant(crop.confidence)}>
+                              <Badge variant={getConfidenceBadgeVariant(crop.confidence)} className="glass">
                                 {crop.confidence}% match
                               </Badge>
                             </div>
@@ -440,24 +448,24 @@ const CropRecommendation: React.FC = () => {
                             <div className="grid grid-cols-2 gap-4 text-sm">
                               <div className="flex items-center gap-2">
                                 <Calendar className="h-4 w-4 text-gray-500" />
-                                <span>{crop.growthDuration.min}-{crop.growthDuration.max} {crop.growthDuration.unit}</span>
+                                <span className="text-enhanced">{crop.growthDuration.min}-{crop.growthDuration.max} {crop.growthDuration.unit}</span>
                               </div>
                               <div className="flex items-center gap-2">
                                 <TrendingUp className="h-4 w-4 text-green-600" />
-                                <span>{crop.profitability.roi}% ROI</span>
+                                <span className="text-enhanced">{crop.profitability.roi}% ROI</span>
                               </div>
                               <div className="flex items-center gap-2">
                                 <Droplets className="h-4 w-4 text-blue-500" />
-                                <span>{crop.season} season</span>
+                                <span className="text-enhanced">{crop.season} season</span>
                               </div>
                               <div className="flex items-center gap-2">
-                                <span className="text-green-600">₹{crop.profitability.profit.toLocaleString()}</span>
-                                <span className="text-sm text-gray-500">expected profit</span>
+                                <span className="text-green-600 font-medium">₹{crop.profitability.profit.toLocaleString()}</span>
+                                <span className="text-sm text-enhanced text-overlay">expected profit</span>
                               </div>
                             </div>
 
                             {index === 0 && (
-                              <Badge variant="secondary" className="mt-2">
+                              <Badge variant="secondary" className="mt-2 glass">
                                 Top Recommendation
                               </Badge>
                             )}
@@ -507,53 +515,53 @@ const CropRecommendation: React.FC = () => {
                 </Card>
 
                 {selectedCrop && (
-                  <Card>
+                  <Card className="glass-ultra">
                     <CardHeader>
-                      <CardTitle>{selectedCrop.variety} - Detailed Information</CardTitle>
+                      <CardTitle className="text-enhanced">{selectedCrop.variety} - Detailed Information</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-4">
                         <div>
-                          <h5 className="font-semibold mb-2">Crop Analysis</h5>
+                          <h5 className="font-semibold mb-2 text-enhanced">Crop Analysis</h5>
                           <div className="space-y-2">
                             <div className="flex justify-between items-center">
-                              <span>Confidence</span>
+                              <span className="text-enhanced">Confidence</span>
                               <div className="flex items-center gap-2">
                                 <Progress value={selectedCrop.confidence} className="w-20" />
-                                <span className="text-sm">{selectedCrop.confidence}%</span>
+                                <span className="text-sm text-enhanced">{selectedCrop.confidence}%</span>
                               </div>
                             </div>
                             <div className="flex justify-between items-center">
-                              <span>Suitability</span>
-                              <span className="capitalize font-semibold">{selectedCrop.suitability}</span>
+                              <span className="text-enhanced">Suitability</span>
+                              <span className="capitalize font-semibold text-enhanced">{selectedCrop.suitability}</span>
                             </div>
                           </div>
                         </div>
 
                         <div>
-                          <h5 className="font-semibold mb-2">Market Information</h5>
+                          <h5 className="font-semibold mb-2 text-enhanced">Market Information</h5>
                           <div className="grid grid-cols-2 gap-4 text-sm">
                             <div>
-                              <span className="text-gray-600">Price Range:</span>
-                              <span className="ml-2 font-semibold">₹{selectedCrop.marketPrice.min}-{selectedCrop.marketPrice.max}/{selectedCrop.marketPrice.currency}</span>
+                              <span className="text-enhanced text-overlay">Price Range:</span>
+                              <span className="ml-2 font-semibold text-enhanced">₹{selectedCrop.marketPrice.min}-{selectedCrop.marketPrice.max}/{selectedCrop.marketPrice.currency}</span>
                             </div>
                             <div>
-                              <span className="text-gray-600">Expected Yield:</span>
-                              <span className="ml-2 font-semibold">{selectedCrop.expectedYield.value} {selectedCrop.expectedYield.unit}</span>
+                              <span className="text-enhanced text-overlay">Expected Yield:</span>
+                              <span className="ml-2 font-semibold text-enhanced">{selectedCrop.expectedYield.value} {selectedCrop.expectedYield.unit}</span>
                             </div>
                           </div>
                         </div>
 
                         <div>
-                          <h5 className="font-semibold mb-2">Growing Information</h5>
+                          <h5 className="font-semibold mb-2 text-enhanced">Growing Information</h5>
                           <div className="grid grid-cols-2 gap-4 text-sm">
                             <div>
-                              <span className="text-gray-600">Season:</span>
-                              <span className="ml-2 capitalize">{selectedCrop.season}</span>
+                              <span className="text-enhanced text-overlay">Season:</span>
+                              <span className="ml-2 capitalize text-enhanced">{selectedCrop.season}</span>
                             </div>
                             <div>
-                              <span className="text-gray-600">Growth Duration:</span>
-                              <span className="ml-2">{selectedCrop.growthDuration.min}-{selectedCrop.growthDuration.max} {selectedCrop.growthDuration.unit}</span>
+                              <span className="text-enhanced text-overlay">Growth Duration:</span>
+                              <span className="ml-2 text-enhanced">{selectedCrop.growthDuration.min}-{selectedCrop.growthDuration.max} {selectedCrop.growthDuration.unit}</span>
                             </div>
                           </div>
                         </div>
@@ -599,17 +607,17 @@ const CropRecommendation: React.FC = () => {
               </TabsContent>
 
               <TabsContent value="analysis">
-                <Card>
+                <Card className="glass-ultra">
                   <CardHeader>
-                    <CardTitle>Suitability Analysis</CardTitle>
+                    <CardTitle className="text-enhanced">Suitability Analysis</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
                       {Object.entries(result.factors).map(([factor, score]) => (
                         <div key={factor} className="space-y-2">
                           <div className="flex justify-between">
-                            <span className="capitalize font-medium">{factor}</span>
-                            <span className={`font-semibold ${getConfidenceColor(score as number)}`}>
+                            <span className="capitalize font-medium text-enhanced">{factor}</span>
+                            <span className={`font-semibold ${getConfidenceColor(score as number)} text-enhanced`}>
                               {score}%
                             </span>
                           </div>
@@ -622,9 +630,9 @@ const CropRecommendation: React.FC = () => {
               </TabsContent>
 
               <TabsContent value="warnings">
-                <Card>
+                <Card className="glass-ultra">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
+                    <CardTitle className="flex items-center gap-2 text-enhanced">
                       <AlertTriangle className="h-5 w-5 text-orange-500" />
                       Important Warnings
                     </CardTitle>
@@ -632,9 +640,9 @@ const CropRecommendation: React.FC = () => {
                   <CardContent>
                     <div className="space-y-3">
                       {result.warnings.map((warning, index) => (
-                        <Alert key={index}>
+                        <Alert key={index} className="glass">
                           <AlertTriangle className="h-4 w-4" />
-                          <AlertDescription>{warning}</AlertDescription>
+                          <AlertDescription className="text-enhanced">{warning}</AlertDescription>
                         </Alert>
                       ))}
                     </div>
@@ -643,9 +651,9 @@ const CropRecommendation: React.FC = () => {
               </TabsContent>
 
               <TabsContent value="tips">
-                <Card>
+                <Card className="glass-ultra">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
+                    <CardTitle className="flex items-center gap-2 text-enhanced">
                       <Lightbulb className="h-5 w-5 text-yellow-500" />
                       Farming Tips & Next Steps
                     </CardTitle>
@@ -653,24 +661,24 @@ const CropRecommendation: React.FC = () => {
                   <CardContent>
                     <div className="space-y-6">
                       <div>
-                        <h5 className="font-semibold mb-3">General Tips</h5>
+                        <h5 className="font-semibold mb-3 text-enhanced">General Tips</h5>
                         <div className="space-y-2">
                           {result.tips.map((tip, index) => (
                             <div key={index} className="flex items-start gap-2">
                               <Lightbulb className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
-                              <span className="text-sm">{tip}</span>
+                              <span className="text-sm text-enhanced">{tip}</span>
                             </div>
                           ))}
                         </div>
                       </div>
 
                       <div>
-                        <h5 className="font-semibold mb-3">Next Steps</h5>
+                        <h5 className="font-semibold mb-3 text-enhanced">Next Steps</h5>
                         <div className="space-y-2">
                           {result.nextSteps.map((step, index) => (
                             <div key={index} className="flex items-start gap-2">
                               <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                              <span className="text-sm">{step}</span>
+                              <span className="text-sm text-enhanced">{step}</span>
                             </div>
                           ))}
                         </div>
@@ -683,10 +691,10 @@ const CropRecommendation: React.FC = () => {
           )}
 
           {!result && !isLoading && (
-            <Card>
+            <Card className="glass-ultra">
               <CardContent className="p-6 text-center">
                 <Sprout className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600">
+                <p className="text-enhanced text-overlay">
                   Fill in your soil and climate parameters to get personalized crop recommendations
                 </p>
               </CardContent>

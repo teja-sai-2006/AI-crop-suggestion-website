@@ -228,18 +228,18 @@ const CropTrackerPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navigation />
       
       {/* Header */}
-      <header className="bg-gradient-harvest text-foreground shadow-card mt-16">
+      <header className="glass-ultra shadow-card mt-16">
         <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <TrendingUp className="text-3xl" />
+              <TrendingUp className="text-3xl text-enhanced" />
               <div>
-                <h1 className="text-3xl font-bold">Crop Tracker</h1>
-                <p className="text-muted-foreground">Monitor your crops from seed to harvest</p>
+                <h1 className="text-3xl font-bold text-enhanced text-overlay">Crop Tracker</h1>
+                <p className="text-enhanced text-overlay">Monitor your crops from seed to harvest</p>
               </div>
             </div>
             <div className="flex gap-3">
@@ -247,12 +247,12 @@ const CropTrackerPage = () => {
                 variant="outline" 
                 onClick={handleRefresh}
                 disabled={refreshing || loading}
-                className="bg-background hover:bg-muted"
+                className="glass hover:glass-medium text-enhanced"
               >
                 <RefreshCw className={`h-4 w-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
                 {refreshing ? 'Refreshing...' : 'Refresh'}
               </Button>
-              <Button className="bg-primary hover:bg-primary/90" onClick={() => setIsAddOpen(true)}>
+              <Button className="glass hover:glass-medium text-enhanced" onClick={() => setIsAddOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Add New Crop
               </Button>
@@ -266,48 +266,48 @@ const CropTrackerPage = () => {
           {/* Overview Stats */}
           <section>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <Card>
+              <Card className="glass-ultra">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-muted-foreground">Total Fields</p>
-                      <p className="text-2xl font-bold">{summary?.totalCrops || 0}</p>
+                      <p className="text-sm text-enhanced text-overlay">Total Fields</p>
+                      <p className="text-2xl font-bold text-enhanced">{summary?.totalCrops || 0}</p>
                     </div>
                     <Sprout className="h-8 w-8 text-primary" />
                   </div>
                 </CardContent>
               </Card>
               
-              <Card>
+              <Card className="glass-ultra">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-muted-foreground">Total Area</p>
-                      <p className="text-2xl font-bold">{summary?.totalArea.toFixed(1) || 0} acres</p>
+                      <p className="text-sm text-enhanced text-overlay">Total Area</p>
+                      <p className="text-2xl font-bold text-enhanced">{summary?.totalArea.toFixed(1) || 0} acres</p>
                     </div>
                     <MapPin className="h-8 w-8 text-primary" />
                   </div>
                 </CardContent>
               </Card>
               
-              <Card>
+              <Card className="glass-ultra">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-muted-foreground">Active Crops</p>
-                      <p className="text-2xl font-bold">{summary?.activeCrops || 0}</p>
+                      <p className="text-sm text-enhanced text-overlay">Active Crops</p>
+                      <p className="text-2xl font-bold text-enhanced">{summary?.activeCrops || 0}</p>
                     </div>
                     <TrendingUp className="h-8 w-8 text-success" />
                   </div>
                 </CardContent>
               </Card>
               
-              <Card>
+              <Card className="glass-ultra">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-muted-foreground">Pending Tasks</p>
-                      <p className="text-2xl font-bold">{summary?.pendingActivities || 0}</p>
+                      <p className="text-sm text-enhanced text-overlay">Pending Tasks</p>
+                      <p className="text-2xl font-bold text-enhanced">{summary?.pendingActivities || 0}</p>
                     </div>
                     <Calendar className="h-8 w-8 text-warning" />
                   </div>
@@ -318,17 +318,17 @@ const CropTrackerPage = () => {
 
           {/* Crop Cards */}
           <section>
-            <h2 className="text-2xl font-semibold mb-6">My Crops</h2>
+            <h2 className="text-2xl font-semibold mb-6 text-enhanced text-overlay">My Crops</h2>
             <div className="space-y-6">
               {trackedCrops.length === 0 ? (
-                <Card>
+                <Card className="glass-ultra">
                   <CardContent className="p-12 text-center">
-                    <Sprout className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                    <h3 className="text-lg font-medium mb-2">No crops tracked yet</h3>
-                    <p className="text-muted-foreground mb-6">
+                    <Sprout className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+                    <h3 className="text-lg font-medium mb-2 text-enhanced">No crops tracked yet</h3>
+                    <p className="text-enhanced text-overlay mb-6">
                       Start tracking your crops to monitor their progress from seed to harvest
                     </p>
-                    <Button onClick={() => setIsAddOpen(true)}>
+                    <Button onClick={() => setIsAddOpen(true)} className="glass hover:glass-medium text-enhanced">
                       <Plus className="h-4 w-4 mr-2" />
                       Add Your First Crop
                     </Button>
@@ -336,23 +336,23 @@ const CropTrackerPage = () => {
                 </Card>
               ) : (
                 trackedCrops.map((crop) => (
-                <Card key={crop.id} className="overflow-hidden">
+                <Card key={crop.id} className="overflow-hidden glass-ultra">
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <div>
-                        <CardTitle className="flex items-center gap-2">
+                        <CardTitle className="flex items-center gap-2 text-enhanced">
                           <Sprout className="h-5 w-5" />
                           {crop.name}
                         </CardTitle>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-enhanced text-overlay">
                           {crop.variety} • {crop.area} • Day {crop.daysFromSowing}
                         </p>
                       </div>
                       <div className="text-right">
-                        <Badge variant={getHealthColor(crop.health) as any}>
+                        <Badge variant={getHealthColor(crop.health) as any} className="glass">
                           {crop.health}
                         </Badge>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="text-sm text-enhanced text-overlay mt-1">
                           Harvest: {new Date(crop.expectedHarvest).toLocaleDateString()}
                         </p>
                       </div>
@@ -364,28 +364,28 @@ const CropTrackerPage = () => {
                       {/* Progress */}
                       <div>
                         <div className="flex justify-between text-sm mb-2">
-                          <span>Growth Progress</span>
-                          <span>{crop.progress}%</span>
+                          <span className="text-enhanced">Growth Progress</span>
+                          <span className="text-enhanced">{crop.progress}%</span>
                         </div>
                         <Progress value={crop.progress} className="h-2" />
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-xs text-enhanced text-overlay mt-1">
                           Current Stage: {crop.stage}
                         </p>
                       </div>
                       
                       {/* Activities Timeline */}
                       <div>
-                        <h4 className="font-medium mb-3">Activity Timeline</h4>
+                        <h4 className="font-medium mb-3 text-enhanced">Activity Timeline</h4>
                         <div className="space-y-2">
                           {crop.activities.slice(-4).map((activity, index) => (
-                            <div key={index} className="flex items-center justify-between p-2 bg-muted/30 rounded-md">
+                            <div key={index} className="flex items-center justify-between p-2 glass rounded-md">
                               <div className="flex items-center gap-3">
-                                <Badge variant={getStatusColor(activity.status) as any} className="text-xs">
+                                <Badge variant={getStatusColor(activity.status) as any} className="text-xs glass">
                                   {activity.status}
                                 </Badge>
-                                <span className="text-sm">{activity.activity}</span>
+                                <span className="text-sm text-enhanced">{activity.activity}</span>
                               </div>
-                              <span className="text-xs text-muted-foreground">
+                              <span className="text-xs text-enhanced text-overlay">
                                 {new Date(activity.date).toLocaleDateString()}
                               </span>
                             </div>
@@ -399,6 +399,7 @@ const CropTrackerPage = () => {
                           variant="outline" 
                           size="sm"
                           onClick={() => setIrrigationModalState({open: true, cropId: crop.id, cropName: crop.name})}
+                          className="glass hover:glass-medium text-enhanced"
                         >
                           <Droplets className="h-4 w-4 mr-2" />
                           Log Irrigation
@@ -407,6 +408,7 @@ const CropTrackerPage = () => {
                           variant="outline" 
                           size="sm"
                           onClick={() => setActivityModalState({open: true, cropId: crop.id, cropName: crop.name})}
+                          className="glass hover:glass-medium text-enhanced"
                         >
                           <Calendar className="h-4 w-4 mr-2" />
                           Add Activity
@@ -415,6 +417,7 @@ const CropTrackerPage = () => {
                           variant="outline" 
                           size="sm"
                           onClick={() => navigate(`/crop/${crop.id}`)}
+                          className="glass hover:glass-medium text-enhanced"
                         >
                           View Details
                         </Button>
@@ -425,23 +428,23 @@ const CropTrackerPage = () => {
                             <Button 
                               variant="outline" 
                               size="sm" 
-                              className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                              className="text-destructive hover:text-destructive hover:bg-destructive/10 glass text-enhanced"
                               disabled={removingCropId === crop.id}
                             >
                               <Trash2 className="h-4 w-4 mr-2" />
                               Remove
                             </Button>
                           </AlertDialogTrigger>
-                          <AlertDialogContent>
+                          <AlertDialogContent className="glass-ultra">
                             <AlertDialogHeader>
-                              <AlertDialogTitle>Remove Crop from Tracker?</AlertDialogTitle>
-                              <AlertDialogDescription>
+                              <AlertDialogTitle className="text-enhanced">Remove Crop from Tracker?</AlertDialogTitle>
+                              <AlertDialogDescription className="text-enhanced text-overlay">
                                 Are you sure you want to remove <strong>{crop.name}</strong> ({crop.variety}) from your crop tracker? 
                                 This action cannot be undone and will permanently delete all associated activities and progress data.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogCancel className="glass text-enhanced">Cancel</AlertDialogCancel>
                               <AlertDialogAction
                                 onClick={() => handleRemoveCrop(crop.id, crop.name)}
                                 className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
@@ -472,9 +475,9 @@ const CropTrackerPage = () => {
 
           {/* Upcoming Tasks */}
           <section>
-            <Card>
+            <Card className="glass-ultra">
               <CardHeader>
-                <CardTitle className="flex items-center justify-between">
+                <CardTitle className="flex items-center justify-between text-enhanced">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-5 w-5" />
                     Upcoming Tasks
@@ -483,6 +486,7 @@ const CropTrackerPage = () => {
                     variant="outline" 
                     size="sm"
                     onClick={() => setScheduleTaskModalOpen(true)}
+                    className="glass hover:glass-medium text-enhanced"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Schedule Task
@@ -506,27 +510,28 @@ const CropTrackerPage = () => {
                     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
                     .slice(0, 5)
                     .map((task) => (
-                      <div key={task.id} className={`flex items-center justify-between p-3 rounded-md ${
+                      <div key={task.id} className={`flex items-center justify-between p-3 rounded-md glass ${
                         task.isOverdue 
-                          ? 'bg-red-50 border border-red-200 dark:bg-red-950/20 dark:border-red-900/30'
-                          : 'bg-warning/10 border border-warning/20'
+                          ? 'border border-red-200 dark:border-red-900/30'
+                          : 'border border-warning/20'
                       }`}>
                         <div>
-                          <div className="font-medium">{task.activity} - {task.cropName}</div>
-                          <div className="text-sm text-muted-foreground">
+                          <div className="font-medium text-enhanced">{task.activity} - {task.cropName}</div>
+                          <div className="text-sm text-enhanced text-overlay">
                             Due: {new Date(task.date).toLocaleDateString()}
                             {task.isOverdue && (
                               <span className="text-red-600 font-medium ml-2">• Overdue</span>
                             )}
                           </div>
                           {task.description && (
-                            <div className="text-xs text-muted-foreground mt-1">{task.description}</div>
+                            <div className="text-xs text-enhanced text-overlay mt-1">{task.description}</div>
                           )}
                         </div>
                         <Button 
                           size="sm"
                           onClick={() => handleMarkTaskDone(task.activity, task.cropId)}
                           variant={task.isOverdue ? "destructive" : "default"}
+                          className={task.isOverdue ? "" : "glass hover:glass-medium text-enhanced"}
                         >
                           <CheckCircle className="h-4 w-4 mr-1" />
                           Mark Done
@@ -536,29 +541,31 @@ const CropTrackerPage = () => {
                   }
                   
                   {/* Static upcoming tasks for demo */}
-                  <div className="flex items-center justify-between p-3 bg-warning/10 border border-warning/20 rounded-md">
+                  <div className="flex items-center justify-between p-3 glass border border-warning/20 rounded-md">
                     <div>
-                      <div className="font-medium">Second Irrigation - Wheat Field A</div>
-                      <div className="text-sm text-muted-foreground">Due: April 1, 2024</div>
+                      <div className="font-medium text-enhanced">Second Irrigation - Wheat Field A</div>
+                      <div className="text-sm text-enhanced text-overlay">Due: April 1, 2024</div>
                     </div>
                     <Button 
                       size="sm"
                       onClick={() => handleMarkTaskDone("Second Irrigation - Wheat Field A", "crop_1")}
+                      className="glass hover:glass-medium text-enhanced"
                     >
                       <CheckCircle className="h-4 w-4 mr-1" />
                       Mark Done
                     </Button>
                   </div>
                   
-                  <div className="flex items-center justify-between p-3 bg-muted/30 rounded-md">
+                  <div className="flex items-center justify-between p-3 glass rounded-md">
                     <div>
-                      <div className="font-medium">Harvesting - Mustard Field B</div>
-                      <div className="text-sm text-muted-foreground">Scheduled: April 10, 2024</div>
+                      <div className="font-medium text-enhanced">Harvesting - Mustard Field B</div>
+                      <div className="text-sm text-enhanced text-overlay">Scheduled: April 10, 2024</div>
                     </div>
                     <Button 
                       variant="outline" 
                       size="sm"
                       onClick={() => setScheduleTaskModalOpen(true)}
+                      className="glass hover:glass-medium text-enhanced"
                     >
                       <Calendar className="h-4 w-4 mr-2" />
                       Reschedule
@@ -567,9 +574,9 @@ const CropTrackerPage = () => {
                   
                   {trackedCrops.length === 0 && (
                     <div className="text-center py-8">
-                      <Calendar className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                      <p className="text-muted-foreground mb-4">No upcoming tasks scheduled</p>
-                      <Button onClick={() => setScheduleTaskModalOpen(true)}>
+                      <Calendar className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+                      <p className="text-enhanced text-overlay mb-4">No upcoming tasks scheduled</p>
+                      <Button onClick={() => setScheduleTaskModalOpen(true)} className="glass hover:glass-medium text-enhanced">
                         <Plus className="h-4 w-4 mr-2" />
                         Schedule Your First Task
                       </Button>
