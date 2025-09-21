@@ -45,9 +45,12 @@ const actions = [
 export const QuickActions = () => {
   const navigate = useNavigate();
   return (
-    <Card className="shadow-card">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-lg">Quick Actions</CardTitle>
+    <Card className="shadow-card hover:shadow-glow transition-all duration-300 border-border/60 bg-gradient-to-br from-card to-card/80">
+      <CardHeader className="pb-4">
+        <CardTitle className="text-lg font-semibold flex items-center gap-2">
+          <div className="text-xl">⚡</div>
+          Quick Actions
+        </CardTitle>
       </CardHeader>
       
       <CardContent>
@@ -82,13 +85,21 @@ export const QuickActions = () => {
               <Button
                 key={index}
                 variant="ghost"
-                className={`h-auto p-4 flex-col space-y-2 ${action.color} transition-colors`}
+                className={`
+                  h-auto p-4 flex-col space-y-2 transition-all duration-200 group
+                  ${action.color} hover:scale-105 hover:shadow-soft border border-transparent
+                  hover:border-border/30 rounded-xl
+                `}
                 onClick={handleClick}
               >
-                <IconComponent className="h-6 w-6" />
-                <div className="text-center">
-                  <div className="font-medium text-sm">{action.title}</div>
-                  <div className="text-xs opacity-80">{action.description}</div>
+                <IconComponent className="h-6 w-6 transition-transform duration-200 group-hover:scale-110" />
+                <div className="text-center space-y-1">
+                  <div className="font-semibold text-sm group-hover:text-foreground transition-colors">
+                    {action.title}
+                  </div>
+                  <div className="text-xs opacity-80 group-hover:opacity-100 transition-opacity leading-tight">
+                    {action.description}
+                  </div>
                 </div>
               </Button>
             );

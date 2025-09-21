@@ -42,13 +42,13 @@ export const Navigation = () => {
   return (
     <>
       {/* Fixed Top Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border shadow-sm">
-        <div className="container mx-auto px-6 py-3">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/60 shadow-card">
+        <div className="container mx-auto px-4 sm:px-6 py-3">
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-lg font-semibold">
-              <div className="text-xl">🌾</div>
-              <span>KrishiMitra</span>
+            <div className="flex items-center space-x-3 text-lg font-semibold group cursor-pointer" onClick={() => handleNavigation('/home')}>
+              <div className="text-2xl transition-transform duration-200 group-hover:scale-110">🌾</div>
+              <span className="bg-gradient-field bg-clip-text text-transparent">KrishiMitra</span>
             </div>
             <div className="flex gap-1">
               {navigationItems.map((item) => {
@@ -61,11 +61,17 @@ export const Navigation = () => {
                     variant={isActive ? "default" : "ghost"}
                     size="sm"
                     onClick={() => handleNavigation(item.path)}
-                    className="flex items-center gap-2 px-3"
+                    className={`
+                      flex items-center gap-2 px-3 transition-all duration-200 group
+                      ${isActive 
+                        ? "shadow-soft" 
+                        : "hover:shadow-soft hover:scale-105"
+                      }
+                    `}
                     title={item.label}
                   >
-                    <Icon className="h-4 w-4" />
-                    <span className="hidden lg:inline">{item.label}</span>
+                    <Icon className={`h-4 w-4 transition-transform duration-200 ${!isActive && "group-hover:scale-110"}`} />
+                    <span className="hidden lg:inline font-medium">{item.label}</span>
                   </Button>
                 );
               })}
@@ -74,15 +80,18 @@ export const Navigation = () => {
 
           {/* Mobile Navigation */}
           <div className="md:hidden flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-lg font-semibold">
-              <div className="text-xl">🌾</div>
-              <span>KrishiMitra</span>
+            <div className="flex items-center space-x-3 text-lg font-semibold">
+              <div className="text-2xl">🌾</div>
+              <span className="bg-gradient-field bg-clip-text text-transparent">KrishiMitra</span>
             </div>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
-              className="bg-card/80 backdrop-blur-sm border border-border"
+              className={`
+                bg-card/90 backdrop-blur-sm border border-border transition-all duration-200 hover:shadow-soft
+                ${isOpen ? "rotate-90" : "hover:scale-105"}
+              `}
             >
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
@@ -92,9 +101,13 @@ export const Navigation = () => {
 
       {/* Mobile Navigation Overlay */}
       {isOpen && (
-        <div className="md:hidden fixed inset-0 bg-black/50 z-40" onClick={() => setIsOpen(false)}>
-          <div className="fixed top-16 right-4 bg-card border border-border rounded-lg p-4 shadow-card min-w-[200px]">
-            <div className="space-y-2">
+        <>
+          <div 
+            className="md:hidden fixed inset-0 bg-black/60 z-40 backdrop-blur-sm transition-opacity duration-200" 
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="md:hidden fixed top-16 right-4 left-4 sm:left-auto sm:min-w-[240px] bg-card/95 backdrop-blur-md border border-border/60 rounded-xl p-4 shadow-glow z-50 animate-in slide-in-from-top-5 duration-200">
+            <div className="space-y-1">
               {navigationItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path;
@@ -104,16 +117,22 @@ export const Navigation = () => {
                     key={item.path}
                     variant={isActive ? "default" : "ghost"}
                     onClick={() => handleNavigation(item.path)}
-                    className="w-full justify-start gap-3"
+                    className={`
+                      w-full justify-start gap-3 transition-all duration-200 group
+                      ${isActive 
+                        ? "shadow-soft" 
+                        : "hover:shadow-soft hover:translate-x-1"
+                      }
+                    `}
                   >
-                    <Icon className="h-4 w-4" />
-                    {item.label}
+                    <Icon className={`h-4 w-4 transition-transform duration-200 ${!isActive && "group-hover:scale-110"}`} />
+                    <span className="font-medium">{item.label}</span>
                   </Button>
                 );
               })}
             </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );

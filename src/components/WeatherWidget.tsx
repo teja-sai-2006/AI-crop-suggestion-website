@@ -150,23 +150,46 @@ export const WeatherWidget = () => {
   // Show loading state
   if (loading) {
     return (
-      <Card className="shadow-card hover:shadow-glow transition-all duration-300">
+      <Card className="shadow-card hover:shadow-glow transition-all duration-300 border-border/60 bg-gradient-to-br from-card to-card/80">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center justify-between">
-            <span className="text-lg">Weather Forecast</span>
-            <Badge variant="outline" className="text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <div className="text-xl">🌤️</div>
+              <span className="text-lg font-semibold">Weather Forecast</span>
+            </div>
+            <Badge variant="outline" className="text-muted-foreground animate-pulse">
               Loading...
             </Badge>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="bg-gradient-sky rounded-lg p-4 animate-pulse">
-            <div className="h-20 bg-white/20 rounded"></div>
+          <div className="bg-gradient-sky rounded-xl p-6 relative overflow-hidden">
+            <div className="animate-pulse space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="h-10 w-10 bg-white/20 rounded-full"></div>
+                  <div className="space-y-2">
+                    <div className="h-6 w-16 bg-white/20 rounded"></div>
+                    <div className="h-4 w-24 bg-white/20 rounded"></div>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="h-4 w-12 bg-white/20 rounded"></div>
+                  <div className="h-4 w-12 bg-white/20 rounded"></div>
+                </div>
+              </div>
+            </div>
+            <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-4 translate-x-4"></div>
           </div>
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-4 gap-3">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="text-center p-2 rounded-md bg-muted/50 animate-pulse">
-                <div className="h-16 bg-gray-200 rounded"></div>
+              <div key={i} className="text-center p-3 rounded-lg bg-muted/50 animate-pulse">
+                <div className="space-y-2">
+                  <div className="h-3 w-6 bg-gray-200 rounded mx-auto"></div>
+                  <div className="h-5 w-5 bg-gray-200 rounded-full mx-auto"></div>
+                  <div className="h-4 w-8 bg-gray-200 rounded mx-auto"></div>
+                  <div className="h-3 w-6 bg-gray-200 rounded mx-auto"></div>
+                </div>
               </div>
             ))}
           </div>
@@ -178,19 +201,26 @@ export const WeatherWidget = () => {
   // Show error state
   if (error) {
     return (
-      <Card className="shadow-card hover:shadow-glow transition-all duration-300">
+      <Card className="shadow-card hover:shadow-glow transition-all duration-300 border-border/60 bg-gradient-to-br from-card to-card/80">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center justify-between">
-            <span className="text-lg">Weather Forecast</span>
-            <Badge variant="destructive" className="text-white">
+            <div className="flex items-center gap-2">
+              <div className="text-xl">🌤️</div>
+              <span className="text-lg font-semibold">Weather Forecast</span>
+            </div>
+            <Badge variant="destructive" className="text-white shadow-soft">
               Error
             </Badge>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="text-center py-4">
-            <p className="text-muted-foreground mb-4">{error}</p>
-            <Button onClick={loadWeatherData} variant="outline">
+          <div className="text-center py-8 space-y-4">
+            <div className="text-4xl opacity-60">⚠️</div>
+            <div className="space-y-2">
+              <p className="text-muted-foreground">{error}</p>
+              <p className="text-sm text-muted-foreground">Please check your connection and try again</p>
+            </div>
+            <Button onClick={loadWeatherData} variant="outline" className="transition-all duration-200 hover:scale-105 hover:shadow-soft">
               Try Again
             </Button>
           </div>
@@ -202,21 +232,36 @@ export const WeatherWidget = () => {
   // Show no data state
   if (!weatherData) {
     return (
-      <Card className="shadow-card hover:shadow-glow transition-all duration-300">
+      <Card className="shadow-card hover:shadow-glow transition-all duration-300 border-border/60 bg-gradient-to-br from-card to-card/80">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center justify-between">
-            <span className="text-lg">Weather Forecast</span>
-            <Badge variant="outline" className="text-muted-foreground">
-              No Data
+            <div className="flex items-center gap-2">
+              <div className="text-xl">🌤️</div>
+              <span className="text-lg font-semibold">Weather Forecast</span>
+            </div>
+            <Badge variant="outline" className="text-muted-foreground bg-muted/30">
+              📍 No location set
             </Badge>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="text-center py-4">
-            <p className="text-muted-foreground mb-4">Weather data not available</p>
-            <Button onClick={loadWeatherData} variant="outline">
-              Refresh
+          <div className="text-center py-8 space-y-4">
+            <div className="text-4xl opacity-60">📍</div>
+            <div className="space-y-2">
+              <h4 className="font-medium">Select Your Location</h4>
+              <p className="text-muted-foreground">Choose your location to get accurate weather forecasts</p>
+            </div>
+            <Button 
+              onClick={() => setIsLocationSelectorOpen(true)} 
+              variant="outline" 
+              className="transition-all duration-200 hover:scale-105 hover:shadow-soft"
+            >
+              <MapPin className="h-4 w-4 mr-2" />
+              Select Location
             </Button>
+          </div>
+          <div className="text-xs text-muted-foreground text-center pt-3 border-t border-border/30">
+            Set your location to view weather data
           </div>
         </CardContent>
       </Card>
@@ -225,12 +270,18 @@ export const WeatherWidget = () => {
   
   // Return normal weather widget with data
   return (
-    <Card className="shadow-card hover:shadow-glow transition-all duration-300 cursor-pointer" onClick={() => navigate('/weather')}>
+    <Card className="
+      shadow-card hover:shadow-glow transition-all duration-300 cursor-pointer group
+      hover:scale-[1.02] border-border/60 bg-gradient-to-br from-card to-card/80
+    " onClick={() => navigate('/weather')}>
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center justify-between">
-          <span className="text-lg">Weather Forecast</span>
+          <div className="flex items-center gap-3">
+            <div className="text-xl transition-transform duration-200 group-hover:scale-110">🌤️</div>
+            <span className="text-lg font-semibold group-hover:text-primary transition-colors">Weather Forecast</span>
+          </div>
           <div className="flex items-center gap-2">
-            <Badge variant="outline" className="text-muted-foreground">
+            <Badge variant="outline" className="text-muted-foreground bg-muted/30 border-border/60">
               📍 {weatherData.current.location}
             </Badge>
             <Button 
@@ -240,7 +291,7 @@ export const WeatherWidget = () => {
                 e.stopPropagation();
                 setIsLocationSelectorOpen(true);
               }}
-              className="h-6 w-6 p-0 text-muted-foreground hover:text-foreground"
+              className="h-7 w-7 p-0 text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 hover:scale-110"
               title="Change Location"
             >
               <MapPin className="h-3 w-3" />
@@ -251,51 +302,68 @@ export const WeatherWidget = () => {
       
       <CardContent className="space-y-4">
         {/* Current Weather */}
-        <div className="bg-gradient-sky rounded-lg p-4 text-white">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <WeatherIcon condition={weatherData.current.condition} size="h-8 w-8" />
+        <div className="bg-gradient-sky rounded-xl p-5 text-white relative overflow-hidden shadow-soft">
+          <div className="flex items-center justify-between relative z-10">
+            <div className="flex items-center space-x-4">
+              <div className="transition-transform duration-200 group-hover:scale-110">
+                <WeatherIcon condition={weatherData.current.condition} size="h-10 w-10" />
+              </div>
               <div>
-                <div className="text-2xl font-bold">{weatherData.current.temperature}°C</div>
-                <div className="text-sm opacity-90">{weatherData.current.description}</div>
+                <div className="text-3xl font-bold">{weatherData.current.temperature}°C</div>
+                <div className="text-sm opacity-90 font-medium">{weatherData.current.description}</div>
               </div>
             </div>
-            <div className="text-right space-y-1">
-              <div className="flex items-center space-x-1 text-sm">
+            <div className="text-right space-y-2">
+              <div className="flex items-center space-x-2 text-sm bg-white/10 rounded-lg px-2 py-1">
                 <Droplets className="h-3 w-3" />
-                <span>{weatherData.current.humidity}%</span>
+                <span className="font-medium">{weatherData.current.humidity}%</span>
               </div>
-              <div className="flex items-center space-x-1 text-sm">
+              <div className="flex items-center space-x-2 text-sm bg-white/10 rounded-lg px-2 py-1">
                 <Wind className="h-3 w-3" />
-                <span>{weatherData.current.windSpeed} km/h</span>
+                <span className="font-medium">{weatherData.current.windSpeed} km/h</span>
               </div>
             </div>
           </div>
+          {/* Background decoration */}
+          <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -translate-y-6 translate-x-6"></div>
+          <div className="absolute bottom-0 left-0 w-16 h-16 bg-white/5 rounded-full translate-y-4 -translate-x-4"></div>
         </div>
 
         {/* 4-Day Forecast */}
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-4 gap-3">
           {weatherData.forecast.map((day, index) => (
-            <div key={index} className="text-center p-2 rounded-md bg-muted/50">
-              <div className="text-xs font-medium text-muted-foreground mb-1">{day.day}</div>
-              <WeatherIcon condition={day.condition} size="h-5 w-5 mx-auto mb-1" />
-              <div className="text-sm font-semibold">{day.high}°</div>
+            <div 
+              key={index} 
+              className="
+                text-center p-3 rounded-xl bg-muted/30 border border-border/30
+                transition-all duration-200 hover:shadow-soft hover:scale-105 group/forecast
+              "
+            >
+              <div className="text-xs font-semibold text-muted-foreground mb-2 group-hover/forecast:text-foreground transition-colors">
+                {day.day}
+              </div>
+              <div className="transition-transform duration-200 group-hover/forecast:scale-110">
+                <WeatherIcon condition={day.condition} size="h-6 w-6 mx-auto mb-2" />
+              </div>
+              <div className="text-sm font-bold">{day.high}°</div>
               <div className="text-xs text-muted-foreground">{day.low}°</div>
               {day.rain > 0 && (
-                <div className="text-xs text-weather-rainy mt-1">{day.rain}%</div>
+                <div className="text-xs text-weather-rainy mt-1 font-medium">{day.rain}%</div>
               )}
             </div>
           ))}
         </div>
 
-        <div className="text-xs text-muted-foreground text-center pt-2 border-t">
+        <div className="text-xs text-muted-foreground text-center pt-3 border-t border-border/30">
           {isRefreshing ? (
-            <span className="inline-flex items-center">
-              <span className="animate-spin inline-block w-3 h-3 border border-muted-foreground border-t-transparent rounded-full mr-1"></span>
+            <span className="inline-flex items-center gap-2">
+              <span className="animate-spin inline-block w-3 h-3 border border-muted-foreground border-t-transparent rounded-full"></span>
               Updating weather data...
             </span>
           ) : (
-            `Last updated: ${getTimeAgo(lastUpdateTime)} • Next update in 15 min`
+            <span className="group-hover:text-foreground transition-colors">
+              Last updated: {getTimeAgo(lastUpdateTime)} • Next update in 15 min
+            </span>
           )}
         </div>
       </CardContent>
