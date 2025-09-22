@@ -16,6 +16,16 @@ import { mockMarketLocations } from '../data/mockMarketLocations';
 
 export class MarketPricesAPIService {
   private static readonly PRICES_KEY = 'km_market_prices';
+
+  /**
+   * Force refresh mock data (for development/presentation)
+   */
+  static forceRefreshMockData(): void {
+    console.log('🔄 Force refreshing mock data...');
+    localStorage.removeItem(this.PRICES_KEY);
+    // This will trigger fresh data generation on next access
+    console.log(`✅ Cache cleared. Next data access will regenerate ${mockMarketPrices.length} records`);
+  }
   private static readonly PREFERENCES_KEY = 'km_market_preferences';
 
   /**
@@ -90,14 +100,34 @@ export class MarketPricesAPIService {
       await new Promise(resolve => setTimeout(resolve, 150));
       
       const prices = this.getStoredPrices();
+      console.log(`🔍 Searching for ${crop} in location ${locationId || 'any location'}`);
+      console.log(`📊 Total prices available: ${prices.length}`);
+      
       const today = new Date().toISOString().split('T')[0];
+      console.log(`📅 Looking for prices on: ${today}`);
       
       let filteredPrices = prices.filter(price => 
         price.crop === crop && price.date === today
       );
+      console.log(`📈 Found ${filteredPrices.length} prices for ${crop} today`);
       
       if (locationId) {
         filteredPrices = filteredPrices.filter(price => price.locationId === locationId);
+        console.log(`🏪 After location filter (${locationId}): ${filteredPrices.length} prices`);
+      }
+      
+      if (filteredPrices.length === 0) {
+        console.log(`⚠️ No prices found - expanding search to last 7 days`);
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+        const sevenDaysAgoStr = sevenDaysAgo.toISOString().split('T')[0];
+        
+        filteredPrices = prices.filter(price => 
+          price.crop === crop && 
+          price.date >= sevenDaysAgoStr &&
+          (!locationId || price.locationId === locationId)
+        );
+        console.log(`📅 Found ${filteredPrices.length} prices in last 7 days`);
       }
       
       return filteredPrices;
@@ -118,17 +148,33 @@ export class MarketPricesAPIService {
       await new Promise(resolve => setTimeout(resolve, 300));
       
       const prices = this.getStoredPrices();
+      console.log(`📊 getCropPriceHistory: Total prices available: ${prices.length}`);
+      
       const cutoffDate = new Date();
       cutoffDate.setDate(cutoffDate.getDate() - days);
+      console.log(`📅 Looking for data from ${cutoffDate.toISOString().split('T')[0]} onwards`);
       
       let filteredPrices = prices.filter(price => 
         price.crop === crop && 
         new Date(price.date) >= cutoffDate &&
         price.quality === 'standard' // Use standard quality for history
       );
+      console.log(`📈 After crop + date + quality filter: ${filteredPrices.length} prices`);
       
       if (locationId) {
         filteredPrices = filteredPrices.filter(price => price.locationId === locationId);
+        console.log(`🏪 After location filter: ${filteredPrices.length} prices`);
+      }
+      
+      // If no data found, try without quality filter
+      if (filteredPrices.length === 0) {
+        console.log(`⚠️ No standard quality data found, trying all qualities...`);
+        filteredPrices = prices.filter(price => 
+          price.crop === crop && 
+          new Date(price.date) >= cutoffDate &&
+          (!locationId || price.locationId === locationId)
+        );
+        console.log(`📊 With all qualities: ${filteredPrices.length} prices`);
       }
       
       // Group prices by date and calculate average
@@ -146,6 +192,8 @@ export class MarketPricesAPIService {
           price: Math.round((prices.reduce((sum, price) => sum + price, 0) / prices.length) * 100) / 100
         }))
         .sort((a, b) => a.date.localeCompare(b.date));
+      
+      console.log(`📈 Generated ${trends.length} price trends:`, trends.slice(0, 3));
       
       const allPrices = trends.map(t => t.price);
       const currentPrice = allPrices[allPrices.length - 1] || 0;
@@ -286,14 +334,21 @@ export class MarketPricesAPIService {
     try {
       const stored = localStorage.getItem(this.PRICES_KEY);
       if (stored) {
-        return JSON.parse(stored);
+        const parsedData = JSON.parse(stored);
+        console.log(`📊 Using stored prices: ${parsedData.length} records`);
+        return parsedData;
       }
       
       // Initialize with mock data if no stored data
+      console.log(`🔄 Initializing with fresh mock data: ${mockMarketPrices.length} records`);
+      console.log(`🎪 Sample crops in mock data:`, [...new Set(mockMarketPrices.map(p => p.crop))].slice(0, 5));
+      console.log(`🏪 Sample locations in mock data:`, [...new Set(mockMarketPrices.map(p => p.locationId))].slice(0, 5));
+      
       localStorage.setItem(this.PRICES_KEY, JSON.stringify(mockMarketPrices));
       return [...mockMarketPrices];
     } catch (error) {
       console.warn('Failed to get stored prices, using mock data:', error);
+      console.log(`⚠️ Fallback mock data: ${mockMarketPrices.length} records`);
       return [...mockMarketPrices];
     }
   }

@@ -12,6 +12,7 @@ import {
   quickReplies,
   languageResponses 
 } from '../data/mockChatResponses';
+import { GeminiAPIService } from './gemini.api';
 
 /**
  * ChatBot API Service - Frontend-first implementation with mock data
@@ -25,19 +26,16 @@ export class ChatBotAPIService {
   private static CURRENT_SESSION_KEY = 'km.chatbot.currentSession';
 
   /**
-   * Send message to chatbot and get response
+   * Send message to chatbot and get response using Gemini AI
    */
   static async sendMessage(
     message: string, 
     sessionId: string,
     language: string = 'en'
   ): Promise<{ userMessage: ChatMessage; botResponse: ChatMessage }> {
-    // TODO: Replace with real backend API call
-    // Example: const response = await fetch('/api/chatbot/message', { method: 'POST', body: JSON.stringify({ message, sessionId, language }) });
-    
     try {
-      // Simulate API processing delay
-      await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
+      // Simulate API processing delay for better UX
+      await new Promise(resolve => setTimeout(resolve, 500));
       
       // Create user message
       const userMessage: ChatMessage = {
@@ -49,30 +47,69 @@ export class ChatBotAPIService {
         messageType: 'text'
       };
       
-      // Generate bot response
-      const mockResponse = generateMockResponse(message, language);
-      const botMessage: ChatMessage = {
-        id: `msg_${Date.now()}_bot`,
-        content: mockResponse.message,
-        sender: 'bot',
-        timestamp: new Date().toISOString(),
-        language,
-        messageType: 'text',
-        metadata: {
-          confidence: mockResponse.confidence,
-          topic: mockResponse.topic,
-          suggestions: mockResponse.suggestions,
-          relatedActions: mockResponse.relatedActions
-        }
-      };
+      // Get conversation history for context
+      const session = await this.getSession(sessionId);
+      const conversationHistory = session?.messages
+        .slice(-10) // Last 10 messages for context
+        .map(msg => ({
+          role: msg.sender === 'user' ? 'user' : 'assistant',
+          content: msg.content
+        })) || [];
+      
+      let botResponse: ChatMessage;
+      
+      try {
+        // Try to get response from Gemini AI
+        const geminiResponse = await GeminiAPIService.generateFarmingAdvice(
+          message, 
+          language, 
+          conversationHistory
+        );
+        
+        botResponse = {
+          id: `msg_${Date.now()}_bot`,
+          content: geminiResponse.message,
+          sender: 'bot',
+          timestamp: new Date().toISOString(),
+          language,
+          messageType: 'text',
+          metadata: {
+            confidence: geminiResponse.confidence,
+            topic: geminiResponse.topic,
+            suggestions: geminiResponse.suggestions,
+            relatedActions: geminiResponse.relatedActions,
+            source: 'gemini-ai'
+          }
+        };
+      } catch (error) {
+        console.warn('Gemini AI failed, falling back to mock response:', error);
+        
+        // Fallback to mock response if Gemini fails
+        const mockResponse = generateMockResponse(message, language);
+        botResponse = {
+          id: `msg_${Date.now()}_bot`,
+          content: mockResponse.message,
+          sender: 'bot',
+          timestamp: new Date().toISOString(),
+          language,
+          messageType: 'text',
+          metadata: {
+            confidence: mockResponse.confidence,
+            topic: mockResponse.topic,
+            suggestions: mockResponse.suggestions,
+            relatedActions: mockResponse.relatedActions,
+            source: 'fallback'
+          }
+        };
+      }
       
       // Save messages to session
-      await this.addMessagesToSession(sessionId, [userMessage, botMessage]);
+      await this.addMessagesToSession(sessionId, [userMessage, botResponse]);
       
       // Update analytics
       this.updateAnalytics('message_sent');
       
-      return { userMessage, botResponse: botMessage };
+      return { userMessage, botResponse: botResponse };
     } catch (error) {
       console.error('Error sending message:', error);
       throw new Error('Failed to send message to chatbot');
@@ -443,6 +480,18 @@ export class ChatBotAPIService {
       localStorage.setItem(this.ANALYTICS_KEY, JSON.stringify(analytics));
     } catch (error) {
       console.warn('Failed to update analytics:', error);
+    }
+  }
+
+  /**
+   * Test Gemini AI connection
+   */
+  static async testGeminiConnection(): Promise<boolean> {
+    try {
+      return await GeminiAPIService.testConnection();
+    } catch (error) {
+      console.error('Error testing Gemini connection:', error);
+      return false;
     }
   }
 

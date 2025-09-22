@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Market Data Cache</title>
+</head>
+<body>
+    <h1>Clear Market Data Cache</h1>
+    <button onclick="clearCache()">Clear Cache</button>
+    <div id="result"></div>
+    
+    <script>
+        function clearCache() {
+            localStorage.removeItem('km_market_prices');
+            localStorage.removeItem('km_market_locations');
+            localStorage.clear(); // Clear all localStorage for this domain
+            document.getElementById('result').innerHTML = '✅ Cache cleared! Refresh the main app to see fresh data.';
+        }
+    </script>
+</body>
+</html>

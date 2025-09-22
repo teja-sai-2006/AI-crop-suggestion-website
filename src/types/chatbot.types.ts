@@ -15,6 +15,7 @@ export interface ChatMessage {
     topic?: string;
     suggestions?: string[];
     relatedActions?: string[];
+    source?: 'gemini-ai' | 'fallback';
   };
 }
 

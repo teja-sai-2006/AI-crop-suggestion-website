@@ -40,12 +40,44 @@ const DiseaseDetection: React.FC = () => {
   const [history, setHistory] = useState<DiseaseDetectionHistory[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('upload');
+  const [smartAnalyzerStatus, setSmartAnalyzerStatus] = useState<{
+    available: boolean;
+    initialized: boolean;
+    initializing: boolean;
+  }>({ available: false, initialized: false, initializing: false });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Load history on component mount
   useEffect(() => {
     loadHistory();
+    initializeSmartAnalyzer();
   }, []);
+
+  const initializeSmartAnalyzer = async () => {
+    setSmartAnalyzerStatus(prev => ({ ...prev, initializing: true }));
+    
+    try {
+      const initialized = await DiseaseDetectionAPIService.initializeSmartAnalyzer();
+      const status = DiseaseDetectionAPIService.getSmartAnalyzerStatus();
+      
+      setSmartAnalyzerStatus({
+        available: status.available,
+        initialized: status.initialized,
+        initializing: false
+      });
+      
+      if (initialized) {
+        console.log('Smart Image Analyzer ready for disease detection!');
+      }
+    } catch (error) {
+      console.error('Failed to initialize Smart Analyzer:', error);
+      setSmartAnalyzerStatus({
+        available: false,
+        initialized: false,
+        initializing: false
+      });
+    }
+  };
 
   const loadHistory = async () => {
     try {
@@ -144,8 +176,37 @@ const DiseaseDetection: React.FC = () => {
           Plant Disease Detection
         </h1>
         <p className="text-lg text-enhanced text-overlay">
-          AI-powered disease diagnosis with treatment recommendations
+          FREE AI-powered disease diagnosis with Smart Computer Vision
         </p>
+        
+        {/* Smart Analyzer Status Indicator */}
+        <div className="flex justify-center">
+          <Badge 
+            variant="outline" 
+            className={`flex items-center gap-2 glass ${
+              smartAnalyzerStatus.initialized ? 'border-green-500 text-green-600' :
+              smartAnalyzerStatus.initializing ? 'border-yellow-500 text-yellow-600' :
+              'border-red-500 text-red-600'
+            }`}
+          >
+            {smartAnalyzerStatus.initializing ? (
+              <>
+                <Loader2 className="h-3 w-3 animate-spin" />
+                Loading AI Model...
+              </>
+            ) : smartAnalyzerStatus.initialized ? (
+              <>
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+                AI Model Ready
+              </>
+            ) : (
+              <>
+                <div className="w-2 h-2 rounded-full bg-red-500" />
+                AI Model Loading...
+              </>
+            )}
+          </Badge>
+        </div>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -237,12 +298,12 @@ const DiseaseDetection: React.FC = () => {
                   {isAnalyzing ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Analyzing Image...
+                      {smartAnalyzerStatus.initialized ? 'AI Analyzing...' : 'Analyzing...'}
                     </>
                   ) : (
                     <>
                       <Bug className="mr-2 h-4 w-4" />
-                      Analyze for Diseases
+                      {smartAnalyzerStatus.initialized ? 'AI Analyze for Diseases' : 'Analyze for Diseases'}
                     </>
                   )}
                 </Button>
@@ -360,7 +421,7 @@ const DiseaseDetection: React.FC = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {result.treatments.slice(0, 3).map((treatment, index) => (
+                    {result.treatments.map((treatment, index) => (
                       <div key={index} className="border rounded-lg p-4 glass">
                         <div className="flex justify-between items-start mb-2">
                           <h4 className="font-semibold text-enhanced">{treatment.name}</h4>

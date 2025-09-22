@@ -112,15 +112,22 @@ function generatePriceHistory(crop: string, location: string, days: number = 30)
 }
 
 // Generate comprehensive mock data
-export const mockMarketPrices: MarketPrice[] = [];
-
-// Generate prices for each crop in each location for the last 30 days
-crops.forEach(crop => {
-  mockMarketLocations.slice(0, 6).forEach(location => { // Use first 6 locations to keep data manageable
-    const priceHistory = generatePriceHistory(crop, location.id);
-    mockMarketPrices.push(...priceHistory);
+const generateComprehensiveMarketData = (): MarketPrice[] => {
+  const allData: MarketPrice[] = [];
+  console.log(`🎪 PRESENTATION DATA GENERATION: Creating comprehensive data for ${crops.length} crops × ${mockMarketLocations.length} locations`);
+  
+  crops.forEach(crop => {
+    mockMarketLocations.forEach(location => {
+      const priceHistory = generatePriceHistory(crop, location.id);
+      allData.push(...priceHistory);
+    });
   });
-});
+  
+  console.log(`✅ Generated ${allData.length} price records for presentation!`);
+  return allData;
+};
+
+export const mockMarketPrices: MarketPrice[] = generateComprehensiveMarketData();
 
 // Export helper functions
 export const getAvailableCrops = (): string[] => {

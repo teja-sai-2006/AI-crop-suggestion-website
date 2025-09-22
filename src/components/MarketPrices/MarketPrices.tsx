@@ -42,6 +42,9 @@ const MarketPrices: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
+      
+      // Force refresh for presentation data
+      MarketPricesAPIService.forceRefreshMockData();
 
       // Load basic data in parallel
       const [crops, markets, summaryData, preferences] = await Promise.all([

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   LineChart,
   Line,
@@ -10,6 +10,7 @@ import {
 } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MarketPrice } from '@/types/marketPrices.types';
+import { MarketPricesAPIService } from '@/services/marketPrices.api';
 
 interface PriceTrendChartProps {
   data?: MarketPrice[];
@@ -26,22 +27,122 @@ const PriceTrendChart: React.FC<PriceTrendChartProps> = ({
   loading = false,
   title = "Price Trend (Last 30 Days)",
 }) => {
-  if (loading) {
+  const [priceData, setPriceData] = useState<MarketPrice[]>([]);
+  const [isLoading, setIsLoading] = useState(loading);
+  const [dataStable, setDataStable] = useState(false);
+
+  // Handle external data changes
+  useEffect(() => {
+    if (data && data.length > 0) {
+      console.log(`📦 External data provided: ${data.length} records`);
+      setPriceData(data);
+      setIsLoading(false);
+      setDataStable(true);
+    }
+  }, [data]);
+
+  // Fetch data when crop or locationId changes and no external data is provided
+  // Fetch data when crop or locationId changes and no external data is provided
+  useEffect(() => {
+    const fetchPriceHistory = async () => {
+      console.log(`🔄 PriceTrendChart useEffect triggered:`, { 
+        crop, 
+        locationId, 
+        dataLength: data.length,
+        currentPriceDataLength: priceData.length 
+      });
+
+      // If external data is provided and not empty, don't fetch
+      if (data && data.length > 0) {
+        console.log(`📦 Skipping fetch - external data available: ${data.length} records`);
+        return;
+      }
+
+      // If no crop selected, clear data
+      if (!crop) {
+        console.log(`❌ No crop selected, clearing data`);
+        setPriceData([]);
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        setIsLoading(true);
+        console.log(`📊 Fetching price history for ${crop} in location: ${locationId || 'all locations'}`);
+        
+        const priceHistory = await MarketPricesAPIService.getCropPriceHistory(crop, locationId, 30);
+        console.log(`📈 Retrieved ${priceHistory.trends.length} price points for chart`);
+        
+        if (priceHistory.trends.length === 0) {
+          console.log(`⚠️ No price trends returned from API`);
+          setPriceData([]);
+          setIsLoading(false);
+          return;
+        }
+        
+        // Convert trends to MarketPrice format for the chart
+        const priceDataForChart: MarketPrice[] = priceHistory.trends.map((trend, index) => ({
+          id: `trend_${index}`,
+          crop: crop,
+          location: priceHistory.location,
+          locationId: locationId || 'all',
+          price: trend.price,
+          unit: 'kg',
+          date: trend.date,
+          marketName: priceHistory.location,
+          previousPrice: index > 0 ? priceHistory.trends[index - 1].price : trend.price,
+          trend: index > 0 
+            ? (trend.price > priceHistory.trends[index - 1].price ? 'up' 
+               : trend.price < priceHistory.trends[index - 1].price ? 'down' 
+               : 'stable')
+            : 'stable',
+          changePercentage: index > 0 
+            ? ((trend.price - priceHistory.trends[index - 1].price) / priceHistory.trends[index - 1].price) * 100
+            : 0,
+          quality: 'standard',
+          minPrice: trend.price * 0.9,
+          maxPrice: trend.price * 1.1,
+          avgPrice: trend.price,
+          createdAt: new Date(trend.date).toISOString(),
+          updatedAt: new Date(trend.date).toISOString()
+        }));
+        
+        console.log(`✅ Chart data prepared: ${priceDataForChart.length} records`);
+        
+        // Add a small delay to prevent flashing
+        setTimeout(() => {
+          setPriceData(priceDataForChart);
+          setDataStable(true);
+        }, 100);
+      } catch (error) {
+        console.error('Error fetching price history for chart:', error);
+        setPriceData([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPriceHistory();
+  }, [crop, locationId]); // Removed 'data' from dependency array to prevent loops
+
+  if (isLoading || !dataStable) {
     return (
       <Card className="glass-medium">
         <CardHeader>
           <CardTitle className="text-strong">{title}</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="h-64 animate-pulse">
-            <div className="h-full glass-ultra rounded"></div>
+          <div className="h-64 flex items-center justify-center">
+            <div className="animate-pulse">
+              <div className="text-enhanced">Loading price trends...</div>
+            </div>
           </div>
         </CardContent>
       </Card>
     );
   }
 
-  if (!data || data.length === 0) {
+  if (!priceData || priceData.length === 0) {
     return (
       <Card className="glass-medium">
         <CardHeader>
@@ -57,7 +158,7 @@ const PriceTrendChart: React.FC<PriceTrendChartProps> = ({
   }
 
   // Sort data by date and format for chart
-  const chartData = data
+  const chartData = priceData
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
     .map((item) => ({
       date: new Date(item.date).toLocaleDateString('en-IN', {
@@ -67,6 +168,8 @@ const PriceTrendChart: React.FC<PriceTrendChartProps> = ({
       price: item.price,
       fullDate: item.date,
     }));
+
+  console.log(`📊 Chart rendering with ${chartData.length} data points:`, chartData.slice(0, 3));
 
   const formatTooltip = (value: number, name: string) => {
     if (name === 'price') {

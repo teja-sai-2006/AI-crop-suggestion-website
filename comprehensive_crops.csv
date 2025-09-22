@@ -1,0 +1,87 @@
+# COMPREHENSIVE CROP DATABASE FOR ALL SCENARIOS
+# Format: N,P,K,temperature,humidity,ph,rainfall,label,season,irrigation,fertilizer,red,black,alluvial,sandy,loamy,laterite,duration,yield,cost,warnings,tips,guidance
+
+# === ACIDIC SOIL CROPS (pH 4.5-6.0) ===
+# RED SOIL SPECIALISTS - LOW NPK
+35,25,30,26,75,5.5,400,finger_millet,Kharif,False,True,1,0,0,1,0,0,90-120 days,25,"₹18,000","Drought stress and blast disease","Drought-tolerant crop suitable for rainfed conditions","Minimal fertilizer needed; excellent for marginal lands"
+40,30,35,24,70,5.8,350,pearl_millet,Kharif,False,True,1,0,0,1,0,0,75-90 days,30,"₹16,000","Heat stress and downy mildew","Very drought tolerant; grows in arid regions","Sow early; harvest when grains are hard"
+45,35,40,22,65,5.6,300,barley,Rabi,False,True,1,1,0,1,0,0,90-110 days,35,"₹19,000","Rust diseases and aphid attack","Cool season crop; salt tolerant","Use certified seeds; avoid waterlogging"
+50,40,45,20,80,5.4,500,oats,Rabi,True,True,1,0,1,1,1,0,100-120 days,40,"₹21,000","Crown rust and smut diseases","Nutritious fodder crop; cool climate","Early sowing recommended; cut at milk stage for fodder"
+
+# RED SOIL - MEDIUM NPK
+80,55,60,28,70,5.7,450,pigeon_pea,Kharif,False,True,1,1,0,1,0,0,120-150 days,42,"₹24,000","Wilt disease and pod fly damage","Drought tolerant legume; improves soil","Mixed cropping with cereals beneficial"
+90,60,70,25,75,5.9,400,castor,Kharif,False,True,1,0,0,1,0,0,90-120 days,38,"₹22,000","Capsule borer and leaf spot","Oil seed crop; drought resistant","Deep plowing required; harvest when capsules dry"
+85,50,65,26,68,5.8,380,sesame,Kharif,False,True,1,1,0,1,0,0,85-105 days,35,"₹20,000","Phyllody disease and capsule borer","Short duration oil crop","Sandy loam preferred; harvest when lower capsules turn brown"
+
+# === BLACK SOIL CROPS (pH 6.0-7.5) ===
+# BLACK SOIL - HIGH NPK DEMAND
+150,90,120,28,75,6.8,600,cotton_bt,Kharif,True,True,0,1,1,0,1,0,150-180 days,45,"₹40,000","Pink bollworm and whitefly resistance","High value cash crop; requires irrigation","Use Bt varieties; integrated pest management"
+180,100,140,26,80,7.0,800,sugarcane_co86032,Annual,True,True,0,1,1,0,1,0,300-365 days,85,"₹55,000","Red rot and early shoot borer","Heavy feeder crop; continuous irrigation","Plant certified sets; earthing up at 4 months"
+120,80,100,24,70,6.5,450,soybean_js335,Kharif,False,True,0,1,1,1,1,0,90-110 days,55,"₹28,000","Yellow mosaic virus and rust","Protein-rich legume; nitrogen fixation","Inoculate seeds; avoid waterlogging"
+
+# BLACK SOIL - MEDIUM NPK
+70,45,55,22,75,6.8,350,gram_chickpea,Rabi,False,True,0,1,1,1,1,0,90-120 days,38,"₹25,000","Wilt disease and pod borer","Cool season pulse; drought tolerant","Seed treatment essential; harvest when pods rattle"
+65,40,50,20,70,7.2,300,wheat_hd2967,Rabi,True,True,0,1,1,1,1,0,120-150 days,48,"₹32,000","Rust diseases and aphid attack","High yielding variety; irrigation needed","Timely sowing; 6 irrigations required"
+60,35,45,18,65,6.9,250,mustard_pusa_bold,Rabi,False,True,0,1,1,1,1,0,90-110 days,35,"₹22,000","White rust and aphid infestation","Oil seed crop; cold tolerant","Line sowing; harvest when siliqua turn brown"
+
+# === ALLUVIAL SOIL CROPS (pH 6.0-7.0) ===
+# ALLUVIAL - RICE VARIETIES (HIGH WATER)
+120,60,40,28,85,6.5,1200,rice_ir64,Kharif,True,True,0,0,1,0,1,0,120-140 days,65,"₹35,000","Blast disease and brown plant hopper","High yielding variety; submergence tolerant","Maintain 5cm water level; harvest at 80% maturity"
+100,50,35,26,90,6.3,1400,rice_pusa_44,Kharif,True,True,0,0,1,0,1,0,135-155 days,70,"₹38,000","Bacterial leaf blight and stem borer","Long duration variety; high yield potential","Transplant 21-day seedlings; apply silicon"
+110,55,38,27,88,6.4,1300,rice_mtv_5003,Kharif,True,True,0,0,1,0,1,0,125-145 days,68,"₹36,000","Sheath blight and leaf folder","Medium duration hybrid variety","Maintain proper spacing; avoid excess nitrogen"
+
+# ALLUVIAL - VEGETABLE CROPS
+140,100,120,22,75,6.8,400,potato_kufri_jyoti,Rabi,True,True,0,0,1,1,1,0,70-90 days,350,"₹45,000","Late blight and aphid attack","Cool season crop; high market value","Earthing up essential; harvest when foliage yellows"
+90,70,80,25,70,6.5,350,onion_pusa_red,Rabi,True,True,0,0,1,1,1,0,120-150 days,250,"₹40,000","Purple blotch and thrips damage","Long day variety; storage type","Transplant at pencil thickness; cure before storage"
+110,80,90,20,65,6.2,300,garlic_yamuna_safed,Rabi,True,True,0,0,1,1,1,0,150-180 days,80,"₹35,000","White rot and nematode attack","Cool season bulb crop","Plant cloves pointed end up; harvest when leaves dry"
+
+# === SANDY SOIL CROPS (pH 6.0-7.5) ===
+# SANDY - DROUGHT TOLERANT CROPS
+30,25,35,32,60,7.0,200,bajra_pearl_millet,Kharif,False,False,1,0,0,1,0,0,75-90 days,28,"₹15,000","Downy mildew and ergot disease","Extreme drought tolerance; arid zone crop","Early sowing; harvest when grains are hard"
+40,30,40,30,65,6.8,250,jowar_sorghum,Kharif,False,True,1,0,1,1,0,0,90-120 days,32,"₹18,000","Shoot fly and stem borer","Drought resistant; multi-purpose crop","Seed treatment; harvest at physiological maturity"
+35,28,38,29,55,7.2,180,cluster_bean,Kharif,False,True,1,0,0,1,0,0,90-110 days,25,"₹20,000","Bacterial blight and pod borer","Leguminous vegetable; drought hardy","Pick pods regularly; harvest green for vegetable"
+
+# SANDY - ROOT CROPS
+60,50,80,26,70,6.5,400,sweet_potato,Kharif,False,True,1,0,1,1,1,0,90-120 days,200,"₹25,000","Sweet potato weevil and wireworm","Nutritious tuber crop; well-drained soil","Plant vine cuttings; harvest before frost"
+55,45,75,24,75,6.8,350,cassava_tapioca,Annual,False,True,1,0,0,1,0,0,300-360 days,300,"₹22,000","Cassava mosaic virus and mealybug","Starchy tuber; drought tolerant after establishment","Plant stem cuttings; harvest tubers carefully"
+50,40,70,22,80,6.3,300,yam_dioscorea,Annual,False,True,1,0,1,1,1,0,240-300 days,150,"₹28,000","Anthracnose and scale insects","Climbing tuber crop; support needed","Provide stakes; harvest when vines dry"
+
+# === LOAMY SOIL CROPS (pH 6.5-7.5) ===
+# LOAMY - HIGH VALUE VEGETABLES
+160,120,140,20,75,6.8,400,cabbage_golden_acre,Rabi,True,True,0,1,1,0,1,0,80-100 days,400,"₹45,000","Clubroot and diamondback moth","Cool season brassica; high nutrition needs","Transplant hardened seedlings; maintain soil moisture"
+150,110,130,18,80,6.5,350,cauliflower_snowball,Rabi,True,True,0,0,1,0,1,0,75-95 days,300,"₹42,000","Black rot and aphid infestation","Cool weather crop; blanching required","Tie leaves over curd; harvest compact heads"
+140,100,120,22,70,6.9,380,broccoli_palam_samridhi,Rabi,True,True,0,0,1,0,1,0,80-100 days,120,"₹40,000","Downy mildew and aphid attack","Nutritious brassica; premium vegetable","Harvest central head first; side shoots follow"
+
+# LOAMY - FRUIT CROPS
+180,80,200,26,75,6.7,600,watermelon_sugar_baby,Summer,True,True,0,0,1,1,1,0,90-110 days,250,"₹30,000","Fusarium wilt and fruit fly","Warm season cucurbit; high water content","Mulching essential; harvest when tendril dries"
+140,70,120,25,70,6.8,500,muskmelon_hara_madhu,Summer,True,True,0,0,1,1,1,0,80-100 days,180,"₹28,000","Powdery mildew and aphid attack","Premium fruit; export quality","Pinch growing tips; harvest when fruit slips"
+120,60,100,24,80,6.6,450,cucumber_straight_eight,Summer,True,True,0,0,1,1,1,0,50-70 days,150,"₹25,000","Downy mildew and cucumber beetle","Fast growing vine crop","Provide support; harvest young fruits"
+
+# === LATERITE SOIL CROPS (pH 5.0-6.5) ===
+# LATERITE - ACID TOLERANT TREES
+80,60,100,26,80,5.8,1200,coconut_dwarf,Annual,False,True,1,0,0,0,0,1,365 days,60,"₹35,000","Rhinoceros beetle and bud rot","Perennial palm; coastal areas","Apply organic matter; control pests regularly"
+70,50,90,25,85,5.5,1400,areca_nut,Annual,False,True,1,0,0,0,0,1,365 days,40,"₹45,000","Fruit rot and yellow leaf disease","Shade tolerant palm; high value","Intercrop with pepper; proper drainage essential"
+60,40,80,24,90,5.2,1600,black_pepper,Annual,False,True,1,0,0,0,0,1,365 days,8,"₹80,000","Quick wilt and pollu beetle","Climbing spice; shade crop","Provide live standards; harvest when berries turn red"
+
+# LATERITE - SPICE CROPS
+90,70,110,28,75,5.9,800,cardamom_malabar,Annual,True,True,1,0,0,0,0,1,365 days,150,"₹120,000","Thrips and capsule borer","High value spice; shade essential","Provide 50% shade; harvest capsules individually"
+85,65,105,26,80,5.7,900,ginger_rio_de_janeiro,Annual,True,True,1,0,0,0,0,1,240-270 days,200,"₹50,000","Rhizome rot and shoot borer","Underground rhizome; monsoon crop","Plant during pre-monsoon; harvest after foliage dries"
+80,60,100,25,85,5.6,1000,turmeric_salem,Annual,True,True,1,0,0,0,0,1,270-300 days,250,"₹40,000","Leaf blotch and rhizome rot","Rhizomatous spice; tropical crop","Plant during onset of monsoon; cure rhizomes properly"
+
+# === ALKALINE SOIL CROPS (pH 7.5-9.0) ===
+# ALKALINE - SALT TOLERANT
+45,35,50,30,65,8.0,300,barley_azad,Rabi,False,True,1,1,1,1,1,0,90-110 days,30,"₹20,000","Salt tolerance; rust diseases","Most salt tolerant cereal","Use gypsum; leach salts before sowing"
+50,40,55,28,70,8.2,350,rye_grass,Rabi,False,True,1,1,1,1,1,0,85-105 days,35,"₹18,000","Ergot disease; alkaline tolerance","Fodder crop; alkaline soil adaptation","Apply sulfur; cut at boot stage"
+40,30,45,32,60,8.5,250,saltbush_atriplex,Annual,False,False,1,1,1,1,1,0,365 days,40,"₹15,000","Extreme salt tolerance","Shrub for saline wastelands","Minimal care; browse for livestock"
+
+# === ZAID SEASON SPECIALTIES ===
+# ZAID - SUMMER CROPS
+100,60,80,35,50,7.0,200,summer_moong,Zaid,True,True,0,1,1,1,1,0,60-75 days,25,"₹30,000","Yellow mosaic virus and thrips","Short duration pulse; heat tolerant","Pre-soaking seeds; frequent irrigation"
+90,50,70,38,45,6.8,150,summer_fodder,Zaid,True,True,1,1,1,1,1,0,45-60 days,300,"₹12,000","Heat stress and aphid attack","Green fodder; multiple cuts","Cut at 50% flowering; allow regrowth"
+80,45,65,40,40,7.2,100,cluster_bean_summer,Zaid,False,True,1,0,1,1,0,0,75-90 days,30,"₹25,000","Heat tolerance; minimal water","Drought hardy legume","Mulching essential; harvest pods young"
+
+# === ORGANIC/LOW INPUT CROPS ===
+# ORGANIC - MINIMAL FERTILIZER
+20,15,25,24,70,6.5,400,organic_wheat,Rabi,False,False,0,1,1,1,1,0,130-150 days,35,"₹40,000","Lower yield but premium price","Organic certification possible","Use vermicompost; biological pest control"
+15,12,20,26,75,6.3,500,organic_rice,Kharif,True,False,0,0,1,0,1,0,140-160 days,45,"₹45,000","System of rice intensification","Organic premium market","Single seedling transplanting; alternate wetting"
+25,20,30,22,65,6.8,350,organic_vegetables,Annual,True,False,0,1,1,1,1,0,60-120 days,200,"₹50,000","Pest management challenging","High market premium","Neem-based pesticides; companion planting"

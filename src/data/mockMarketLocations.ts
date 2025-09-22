@@ -8,7 +8,7 @@ import { MarketLocation } from '../types/marketPrices.types';
 export const mockMarketLocations: MarketLocation[] = [
   {
     id: 'loc_mumbai_apmc',
-    name: 'APMC Market Mumbai',
+    name: 'Agricultural Market Mumbai',
     city: 'Mumbai',
     state: 'Maharashtra',
     region: 'Western India',
@@ -18,37 +18,37 @@ export const mockMarketLocations: MarketLocation[] = [
   },
   {
     id: 'loc_pune_hadapsar',
-    name: 'Hadapsar Market Pune',
+    name: 'Agricultural Market Pune',
     city: 'Pune',
     state: 'Maharashtra',
     region: 'Western India',
-    marketType: 'mandi',
+    marketType: 'wholesale',
     isActive: true,
     coordinates: { lat: 18.5204, lng: 73.8567 }
   },
   {
-    id: 'loc_nagpur_cotton',
-    name: 'Cotton Market Nagpur',
-    city: 'Nagpur',
-    state: 'Maharashtra',
-    region: 'Central India',
+    id: 'loc_delhi_azadpur',
+    name: 'Agricultural Market Delhi',
+    city: 'Delhi',
+    state: 'Delhi',
+    region: 'North India',
     marketType: 'wholesale',
     isActive: true,
-    coordinates: { lat: 21.1458, lng: 79.0882 }
+    coordinates: { lat: 28.7041, lng: 77.1025 }
   },
   {
-    id: 'loc_hyderabad_begum',
-    name: 'Begum Bazaar Hyderabad',
-    city: 'Hyderabad',
-    state: 'Telangana',
+    id: 'loc_bangalore_yeshwanthpur',
+    name: 'Agricultural Market Bangalore',
+    city: 'Bangalore',
+    state: 'Karnataka',
     region: 'South India',
     marketType: 'wholesale',
     isActive: true,
-    coordinates: { lat: 17.3850, lng: 78.4867 }
+    coordinates: { lat: 12.9716, lng: 77.5946 }
   },
   {
     id: 'loc_chennai_koyambedu',
-    name: 'Koyambedu Market Chennai',
+    name: 'Agricultural Market Chennai',
     city: 'Chennai',
     state: 'Tamil Nadu',
     region: 'South India',
@@ -57,28 +57,8 @@ export const mockMarketLocations: MarketLocation[] = [
     coordinates: { lat: 13.0827, lng: 80.2707 }
   },
   {
-    id: 'loc_bengaluru_yeswanthpur',
-    name: 'Yeswanthpur Market Bengaluru',
-    city: 'Bengaluru',
-    state: 'Karnataka',
-    region: 'South India',
-    marketType: 'mandi',
-    isActive: true,
-    coordinates: { lat: 13.0285, lng: 77.5540 }
-  },
-  {
-    id: 'loc_delhi_azadpur',
-    name: 'Azadpur Mandi Delhi',
-    city: 'Delhi',
-    state: 'Delhi',
-    region: 'North India',
-    marketType: 'mandi',
-    isActive: true,
-    coordinates: { lat: 28.7041, lng: 77.1025 }
-  },
-  {
-    id: 'loc_kolkata_sealdah',
-    name: 'Sealdah Market Kolkata',
+    id: 'loc_kolkata_mechua',
+    name: 'Agricultural Market Kolkata',
     city: 'Kolkata',
     state: 'West Bengal',
     region: 'East India',
@@ -87,67 +67,114 @@ export const mockMarketLocations: MarketLocation[] = [
     coordinates: { lat: 22.5726, lng: 88.3639 }
   },
   {
+    id: 'loc_hyderabad_bowenpally',
+    name: 'Agricultural Market Hyderabad',
+    city: 'Hyderabad',
+    state: 'Telangana',
+    region: 'South India',
+    marketType: 'wholesale',
+    isActive: true,
+    coordinates: { lat: 17.3850, lng: 78.4867 }
+  },
+  {
     id: 'loc_ahmedabad_jamalpur',
-    name: 'Jamalpur Market Ahmedabad',
+    name: 'Agricultural Market Ahmedabad',
     city: 'Ahmedabad',
     state: 'Gujarat',
     region: 'Western India',
-    marketType: 'mandi',
+    marketType: 'wholesale',
     isActive: true,
     coordinates: { lat: 23.0225, lng: 72.5714 }
   },
   {
-    id: 'loc_jaipur_chomu',
-    name: 'Chomu Mandi Jaipur',
+    id: 'loc_jaipur_muhana',
+    name: 'Agricultural Market Jaipur',
     city: 'Jaipur',
     state: 'Rajasthan',
     region: 'North India',
-    marketType: 'mandi',
+    marketType: 'wholesale',
     isActive: true,
     coordinates: { lat: 26.9124, lng: 75.7873 }
   },
   {
-    id: 'loc_lucknow_aminabad',
-    name: 'Aminabad Market Lucknow',
+    id: 'loc_solapur_agricultural',
+    name: 'Agricultural Market Solapur',
+    city: 'Solapur',
+    state: 'Maharashtra',
+    region: 'Western India',
+    marketType: 'wholesale',
+    isActive: true,
+    coordinates: { lat: 17.6599, lng: 75.9064 }
+  },
+  {
+    id: 'loc_indore_choithram',
+    name: 'Agricultural Market Indore',
+    city: 'Indore',
+    state: 'Madhya Pradesh',
+    region: 'Central India',
+    marketType: 'wholesale',
+    isActive: true,
+    coordinates: { lat: 22.7196, lng: 75.8577 }
+  },
+  {
+    id: 'loc_lucknow_alambagh',
+    name: 'Agricultural Market Lucknow',
     city: 'Lucknow',
     state: 'Uttar Pradesh',
     region: 'North India',
-    marketType: 'retail',
+    marketType: 'wholesale',
     isActive: true,
     coordinates: { lat: 26.8467, lng: 80.9462 }
   },
   {
-    id: 'loc_bhopal_chowk',
-    name: 'Chowk Bazaar Bhopal',
+    id: 'loc_bhopal_hamidia',
+    name: 'Agricultural Market Bhopal',
     city: 'Bhopal',
     state: 'Madhya Pradesh',
     region: 'Central India',
     marketType: 'wholesale',
     isActive: true,
     coordinates: { lat: 23.2599, lng: 77.4126 }
+  },
+  {
+    id: 'loc_chandigarh_sector26',
+    name: 'Agricultural Market Chandigarh',
+    city: 'Chandigarh',
+    state: 'Chandigarh',
+    region: 'North India',
+    marketType: 'wholesale',
+    isActive: true,
+    coordinates: { lat: 30.7333, lng: 76.7794 }
+  },
+  {
+    id: 'loc_nashik_satpur',
+    name: 'Agricultural Market Nashik',
+    city: 'Nashik',
+    state: 'Maharashtra',
+    region: 'Western India',
+    marketType: 'wholesale',
+    isActive: true,
+    coordinates: { lat: 19.9975, lng: 73.7898 }
   }
 ];
 
-export const getCropsByRegion = (region: string): string[] => {
-  const regionCrops: Record<string, string[]> = {
-    'Western India': ['Cotton', 'Sugarcane', 'Onion', 'Grapes', 'Wheat', 'Soybean'],
-    'North India': ['Wheat', 'Rice', 'Potato', 'Mustard', 'Barley', 'Peas'],
-    'South India': ['Rice', 'Coconut', 'Coffee', 'Spices', 'Millets', 'Sugarcane'],
-    'East India': ['Rice', 'Jute', 'Tea', 'Potato', 'Wheat', 'Maize'],
-    'Central India': ['Cotton', 'Soybean', 'Wheat', 'Gram', 'Mustard', 'Rice']
-  };
-  
-  return regionCrops[region] || [];
-};
-
+// Helper functions for backward compatibility
 export const getLocationsByState = (state: string): MarketLocation[] => {
   return mockMarketLocations.filter(location => location.state === state);
 };
 
 export const getAvailableStates = (): string[] => {
-  return [...new Set(mockMarketLocations.map(location => location.state))];
+  const stateSet = new Set(mockMarketLocations.map(location => location.state));
+  const uniqueStates = Array.from(stateSet);
+  console.log(`🏪 Market Locations: ${uniqueStates.length} states, ${mockMarketLocations.length} total markets`);
+  return uniqueStates;
 };
 
 export const getAvailableRegions = (): string[] => {
-  return [...new Set(mockMarketLocations.map(location => location.region))];
+  const regionSet = new Set(mockMarketLocations.map(location => location.region));
+  return Array.from(regionSet);
+};
+
+export const getLocationsByRegion = (region: string): MarketLocation[] => {
+  return mockMarketLocations.filter(location => location.region === region);
 };

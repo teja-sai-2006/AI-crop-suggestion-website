@@ -22,17 +22,17 @@ const CropRecommendation: React.FC = () => {
   const { toast } = useToast();
   
   // Form state
-  const [formData, setFormData] = useState<CropRecommendationInput & { season?: string }>({
+  const [formData, setFormData] = useState<CropRecommendationInput & { season?: string; soilType?: string }>({
     soil: {
       ph: 6.5,
-      nitrogen: 50,
-      phosphorus: 30,
+      nitrogen: 80,
+      phosphorus: 45,
       potassium: 40
     },
     climate: {
       temperature: 25,
-      humidity: 65,
-      rainfall: 800,
+      humidity: 80,
+      rainfall: 250,
       location: {
         name: 'Mumbai, Maharashtra',
         lat: 19.0760,
@@ -41,7 +41,8 @@ const CropRecommendation: React.FC = () => {
     },
     farmSize: 2.0,
     experience: 'intermediate',
-    season: 'kharif'
+    season: 'kharif',
+    soilType: 'alluvial'
   });
 
   // Component state
@@ -66,6 +67,22 @@ const CropRecommendation: React.FC = () => {
       } catch (err) {
         console.warn('Failed to load last result:', err);
       }
+    } else {
+      // Auto-load recommendations with default values for better UX
+      const autoLoad = async () => {
+        try {
+          setIsLoading(true);
+          const recommendation = await CropRecommendationAPIService.getCropRecommendations(formData);
+          setResult(recommendation);
+          localStorage.setItem('km.cropRecommendation.lastResult', JSON.stringify(recommendation));
+          checkTrackedStatus(recommendation.recommendations);
+        } catch (err) {
+          console.warn('Auto-load failed:', err);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      autoLoad();
     }
   }, []);
 
@@ -214,6 +231,25 @@ const CropRecommendation: React.FC = () => {
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-enhanced">Soil Parameters</h3>
                 <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="soilType" className="text-enhanced">Soil Type</Label>
+                    <Select
+                      value={formData.soilType || 'loamy'}
+                      onValueChange={(value) => handleGeneralInputChange('soilType', value)}
+                    >
+                      <SelectTrigger className="glass text-enhanced">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="glass">
+                        <SelectItem value="red">Red Soil</SelectItem>
+                        <SelectItem value="black">Black Soil</SelectItem>
+                        <SelectItem value="alluvial">Alluvial Soil</SelectItem>
+                        <SelectItem value="sandy">Sandy Soil</SelectItem>
+                        <SelectItem value="loamy">Loamy Soil</SelectItem>
+                        <SelectItem value="laterite">Laterite Soil</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                   <div>
                     <Label htmlFor="ph" className="text-enhanced">pH Level</Label>
                     <Input
@@ -425,68 +461,69 @@ const CropRecommendation: React.FC = () => {
                       Recommended Crops
                     </CardTitle>
                     <CardDescription className="text-enhanced">
-                      Based on your soil and climate parameters (Confidence: {result.confidence}%)
+                      Based on your soil and climate parameters (Confidence: {result.confidence}%) - Showing {result.recommendations.length} diverse crops
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
-                      {result.recommendations.slice(0, 3).map((crop, index) => (
+                    <div className="space-y-3 max-h-[800px] overflow-y-auto">
+                      {result.recommendations.map((crop, index) => (
                         <Card key={crop.variety} className={`cursor-pointer transition-all glass ${
                           selectedCrop?.variety === crop.variety ? 'ring-2 ring-blue-500' : ''
                         }`} onClick={() => setSelectedCrop(crop)}>
-                          <CardContent className="p-4">
+                          <CardContent className="p-3">
                             <div className="flex justify-between items-start mb-2">
                               <div>
-                                <h4 className="font-semibold text-lg text-enhanced">{crop.variety}</h4>
-                                <p className="text-sm text-enhanced text-overlay">{crop.name}</p>
+                                <h4 className="font-semibold text-base text-enhanced">{crop.variety}</h4>
+                                <p className="text-xs text-enhanced text-overlay">{crop.name}</p>
                               </div>
-                              <Badge variant={getConfidenceBadgeVariant(crop.confidence)} className="glass">
-                                {crop.confidence}% match
-                              </Badge>
+                              <div className="flex flex-col items-end gap-1">
+                                <Badge variant={getConfidenceBadgeVariant(crop.confidence)} className="glass text-xs">
+                                  {crop.confidence}% match
+                                </Badge>
+                                {index === 0 && (
+                                  <Badge variant="secondary" className="glass text-xs">
+                                    Top Pick
+                                  </Badge>
+                                )}
+                              </div>
                             </div>
                             
-                            <div className="grid grid-cols-2 gap-4 text-sm">
-                              <div className="flex items-center gap-2">
-                                <Calendar className="h-4 w-4 text-gray-500" />
+                            <div className="grid grid-cols-2 gap-2 text-xs">
+                              <div className="flex items-center gap-1">
+                                <Calendar className="h-3 w-3 text-gray-500" />
                                 <span className="text-enhanced">{crop.growthDuration.min}-{crop.growthDuration.max} {crop.growthDuration.unit}</span>
                               </div>
-                              <div className="flex items-center gap-2">
-                                <TrendingUp className="h-4 w-4 text-green-600" />
+                              <div className="flex items-center gap-1">
+                                <TrendingUp className="h-3 w-3 text-green-600" />
                                 <span className="text-enhanced">{crop.profitability.roi}% ROI</span>
                               </div>
-                              <div className="flex items-center gap-2">
-                                <Droplets className="h-4 w-4 text-blue-500" />
+                              <div className="flex items-center gap-1">
+                                <Droplets className="h-3 w-3 text-blue-500" />
                                 <span className="text-enhanced">{crop.season} season</span>
                               </div>
-                              <div className="flex items-center gap-2">
-                                <span className="text-green-600 font-medium">₹{crop.profitability.profit.toLocaleString()}</span>
-                                <span className="text-sm text-enhanced text-overlay">expected profit</span>
+                              <div className="flex items-center gap-1">
+                                <span className="text-green-600 font-medium text-xs">₹{crop.profitability.profit.toLocaleString()}</span>
+                                <span className="text-xs text-enhanced text-overlay">profit</span>
                               </div>
                             </div>
-
-                            {index === 0 && (
-                              <Badge variant="secondary" className="mt-2 glass">
-                                Top Recommendation
-                              </Badge>
-                            )}
                             
                             {/* Add to Crop Tracker Button */}
-                            <div className="mt-4 pt-3 border-t">
+                            <div className="mt-3 pt-2 border-t">
                               {trackedCrops.has(crop.id) ? (
                                 <Button 
                                   variant="outline" 
                                   size="sm" 
-                                  className="w-full" 
+                                  className="w-full text-xs h-7" 
                                   disabled
                                 >
-                                  <CheckCircle className="h-4 w-4 mr-2 text-green-500" />
+                                  <CheckCircle className="h-3 w-3 mr-1 text-green-500" />
                                   Added to Tracker
                                 </Button>
                               ) : (
                                 <Button 
                                   variant="default" 
                                   size="sm" 
-                                  className="w-full" 
+                                  className="w-full text-xs h-7" 
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     handleAddToTracker(crop);
@@ -495,13 +532,13 @@ const CropRecommendation: React.FC = () => {
                                 >
                                   {addingToTracker === crop.id ? (
                                     <>
-                                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                                      <Loader2 className="h-3 w-3 mr-1 animate-spin" />
                                       Adding...
                                     </>
                                   ) : (
                                     <>
-                                      <Plus className="h-4 w-4 mr-2" />
-                                      Add to Crop Tracker
+                                      <Plus className="h-3 w-3 mr-1" />
+                                      Add to Tracker
                                     </>
                                   )}
                                 </Button>

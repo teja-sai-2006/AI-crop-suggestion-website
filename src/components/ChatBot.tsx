@@ -46,6 +46,7 @@ const ChatBot: React.FC = () => {
   const [quickReplies, setQuickReplies] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
+  const [geminiConnected, setGeminiConnected] = useState<boolean | null>(null);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -53,6 +54,7 @@ const ChatBot: React.FC = () => {
   // Load initial data
   useEffect(() => {
     loadInitialData();
+    checkGeminiConnection();
   }, []);
 
   // Auto-scroll to bottom when new messages arrive
@@ -89,6 +91,16 @@ const ChatBot: React.FC = () => {
     } catch (err) {
       console.error('Failed to load initial data:', err);
       setError('Failed to load chat data');
+    }
+  };
+
+  const checkGeminiConnection = async () => {
+    try {
+      const isConnected = await ChatBotAPIService.testGeminiConnection();
+      setGeminiConnected(isConnected);
+    } catch (err) {
+      console.error('Failed to check Gemini connection:', err);
+      setGeminiConnected(false);
     }
   };
 
@@ -384,10 +396,25 @@ const ChatBot: React.FC = () => {
                     Ask me anything about farming, crops, weather, or diseases
                   </CardDescription>
                 </div>
-                <Badge variant="outline" className="flex items-center gap-1 glass text-enhanced">
-                  <Languages className="h-3 w-3" />
-                  {settings.language.toUpperCase()}
-                </Badge>
+                <div className="flex items-center gap-2">
+                  <Badge variant="outline" className="flex items-center gap-1 glass text-enhanced">
+                    <Languages className="h-3 w-3" />
+                    {settings.language.toUpperCase()}
+                  </Badge>
+                  {geminiConnected !== null && (
+                    <Badge 
+                      variant="outline" 
+                      className={`flex items-center gap-1 glass text-enhanced ${
+                        geminiConnected ? 'border-green-500 text-green-600' : 'border-yellow-500 text-yellow-600'
+                      }`}
+                    >
+                      <div className={`w-2 h-2 rounded-full ${
+                        geminiConnected ? 'bg-green-500' : 'bg-yellow-500'
+                      }`} />
+                      {geminiConnected ? 'AI Active' : 'AI Fallback'}
+                    </Badge>
+                  )}
+                </div>
               </div>
             </CardHeader>
 
@@ -430,6 +457,18 @@ const ChatBot: React.FC = () => {
                           {msg.metadata?.topic && (
                             <Badge variant="secondary" className="text-xs glass">
                               {msg.metadata.topic}
+                            </Badge>
+                          )}
+                          {msg.sender === 'bot' && msg.metadata?.source && (
+                            <Badge 
+                              variant="outline" 
+                              className={`text-xs glass ${
+                                msg.metadata.source === 'gemini-ai' 
+                                  ? 'border-green-400 text-green-600' 
+                                  : 'border-yellow-400 text-yellow-600'
+                              }`}
+                            >
+                              {msg.metadata.source === 'gemini-ai' ? 'AI' : 'Backup'}
                             </Badge>
                           )}
                         </div>

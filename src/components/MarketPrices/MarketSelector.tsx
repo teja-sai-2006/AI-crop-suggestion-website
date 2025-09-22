@@ -25,7 +25,7 @@ const MarketSelector: React.FC<MarketSelectorProps> = ({
   return (
     <div className="space-y-2">
       <Label htmlFor="market-selector" className="text-sm font-medium text-enhanced text-overlay">
-        Select Market
+        Select Location
       </Label>
       <Select
         value={selectedMarket}
@@ -33,12 +33,12 @@ const MarketSelector: React.FC<MarketSelectorProps> = ({
         disabled={loading}
       >
         <SelectTrigger id="market-selector" className="w-full glass text-enhanced">
-          <SelectValue placeholder={loading ? "Loading markets..." : "Choose a market"} />
+          <SelectValue placeholder={loading ? "Loading locations..." : "Choose a location"} />
         </SelectTrigger>
         <SelectContent className="glass">
           {markets.map((market) => (
             <SelectItem key={market.id} value={market.id} className="text-enhanced">
-              {market.name}, {market.state}
+              {market.city}, {market.state}
             </SelectItem>
           ))}
         </SelectContent>
