@@ -1,33 +1,50 @@
-# Offline Kheti Gyani
+# KrishiMitra - AI-Powered Farming Companion
 
-Smart farming assistant that runs offline-first.
+Your comprehensive farming companion powered by AI technology.
 
-## Getting started
+## Features
 
-```sh
-# Install dependencies
-npm i
+- **Smart Authentication**: Secure OTP-based login system
+- **AI Chatbot**: Get farming advice and crop recommendations
+- **Crop Tracking**: Monitor your crops and farming activities
+- **Weather Integration**: Real-time weather updates for farming decisions
+- **Market Prices**: Stay updated with current market rates
+- **Disease Detection**: AI-powered crop disease identification
+- **Expert Consultation**: Connect with farming experts
 
-# Start development server
-npm run dev
+## Tech Stack
 
-# Build for production
-npm run build
+- **Frontend**: React + TypeScript + Vite
+- **Styling**: Tailwind CSS + shadcn/ui
+- **AI Integration**: Google Gemini AI
+- **Authentication**: Custom OTP system with localStorage
+- **State Management**: React Context API
 
-# Preview production build
-npm run preview
+## Getting Started
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Set up environment variables (see .env.example)
+4. Start development server: `npm run dev`
+
+## Environment Variables
+
+Create a `.env` file with:
+```
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
+# OpenWeatherMap API Key
+VITE_WEATHER_API_KEY=83076224849c0ab007f629441c463134
+
+
 ```
 
-## Tech stack
+## Contributing
 
-- Vite
-- TypeScript
-- React
-- shadcn/ui
-- Tailwind CSS
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
-## Project structure
+## License
 
-- `src/` application code
-- `public/` static assets
-- `vite.config.ts` Vite configuration
+This project is licensed under the MIT License.
