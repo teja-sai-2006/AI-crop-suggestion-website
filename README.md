@@ -31,13 +31,12 @@ Your comprehensive farming companion powered by AI technology.
 
 Create a `.env` file with:
 ```
+#google gemini api key
 VITE_GEMINI_API_KEY=your_gemini_api_key_here
 # OpenWeatherMap API Key
 VITE_WEATHER_API_KEY=enter here
 # Google Maps API Key
 VITE_GOOGLE_MAPS_API_KEY=enter here
-
-
 ```
 
 ## Contributing
