@@ -33,7 +33,7 @@ Create a `.env` file with:
 ```
 VITE_GEMINI_API_KEY=your_gemini_api_key_here
 # OpenWeatherMap API Key
-VITE_WEATHER_API_KEY=83076224849c0ab007f629441c463134
+VITE_WEATHER_API_KEY=enter here
 
 
 ```
