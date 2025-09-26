@@ -46,7 +46,7 @@ export interface VoiceInputSimulation {
 }
 
 export interface ChatBotSettings {
-  language: 'en' | 'hi' | 'te' | 'ta' | 'bn' | 'mr';
+  language: 'en' | 'hi' | 'kn' | 'sat' | 'te' | 'ta' | 'bn' | 'mr';
   voiceEnabled: boolean;
   autoSuggestions: boolean;
   responseDelay: number;

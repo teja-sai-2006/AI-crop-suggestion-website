@@ -12,7 +12,7 @@ import {
   quickReplies,
   languageResponses 
 } from '../data/mockChatResponses';
-import { GeminiAPIService } from './gemini.api';
+import { SimpleGeminiAPI } from './simple-gemini.api';
 
 /**
  * ChatBot API Service - Frontend-first implementation with mock data
@@ -59,51 +59,47 @@ export class ChatBotAPIService {
       let botResponse: ChatMessage;
       
       try {
-        // Try to get response from Gemini AI
-        const geminiResponse = await GeminiAPIService.generateFarmingAdvice(
-          message, 
-          language, 
-          conversationHistory
-        );
+        // Direct API call using Simple Gemini with language support
+        const aiResponseText = await SimpleGeminiAPI.sendMessage(message, language);
         
         botResponse = {
           id: `msg_${Date.now()}_bot`,
-          content: geminiResponse.message,
+          content: aiResponseText,
           sender: 'bot',
           timestamp: new Date().toISOString(),
           language,
           messageType: 'text',
           metadata: {
-            confidence: geminiResponse.confidence,
-            topic: geminiResponse.topic,
-            suggestions: geminiResponse.suggestions,
-            relatedActions: geminiResponse.relatedActions,
+            confidence: 95,
+            topic: 'general',
+            suggestions: [],
+            relatedActions: [],
             source: 'gemini-ai'
           }
         };
-      } catch (error) {
-        console.warn('Gemini AI failed, falling back to mock response:', error);
         
-        // Fallback to mock response if Gemini fails
-        const mockResponse = generateMockResponse(message, language);
+        console.log('✅ Direct Simple Gemini response delivered');
+        
+      } catch (error) {
+        console.log('❌ Gemini API unavailable:', error.message);
+        
+        // Simple fallback message - no complex processing
         botResponse = {
           id: `msg_${Date.now()}_bot`,
-          content: mockResponse.message,
+          content: "I'm having trouble connecting right now. Please try again in a moment.",
           sender: 'bot',
           timestamp: new Date().toISOString(),
           language,
           messageType: 'text',
           metadata: {
-            confidence: mockResponse.confidence,
-            topic: mockResponse.topic,
-            suggestions: mockResponse.suggestions,
-            relatedActions: mockResponse.relatedActions,
+            confidence: 50,
+            topic: 'error',
+            suggestions: ['Try again', 'Check connection'],
+            relatedActions: ['Retry'],
             source: 'fallback'
           }
         };
-      }
-      
-      // Save messages to session
+      }      // Save messages to session
       await this.addMessagesToSession(sessionId, [userMessage, botResponse]);
       
       // Update analytics
@@ -488,9 +484,9 @@ export class ChatBotAPIService {
    */
   static async testGeminiConnection(): Promise<boolean> {
     try {
-      return await GeminiAPIService.testConnection();
+      return await SimpleGeminiAPI.testConnection();
     } catch (error) {
-      console.error('Error testing Gemini connection:', error);
+      console.log('Gemini connection test failed');
       return false;
     }
   }

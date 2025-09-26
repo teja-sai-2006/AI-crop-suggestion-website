@@ -7,6 +7,13 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import ReactMarkdown from 'react-markdown';
+import { 
   Send, 
   Mic, 
   MicOff, 
@@ -20,7 +27,8 @@ import {
   Volume2,
   Languages,
   Lightbulb,
-  Plus
+  Plus,
+  ChevronDown
 } from 'lucide-react';
 import { ChatBotAPIService } from '../services/chatbot.api';
 import { 
@@ -64,6 +72,9 @@ const ChatBot: React.FC = () => {
 
   const loadInitialData = async () => {
     try {
+      // Clear any existing error
+      setError(null);
+      
       // Load settings
       const userSettings = await ChatBotAPIService.getSettings();
       setSettings(userSettings);
@@ -79,25 +90,39 @@ const ChatBot: React.FC = () => {
         if (session) {
           setCurrentSession(session);
         } else {
+          console.log('Session not found, creating new session...');
           await createNewSession();
         }
       } else {
+        console.log('No current session, creating new session...');
         await createNewSession();
       }
 
       // Load quick replies
       const replies = await ChatBotAPIService.getQuickReplies(userSettings.language);
       setQuickReplies(replies);
+      
+      console.log('Initial data loaded successfully');
     } catch (err) {
       console.error('Failed to load initial data:', err);
-      setError('Failed to load chat data');
+      setError('Failed to load chat data. Please refresh the page and try again.');
+      
+      // Try to create a fallback session if everything fails
+      try {
+        await createNewSession();
+      } catch (fallbackErr) {
+        console.error('Failed to create fallback session:', fallbackErr);
+        setError('Connection error. Please check your internet connection and refresh the page.');
+      }
     }
   };
 
   const checkGeminiConnection = async () => {
     try {
+      console.log('Testing Gemini API connection...');
       const isConnected = await ChatBotAPIService.testGeminiConnection();
       setGeminiConnected(isConnected);
+      console.log('Gemini connection status:', isConnected);
     } catch (err) {
       console.error('Failed to check Gemini connection:', err);
       setGeminiConnected(false);
@@ -106,12 +131,15 @@ const ChatBot: React.FC = () => {
 
   const createNewSession = async () => {
     try {
+      console.log('Creating new session with language:', settings.language);
       const newSession = await ChatBotAPIService.createSession(settings.language);
       setCurrentSession(newSession);
       setSessions(prev => [newSession, ...prev]);
       ChatBotAPIService.setCurrentSessionId(newSession.id);
+      console.log('New session created successfully:', newSession.id);
     } catch (err) {
-      setError('Failed to create new chat session');
+      console.error('Failed to create new chat session:', err);
+      setError('Failed to create new chat session. Please refresh the page and try again.');
     }
   };
 
@@ -150,21 +178,85 @@ const ChatBot: React.FC = () => {
   const startVoiceInput = async () => {
     if (!settings.voiceEnabled) return;
 
+    // Check browser support
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    
+    if (!SpeechRecognition) {
+      setError('Voice input not supported in this browser. Please try Chrome or Edge.');
+      return;
+    }
+
     setIsListening(true);
     setError(null);
 
     try {
-      // Simulate voice input
-      const transcript = await ChatBotAPIService.simulateVoiceTranscription(3000);
-      setMessage(transcript);
-      setIsListening(false);
+      const recognition = new SpeechRecognition();
       
-      // Auto-send voice message
-      if (transcript.trim()) {
-        await sendMessage(transcript);
-      }
+      // Language mapping for speech recognition
+      const languageCodes = {
+        'en': 'en-IN',    // Indian English
+        'hi': 'hi-IN',    // Hindi (India)
+        'kn': 'kn-IN',    // Kannada (Karnataka)
+        'sat': 'hi-IN'    // Santali (use Hindi as closest match)
+      };
+      
+      // Configure recognition
+      recognition.lang = languageCodes[settings.language as keyof typeof languageCodes] || 'en-IN';
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+      
+      // Success handler
+      recognition.onresult = async (event: any) => {
+        const transcript = event.results[0][0].transcript;
+        const confidence = event.results[0][0].confidence;
+        
+        console.log(`🎙️ Voice recognized: "${transcript}" (${Math.round(confidence * 100)}% confidence)`);
+        
+        setMessage(transcript);
+        setIsListening(false);
+        
+        // Auto-send if confidence is good
+        if (transcript.trim() && confidence > 0.7) {
+          await sendMessage(transcript);
+        } else if (transcript.trim()) {
+          // Low confidence - let user review before sending
+          setError(`Voice recognized: "${transcript}" - Please review before sending (${Math.round(confidence * 100)}% confidence)`);
+        }
+      };
+      
+      // Error handler
+      recognition.onerror = (event: any) => {
+        setIsListening(false);
+        console.error('🎙️ Speech recognition error:', event.error);
+        
+        const errorMessages = {
+          'network': 'Network error. Please check your internet connection.',
+          'not-allowed': 'Microphone access denied. Please allow microphone access and try again.',
+          'no-speech': 'No speech detected. Please speak clearly and try again.',
+          'audio-capture': 'Microphone not available. Please check your microphone.',
+          'service-not-allowed': 'Speech service not allowed. Please enable speech recognition.',
+          'language-not-supported': `Language ${settings.language} not supported. Using English instead.`,
+        };
+        
+        const errorMessage = errorMessages[event.error as keyof typeof errorMessages] || 
+                            'Voice input failed. Please try typing instead.';
+        setError(errorMessage);
+      };
+      
+      // End handler
+      recognition.onend = () => {
+        setIsListening(false);
+        console.log('🎙️ Voice recognition ended');
+      };
+      
+      // Start recognition
+      console.log(`🎙️ Starting voice recognition in ${recognition.lang}...`);
+      recognition.start();
+      
     } catch (err) {
-      setError('Voice input failed. Please try typing instead.');
+      console.error('🎙️ Voice input setup failed:', err);
+      setError('Voice input setup failed. Please try typing instead.');
       setIsListening(false);
     }
   };
@@ -356,10 +448,8 @@ const ChatBot: React.FC = () => {
                   <SelectContent>
                     <SelectItem value="en">English</SelectItem>
                     <SelectItem value="hi">हिंदी (Hindi)</SelectItem>
-                    <SelectItem value="te">తెలుగు (Telugu)</SelectItem>
-                    <SelectItem value="ta">தமிழ் (Tamil)</SelectItem>
-                    <SelectItem value="bn">বাংলা (Bengali)</SelectItem>
-                    <SelectItem value="mr">मराठी (Marathi)</SelectItem>
+                    <SelectItem value="kn">ಕನ್ನಡ (Kannada)</SelectItem>
+                    <SelectItem value="sat">ᱥᱟᱱᱛᱟᱲᱤ (Santali - Jharkhand)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -397,10 +487,52 @@ const ChatBot: React.FC = () => {
                   </CardDescription>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="flex items-center gap-1 glass text-enhanced">
-                    <Languages className="h-3 w-3" />
-                    {settings.language.toUpperCase()}
-                  </Badge>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button 
+                        variant="outline" 
+                        className="flex items-center gap-1 glass text-enhanced hover:glass-medium h-7 px-2.5 py-0.5 text-xs font-semibold"
+                      >
+                        <Languages className="h-3 w-3" />
+                        {settings.language === 'en' ? 'English' : 
+                         settings.language === 'hi' ? 'हिंदी' : 
+                         settings.language === 'kn' ? 'ಕನ್ನಡ' : 
+                         settings.language === 'sat' ? 'ᱥᱟᱱᱛᱟᱲᱤ' : 
+                         settings.language.toUpperCase()}
+                        <ChevronDown className="h-3 w-3" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="glass-ultra">
+                      <DropdownMenuItem 
+                        onClick={() => handleLanguageChange('en')}
+                        className={`cursor-pointer ${settings.language === 'en' ? 'bg-blue-50 text-blue-700' : ''}`}
+                      >
+                        <Languages className="h-4 w-4 mr-2" />
+                        English
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={() => handleLanguageChange('hi')}
+                        className={`cursor-pointer ${settings.language === 'hi' ? 'bg-blue-50 text-blue-700' : ''}`}
+                      >
+                        <Languages className="h-4 w-4 mr-2" />
+                        हिंदी (Hindi)
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={() => handleLanguageChange('kn')}
+                        className={`cursor-pointer ${settings.language === 'kn' ? 'bg-blue-50 text-blue-700' : ''}`}
+                      >
+                        <Languages className="h-4 w-4 mr-2" />
+                        ಕನ್ನಡ (Kannada)
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={() => handleLanguageChange('sat')}
+                        className={`cursor-pointer ${settings.language === 'sat' ? 'bg-blue-50 text-blue-700' : ''}`}
+                      >
+                        <Languages className="h-4 w-4 mr-2" />
+                        ᱥᱟᱱᱛᱟᱲᱤ (Santali - Jharkhand)
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                   {geminiConnected !== null && (
                     <Badge 
                       variant="outline" 
@@ -441,7 +573,26 @@ const ChatBot: React.FC = () => {
                               : 'glass text-enhanced'
                           }`}
                         >
-                          <p className="text-sm">{msg.content}</p>
+                          {msg.sender === 'bot' ? (
+                            <div className="text-sm prose prose-sm max-w-none prose-headings:text-enhanced prose-p:text-enhanced prose-li:text-enhanced prose-strong:text-enhanced">
+                              <ReactMarkdown
+                                components={{
+                                  p: ({children}) => <p className="mb-2 last:mb-0">{children}</p>,
+                                  ul: ({children}) => <ul className="mb-2 pl-4 space-y-1">{children}</ul>,
+                                  ol: ({children}) => <ol className="mb-2 pl-4 space-y-1">{children}</ol>,
+                                  li: ({children}) => <li className="text-enhanced">{children}</li>,
+                                  strong: ({children}) => <strong className="font-semibold text-strong">{children}</strong>,
+                                  h1: ({children}) => <h1 className="text-lg font-semibold mb-2 text-strong">{children}</h1>,
+                                  h2: ({children}) => <h2 className="text-base font-semibold mb-2 text-strong">{children}</h2>,
+                                  h3: ({children}) => <h3 className="text-sm font-semibold mb-1 text-strong">{children}</h3>,
+                                }}
+                              >
+                                {msg.content}
+                              </ReactMarkdown>
+                            </div>
+                          ) : (
+                            <p className="text-sm">{msg.content}</p>
+                          )}
                           {msg.metadata?.confidence && (
                             <div className="mt-2 text-xs opacity-75">
                               Confidence: {msg.metadata.confidence}%
@@ -554,7 +705,13 @@ const ChatBot: React.FC = () => {
                     <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
                       <div className="flex items-center gap-1">
                         <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                        <span className="text-xs text-red-600">Listening...</span>
+                        <span className="text-xs text-red-600">
+                          Listening in {settings.language === 'en' ? 'English' : 
+                                       settings.language === 'hi' ? 'Hindi' : 
+                                       settings.language === 'kn' ? 'Kannada' : 
+                                       settings.language === 'sat' ? 'Santali' : 
+                                       settings.language.toUpperCase()}...
+                        </span>
                       </div>
                     </div>
                   )}
@@ -575,16 +732,38 @@ const ChatBot: React.FC = () => {
                     disabled={isLoading || isListening}
                     size="sm"
                     variant={isListening ? "destructive" : "outline"}
-                    className={isListening ? "" : "glass hover:glass-medium text-enhanced"}
+                    className={`${isListening ? "animate-pulse" : "glass hover:glass-medium text-enhanced"} relative`}
+                    title={`Voice input in ${settings.language === 'en' ? 'English' : 
+                             settings.language === 'hi' ? 'Hindi' : 
+                             settings.language === 'kn' ? 'Kannada' : 
+                             settings.language === 'sat' ? 'Santali' : 
+                             settings.language.toUpperCase()}`}
                   >
-                    {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+                    {isListening ? (
+                      <>
+                        <MicOff className="h-4 w-4" />
+                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-ping" />
+                      </>
+                    ) : (
+                      <Mic className="h-4 w-4" />
+                    )}
                   </Button>
                 )}
               </div>
 
               {error && (
                 <Alert variant="destructive" className="mt-2 glass-ultra">
-                  <AlertDescription className="text-enhanced">{error}</AlertDescription>
+                  <AlertDescription className="text-enhanced">
+                    {error}
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="ml-2 h-6 text-xs"
+                      onClick={loadInitialData}
+                    >
+                      Retry Connection
+                    </Button>
+                  </AlertDescription>
                 </Alert>
               )}
             </CardContent>
