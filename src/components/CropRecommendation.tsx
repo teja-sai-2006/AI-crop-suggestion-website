@@ -16,12 +16,14 @@ import {
   CropRecommendationResult, 
   CropSuggestion 
 } from '../types/cropRecommendation.types';
+import { LocationData } from '../types/locationData.types';
 import { useToast } from '@/hooks/use-toast';
+import CropLocationSelector from './CropLocationSelector';
 
 const CropRecommendation: React.FC = () => {
   const { toast } = useToast();
   
-  // Form state
+  // Form state - Updated with selectedLocationKey
   const [formData, setFormData] = useState<CropRecommendationInput & { season?: string; soilType?: string }>({
     soil: {
       ph: 6.5,
@@ -44,6 +46,9 @@ const CropRecommendation: React.FC = () => {
     season: 'kharif',
     soilType: 'alluvial'
   });
+
+  // Location state
+  const [selectedLocationKey, setSelectedLocationKey] = useState<string>('');
 
   // Component state
   const [isLoading, setIsLoading] = useState(false);
@@ -166,6 +171,43 @@ const CropRecommendation: React.FC = () => {
           location
         }
       }));
+    }
+  };
+
+  // Handle location change from CSV data
+  const handleCropLocationChange = (locationData: LocationData | null) => {
+    if (locationData) {
+      setSelectedLocationKey(locationData.locationKey);
+      
+      // Auto-populate form fields with location data
+      setFormData(prev => ({
+        ...prev,
+        soil: {
+          ph: locationData.soilData.ph,
+          nitrogen: locationData.soilData.nitrogen,
+          phosphorus: locationData.soilData.phosphorus,
+          potassium: locationData.soilData.potassium
+        },
+        climate: {
+          temperature: locationData.climateData.temperature,
+          humidity: locationData.climateData.humidity,
+          rainfall: locationData.climateData.rainfall,
+          location: {
+            name: locationData.displayName,
+            lat: 0, // We don't have lat/lon in CSV, using defaults
+            lon: 0
+          }
+        }
+      }));
+
+      // Show toast notification about auto-population
+      toast({
+        title: "Location Updated!",
+        description: `Soil and climate parameters have been updated for ${locationData.displayName}`,
+        variant: "default"
+      });
+    } else {
+      setSelectedLocationKey('');
     }
   };
 
@@ -371,23 +413,14 @@ const CropRecommendation: React.FC = () => {
               {/* Farm Details */}
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-enhanced">Farm Details</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="location" className="text-enhanced">Location</Label>
-                    <Select onValueChange={handleLocationChange} defaultValue="mumbai">
-                      <SelectTrigger className="glass text-enhanced">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="glass">
-                        <SelectItem value="mumbai">Mumbai, Maharashtra</SelectItem>
-                        <SelectItem value="delhi">Delhi, Delhi</SelectItem>
-                        <SelectItem value="bangalore">Bangalore, Karnataka</SelectItem>
-                        <SelectItem value="chennai">Chennai, Tamil Nadu</SelectItem>
-                        <SelectItem value="kolkata">Kolkata, West Bengal</SelectItem>
-                        <SelectItem value="pune">Pune, Maharashtra</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <div className="grid grid-cols-1 gap-4">
+                  {/* New Location Selector */}
+                  <CropLocationSelector
+                    value={selectedLocationKey}
+                    onLocationChange={handleCropLocationChange}
+                    placeholder="Select your state and district..."
+                  />
+                  
                   <div>
                     <Label htmlFor="farmSize" className="text-enhanced">Farm Size (acres)</Label>
                     <Input
@@ -402,7 +435,8 @@ const CropRecommendation: React.FC = () => {
                       className="glass text-enhanced"
                     />
                   </div>
-                  <div className="col-span-2">
+                  
+                  <div>
                     <Label htmlFor="experience" className="text-enhanced">Experience Level</Label>
                     <Select
                       value={formData.experience}
