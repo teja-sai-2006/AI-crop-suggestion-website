@@ -154,62 +154,62 @@ All colors MUST be HSL for consistency and theming support.
     0%, 8% {
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-        url('/src/assets/backgrounds/hero-farmland.jpg');
+        url('/backgrounds/hero-farmland-rtrBqgLM.jpg');
     }
     9%, 16% {
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-        url('/src/assets/backgrounds/farm-field-sunset.jpg');
+        url('/backgrounds/farm-field-sunset.jpg');
     }
     17%, 24% {
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-        url('/src/assets/backgrounds/wheat-field.jpg');
+        url('/backgrounds/wheat-field.jpg');
     }
     25%, 32% {
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-        url('/src/assets/backgrounds/rolling-hills.jpg');
+        url('/backgrounds/barley-field.jpg');
     }
     33%, 40% {
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-        url('/src/assets/backgrounds/sunflower-field.jpg');
+        url('/backgrounds/sunflower-field.jpg');
     }
     41%, 48% {
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-        url('/src/assets/backgrounds/mountain-valley.jpg');
+        url('/backgrounds/mountain-valley.jpg');
     }
     49%, 56% {
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-        url('/src/assets/backgrounds/field-3092043_640.jpg');
+        url('/backgrounds/field-3092043_640.jpg');
     }
     57%, 64% {
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-        url('/src/assets/backgrounds/barley-field.jpg');
+        url('/backgrounds/bbhb.jpg');
     }
     65%, 72% {
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-        url('/src/assets/backgrounds/tea-plantation.jpg');
+        url('/backgrounds/wp9212011.jpg');
     }
     73%, 80% {
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-        url('/src/assets/backgrounds/vineyard.jpg');
+        url('/backgrounds/wp9020111.jpg');
     }
     81%, 88% {
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-        url('/src/assets/backgrounds/cool-farming-ybreiif7eiumpdky.jpg');
+        url('/backgrounds/cool-farming-ybreiif7eiumpdky.jpg');
     }
     89%, 100% {
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-        url('/src/assets/backgrounds/nature-landscape.jpg');
+        url('/backgrounds/pexels-pixabay-259280.jpg');
     }
   }
 
