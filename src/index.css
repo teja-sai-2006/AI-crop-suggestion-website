@@ -184,7 +184,7 @@ All colors MUST be HSL for consistency and theming support.
     49%, 56% {
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-        url('/src/assets/backgrounds/corn-field.jpg');
+        url('/src/assets/backgrounds/field-3092043_640.jpg');
     }
     57%, 64% {
       background-image: 
