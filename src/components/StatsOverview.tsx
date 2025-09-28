@@ -1,38 +1,40 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
-
-const stats = [
-  {
-    title: "Active Crops",
-    value: "4",
-    change: "+2",
-    trend: "up",
-    description: "from last season",
-  },
-  {
-    title: "Avg Yield",
-    value: "85%",
-    change: "+12%",
-    trend: "up", 
-    description: "vs target yield",
-  },
-  {
-    title: "Soil Health",
-    value: "Good",
-    change: "0%",
-    trend: "stable",
-    description: "NPK balanced",
-  },
-  {
-    title: "Water Usage",
-    value: "1,200L",
-    change: "-8%",
-    trend: "down",
-    description: "efficient usage",
-  },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export const StatsOverview = () => {
+  const { t } = useLanguage();
+  
+  const stats = [
+    {
+      title: t('activeCrops'),
+      value: "4",
+      change: "+2",
+      trend: "up",
+      description: t('fromLastSeason'),
+    },
+    {
+      title: t('avgYield'),
+      value: "85%",
+      change: "+12%",
+      trend: "up", 
+      description: t('vsTargetYield'),
+    },
+    {
+      title: t('soilHealth'),
+      value: t('good'),
+      change: "0%",
+      trend: "stable",
+      description: t('npkBalanced'),
+    },
+    {
+      title: t('waterUsage'),
+      value: "1,200L",
+      change: "-8%",
+      trend: "down",
+      description: t('efficientUsage'),
+    },
+  ];
   const getTrendIcon = (trend: string) => {
     switch (trend) {
       case "up":

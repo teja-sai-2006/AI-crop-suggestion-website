@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { LocationSelector } from "@/components/LocationSelector";
 import { WeatherAPIService } from "@/services/weather.api";
 import { WeatherData, LocationData } from "@/types/weather.types";
+import { useLanguage } from "@/context/LanguageContext";
 
 
 
@@ -27,6 +28,7 @@ const WeatherIcon = ({ condition, size = "h-6 w-6" }: { condition: string; size?
 export const WeatherWidget = () => {
   const navigate = useNavigate();
   const { currentLocation, isLocationSet } = useLocation();
+  const { t } = useLanguage();
   const [isLocationSelectorOpen, setIsLocationSelectorOpen] = useState(false);
   const [lastUpdateTime, setLastUpdateTime] = useState<Date>(new Date());
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -65,7 +67,7 @@ export const WeatherWidget = () => {
           location: currentLocation.name
         },
         forecast: forecast.slice(0, 4).map((day, index) => ({
-          day: index === 0 ? "Today" : index === 1 ? "Tomorrow" : day.day,
+          day: index === 0 ? t('today') : index === 1 ? t('tomorrow') : day.day,
           high: day.high,
           low: day.low,
           condition: day.condition,
@@ -109,7 +111,7 @@ export const WeatherWidget = () => {
       <Card className="glass-ultra shadow-card hover:shadow-glow transition-all duration-300">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center justify-between">
-            <span className="text-lg text-enhanced">Weather Forecast</span>
+            <span className="text-lg text-enhanced">{t('weatherForecast')}</span>
             <Badge variant="outline" className="text-muted-foreground glass">
               📍 No location set
             </Badge>
@@ -129,7 +131,7 @@ export const WeatherWidget = () => {
               className="glass text-enhanced border-white/30"
             >
               <MapPin className="h-4 w-4 mr-2" />
-              Select Location
+              {t('selectLocation')}
             </Button>
           </div>
           

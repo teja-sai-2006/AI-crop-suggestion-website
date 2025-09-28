@@ -19,9 +19,11 @@ import {
 import { LocationData } from '../types/locationData.types';
 import { useToast } from '@/hooks/use-toast';
 import CropLocationSelector from './CropLocationSelector';
+import { useLanguage } from '@/context/LanguageContext';
 
 const CropRecommendation: React.FC = () => {
   const { toast } = useToast();
+  const { t } = useLanguage();
   
   // Form state - Updated with selectedLocationKey
   const [formData, setFormData] = useState<CropRecommendationInput & { season?: string; soilType?: string }>({
@@ -118,14 +120,14 @@ const CropRecommendation: React.FC = () => {
       setTrackedCrops(prev => new Set([...prev, cropSuggestion.id]));
       
       toast({
-        title: "Success!",
-        description: `${cropSuggestion.variety} added to your Crop Tracker!`,
+        title: t('success'),
+        description: `${cropSuggestion.variety} ${t('addedToCropTracker')}`,
         variant: "default"
       });
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Something went wrong while adding to tracker.';
+      const errorMessage = error instanceof Error ? error.message : t('errorAddingToTracker');
       toast({
-        title: "Error",
+        title: t('error'),
         description: errorMessage,
         variant: "destructive"
       });
@@ -228,7 +230,7 @@ const CropRecommendation: React.FC = () => {
       // Save to localStorage
       localStorage.setItem('km.cropRecommendation.lastResult', JSON.stringify(recommendation));
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to get recommendations');
+      setError(err instanceof Error ? err.message : t('failedToGetRecommendations'));
     } finally {
       setIsLoading(false);
     }
@@ -251,10 +253,10 @@ const CropRecommendation: React.FC = () => {
       <div className="text-center space-y-2">
         <h1 className="text-3xl font-bold text-enhanced flex items-center justify-center gap-2 text-overlay">
           <Sprout className="h-8 w-8 text-green-600" />
-          Crop Recommendation System
+          {t('cropRecommendationSystem')}
         </h1>
         <p className="text-lg text-enhanced text-overlay">
-          Get AI-powered crop suggestions based on your soil and climate parameters
+          {t('aiPoweredCropSuggestions')}
         </p>
       </div>
 
@@ -262,19 +264,19 @@ const CropRecommendation: React.FC = () => {
         {/* Input Form */}
         <Card className="glass-ultra">
           <CardHeader>
-            <CardTitle className="text-enhanced">Soil & Climate Parameters</CardTitle>
+            <CardTitle className="text-enhanced">{t('soilClimateParameters')}</CardTitle>
             <CardDescription className="text-enhanced">
-              Enter your soil test results and climate information to get personalized crop recommendations
+              {t('enterSoilTestResults')}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Soil Parameters */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-enhanced">Soil Parameters</h3>
+                <h3 className="text-lg font-semibold text-enhanced">{t('soilParameters')}</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="soilType" className="text-enhanced">Soil Type</Label>
+                    <Label htmlFor="soilType" className="text-enhanced">{t('soilType')}</Label>
                     <Select
                       value={formData.soilType || 'loamy'}
                       onValueChange={(value) => handleGeneralInputChange('soilType', value)}
@@ -283,17 +285,17 @@ const CropRecommendation: React.FC = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="glass">
-                        <SelectItem value="red">Red Soil</SelectItem>
-                        <SelectItem value="black">Black Soil</SelectItem>
-                        <SelectItem value="alluvial">Alluvial Soil</SelectItem>
-                        <SelectItem value="sandy">Sandy Soil</SelectItem>
-                        <SelectItem value="loamy">Loamy Soil</SelectItem>
-                        <SelectItem value="laterite">Laterite Soil</SelectItem>
+                        <SelectItem value="red">{t('redSoil')}</SelectItem>
+                        <SelectItem value="black">{t('blackSoil')}</SelectItem>
+                        <SelectItem value="alluvial">{t('alluvialSoil')}</SelectItem>
+                        <SelectItem value="sandy">{t('sandySoil')}</SelectItem>
+                        <SelectItem value="loamy">{t('loamySoil')}</SelectItem>
+                        <SelectItem value="laterite">{t('lateriteSoil')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <div>
-                    <Label htmlFor="ph" className="text-enhanced">pH Level</Label>
+                    <Label htmlFor="ph" className="text-enhanced">{t('phLevel')}</Label>
                     <Input
                       id="ph"
                       type="number"
@@ -307,7 +309,7 @@ const CropRecommendation: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="nitrogen" className="text-enhanced">Nitrogen (kg/ha)</Label>
+                    <Label htmlFor="nitrogen" className="text-enhanced">{t('nitrogen')} (kg/ha)</Label>
                     <Input
                       id="nitrogen"
                       type="number"
@@ -320,7 +322,7 @@ const CropRecommendation: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="phosphorus" className="text-enhanced">Phosphorus (kg/ha)</Label>
+                    <Label htmlFor="phosphorus" className="text-enhanced">{t('phosphorus')} (kg/ha)</Label>
                     <Input
                       id="phosphorus"
                       type="number"
@@ -333,7 +335,7 @@ const CropRecommendation: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="potassium" className="text-enhanced">Potassium (kg/ha)</Label>
+                    <Label htmlFor="potassium" className="text-enhanced">{t('potassium')} (kg/ha)</Label>
                     <Input
                       id="potassium"
                       type="number"
@@ -350,10 +352,10 @@ const CropRecommendation: React.FC = () => {
 
               {/* Climate Parameters */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-enhanced">Climate Information</h3>
+                <h3 className="text-lg font-semibold text-enhanced">{t('climateParameters')}</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="temperature" className="text-enhanced">Average Temperature (°C)</Label>
+                    <Label htmlFor="temperature" className="text-enhanced">{t('averageTemperature')}</Label>
                     <Input
                       id="temperature"
                       type="number"
@@ -366,7 +368,7 @@ const CropRecommendation: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="rainfall" className="text-enhanced">Annual Rainfall (mm)</Label>
+                    <Label htmlFor="rainfall" className="text-enhanced">{t('expectedRainfall')}</Label>
                     <Input
                       id="rainfall"
                       type="number"
@@ -379,7 +381,7 @@ const CropRecommendation: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="humidity" className="text-enhanced">Humidity (%)</Label>
+                    <Label htmlFor="humidity" className="text-enhanced">{t('humidity')} (%)</Label>
                     <Input
                       id="humidity"
                       type="number"
@@ -392,7 +394,7 @@ const CropRecommendation: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="season" className="text-enhanced">Season</Label>
+                    <Label htmlFor="season" className="text-enhanced">{t('selectSeason')}</Label>
                     <Select
                       value={formData.season || 'kharif'}
                       onValueChange={(value) => handleGeneralInputChange('season', value)}
@@ -401,9 +403,9 @@ const CropRecommendation: React.FC = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="glass">
-                        <SelectItem value="kharif">Kharif (Monsoon)</SelectItem>
-                        <SelectItem value="rabi">Rabi (Winter)</SelectItem>
-                        <SelectItem value="zaid">Zaid (Summer)</SelectItem>
+                        <SelectItem value="kharif">{t('kharifSeason')}</SelectItem>
+                        <SelectItem value="rabi">{t('rabiSeason')}</SelectItem>
+                        <SelectItem value="zaid">{t('summerSeason')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -412,7 +414,7 @@ const CropRecommendation: React.FC = () => {
 
               {/* Farm Details */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-enhanced">Farm Details</h3>
+                <h3 className="text-lg font-semibold text-enhanced">{t('farmDetails')}</h3>
                 <div className="grid grid-cols-1 gap-4">
                   {/* New Location Selector */}
                   <CropLocationSelector
@@ -422,7 +424,7 @@ const CropRecommendation: React.FC = () => {
                   />
                   
                   <div>
-                    <Label htmlFor="farmSize" className="text-enhanced">Farm Size (acres)</Label>
+                    <Label htmlFor="farmSize" className="text-enhanced">{t('farmSize')} (acres)</Label>
                     <Input
                       id="farmSize"
                       type="number"
@@ -437,7 +439,7 @@ const CropRecommendation: React.FC = () => {
                   </div>
                   
                   <div>
-                    <Label htmlFor="experience" className="text-enhanced">Experience Level</Label>
+                    <Label htmlFor="experience" className="text-enhanced">{t('experienceLevel')}</Label>
                     <Select
                       value={formData.experience}
                       onValueChange={(value) => handleGeneralInputChange('experience', value)}
@@ -446,9 +448,9 @@ const CropRecommendation: React.FC = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="glass">
-                        <SelectItem value="beginner">Beginner (0-2 years)</SelectItem>
-                        <SelectItem value="intermediate">Intermediate (3-10 years)</SelectItem>
-                        <SelectItem value="expert">Expert (10+ years)</SelectItem>
+                        <SelectItem value="beginner">{t('beginner')} (0-2 years)</SelectItem>
+                        <SelectItem value="intermediate">{t('intermediate')} (3-10 years)</SelectItem>
+                        <SelectItem value="expert">{t('expert')} (10+ years)</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -459,10 +461,10 @@ const CropRecommendation: React.FC = () => {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Analyzing...
+                    {t('analyzing')}...
                   </>
                 ) : (
-                  'Get Crop Recommendations'
+                  t('getCropRecommendations')
                 )}
               </Button>
             </form>
@@ -481,10 +483,10 @@ const CropRecommendation: React.FC = () => {
           {result && (
             <Tabs defaultValue="recommendations" className="w-full">
               <TabsList className="grid w-full grid-cols-4 glass">
-                <TabsTrigger value="recommendations" className="text-enhanced">Crops</TabsTrigger>
-                <TabsTrigger value="analysis" className="text-enhanced">Analysis</TabsTrigger>
-                <TabsTrigger value="warnings" className="text-enhanced">Warnings</TabsTrigger>
-                <TabsTrigger value="tips" className="text-enhanced">Tips</TabsTrigger>
+                <TabsTrigger value="recommendations" className="text-enhanced">{t('crops')}</TabsTrigger>
+                <TabsTrigger value="analysis" className="text-enhanced">{t('analysis')}</TabsTrigger>
+                <TabsTrigger value="warnings" className="text-enhanced">{t('warnings')}</TabsTrigger>
+                <TabsTrigger value="tips" className="text-enhanced">{t('tips')}</TabsTrigger>
               </TabsList>
 
               <TabsContent value="recommendations" className="space-y-4">
@@ -492,10 +494,10 @@ const CropRecommendation: React.FC = () => {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-enhanced">
                       <Sprout className="h-5 w-5" />
-                      Recommended Crops
+                      {t('recommendedCrops')}
                     </CardTitle>
                     <CardDescription className="text-enhanced">
-                      Based on your soil and climate parameters (Confidence: {result.confidence}%) - Showing {result.recommendations.length} diverse crops
+                      {t('basedOnSoilClimate')} (Confidence: {result.confidence}%) - {t('showingDiverseCrops')} {result.recommendations.length}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>

@@ -20,11 +20,13 @@ import LoginPage from "./pages/LoginPage";
 import { CropsProvider } from "./context/CropsContext";
 import { LocationProvider } from "./context/LocationContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import { LanguageProvider } from "./context/LanguageContext";
 import WeatherDayPage from "./pages/WeatherDayPage";
 import TemperatureDetails from "./pages/metrics/TemperatureDetails";
 import HumidityDetails from "./pages/metrics/HumidityDetails";
 import WindDetails from "./pages/metrics/WindDetails";
 import UVDetails from "./pages/metrics/UVDetails";
+import LanguageSelector from "./components/LanguageSelector";
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { LogOut, User } from 'lucide-react';
@@ -79,6 +81,9 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
       </div>
 
       {children}
+      
+      {/* Global Language Selector - Bottom Right Corner */}
+      <LanguageSelector />
     </div>
   );
 }
@@ -122,7 +127,9 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
-          <AppRoutes />
+          <LanguageProvider>
+            <AppRoutes />
+          </LanguageProvider>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>

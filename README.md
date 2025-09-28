@@ -31,12 +31,18 @@ Your comprehensive farming companion powered by AI technology.
 
 Create a `.env` file with:
 ```
-#google gemini api key
-VITE_GEMINI_API_KEY=your_gemini_api_key_here
+# Environment Variables for KrishiMitra
+# Add your API keys here
+
 # OpenWeatherMap API Key
-VITE_WEATHER_API_KEY=enter here
-# Google Maps API Key
-VITE_GOOGLE_MAPS_API_KEY=enter here
+VITE_WEATHER_API_KEY=entail_your_api_key_here
+
+# Google Gemini AI API Key
+VITE_GOOGLE_GEMINI_API_KEY=entail_your_api_key_here
+
+# Add other API keys as needed
+# VITE_GOOGLE_MAPS_API_KEY=your_google_maps_key
+# VITE_OPENCAGE_API_KEY=your_geocoding_key
 ```
 
 ## Contributing

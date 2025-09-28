@@ -15,24 +15,26 @@ import {
   FileText
 } from "lucide-react";
 import { useState } from "react";
-
-const navigationItems = [
-  { path: "/home", label: "Home", icon: Home },
-  { path: "/recommendation", label: "Crop Recommendation", icon: Wheat },
-  { path: "/weather", label: "Weather Forecast", icon: Cloud },
-  { path: "/tracker", label: "Crop Tracker", icon: TrendingUp },
-  { path: "/disease", label: "Disease Detection", icon: Bug },
-  { path: "/market", label: "Market Prices", icon: BarChart3 },
-  { path: "/records", label: "Farm Records", icon: FileText },
-  { path: "/expert", label: "Expert Call", icon: Phone },
-  { path: "/chat", label: "Chatbot", icon: MessageCircle },
-  { path: "/settings", label: "Settings", icon: Settings },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useLanguage();
+
+  const navigationItems = [
+    { path: "/home", label: t('home'), icon: Home },
+    { path: "/recommendation", label: t('cropRecommendation'), icon: Wheat },
+    { path: "/weather", label: t('weatherForecast'), icon: Cloud },
+    { path: "/tracker", label: t('cropTracker'), icon: TrendingUp },
+    { path: "/disease", label: t('diseaseDetection'), icon: Bug },
+    { path: "/market", label: t('marketPrices'), icon: BarChart3 },
+    { path: "/records", label: t('farmRecords'), icon: FileText },
+    { path: "/expert", label: t('expertCall'), icon: Phone },
+    { path: "/chat", label: t('chatbot'), icon: MessageCircle },
+    { path: "/settings", label: t('settings'), icon: Settings },
+  ];
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -48,7 +50,7 @@ export const Navigation = () => {
           <div className="hidden md:flex items-center justify-between">
             <div className="flex items-center space-x-2 text-lg font-semibold text-enhanced">
               <div className="text-xl">🌾</div>
-              <span>KrishiMitra</span>
+              <span>{t('welcomeTitle')}</span>
             </div>
             <div className="flex gap-1">
               {navigationItems.map((item) => {
@@ -76,7 +78,7 @@ export const Navigation = () => {
           <div className="md:hidden flex items-center justify-between">
             <div className="flex items-center space-x-2 text-lg font-semibold text-enhanced">
               <div className="text-xl">🌾</div>
-              <span>KrishiMitra</span>
+              <span>{t('welcomeTitle')}</span>
             </div>
             <Button
               variant="ghost"
