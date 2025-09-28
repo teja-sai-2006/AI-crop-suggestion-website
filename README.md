@@ -52,6 +52,12 @@ VITE_GOOGLE_GEMINI_API_KEY=entail_your_api_key_here
 3. Make your changes
 4. Submit a pull request
 
+
+
+web from pc demo:https://drive.google.com/file/d/1H4uEpJ8pcFIlrfdOlpztIm6MUMOiRJKf/view?usp=sharing
+
+moble application view:https://drive.google.com/file/d/170_X1RWNVmb-66xMfyn5ALi3XZZwfeRC/view?usp=sharing
+
 ## License
 
 This project is licensed under the MIT License.
